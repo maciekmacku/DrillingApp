@@ -127,7 +127,7 @@
     margin-top: -4px;
   }
 
-  /* ── HAMBURGER BUTTON ── */
+  /* ── HAMBURGER ── */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -156,37 +156,36 @@
   .hamburger.is-open span:nth-child(2) { opacity: 0; }
   .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* Overlay backdrop */
+  /* Overlay */
   #nav-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.65);
+    background: rgba(0,0,0,0.6);
     z-index: 800;
     opacity: 0;
     transition: opacity 0.25s ease;
-    -webkit-tap-highlight-color: transparent;
   }
   #nav-overlay.visible { opacity: 1; }
 
-  .nav-close { display: none; }
-
-  /* ── NAV DESKTOP ── */
-  nav {
+  /* ── DESKTOP NAV (inside header) ── */
+  #main-nav-desktop {
     display: flex;
     gap: 2px;
     overflow-x: auto;
     scrollbar-width: none;
     align-items: center;
+    flex: 1;
+    justify-content: flex-end;
   }
-  nav::-webkit-scrollbar { display: none; }
+  #main-nav-desktop::-webkit-scrollbar { display: none; }
 
-  nav button {
+  #main-nav-desktop button {
     background: none;
     border: none;
-    padding: 8px 12px;
+    padding: 8px 11px;
     font-family: 'Rajdhani', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.07em;
     text-transform: uppercase;
@@ -198,181 +197,143 @@
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
   }
-  nav button:hover { color: var(--text-bright); background: rgba(231,76,60,0.08); }
-  nav button.active { color: #e74c3c; background: rgba(231,76,60,0.1); }
-  nav button.active::after {
+  #main-nav-desktop button:hover { color: var(--text-bright); background: rgba(231,76,60,0.08); }
+  #main-nav-desktop button.active { color: #e74c3c; background: rgba(231,76,60,0.1); }
+  #main-nav-desktop button.active::after {
     content: '';
     position: absolute;
-    bottom: 0; left: 12px; right: 12px;
+    bottom: 0; left: 11px; right: 11px;
     height: 2px;
     background: #e74c3c;
     border-radius: 2px;
   }
 
+  /* ── MOBILE DRAWER NAV (outside header, fixed) ── */
+  #main-nav-mobile {
+    display: none; /* hidden on desktop */
+    position: fixed;
+    top: 0; left: 0;
+    width: min(300px, 85vw);
+    height: 100%;
+    height: 100dvh;
+    background: #0a0f1a;
+    border-right: 1px solid rgba(231,76,60,0.2);
+    flex-direction: column;
+    align-items: stretch;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    gap: 0;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 6px 0 40px rgba(0,0,0,0.6);
+  }
+  #main-nav-mobile.is-open { transform: translateX(0); }
+
+  .nav-close {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 18px 20px;
+    background: rgba(231,76,60,0.07);
+    border: none;
+    border-bottom: 1px solid rgba(231,76,60,0.15);
+    color: #e74c3c;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-align: center;
+    cursor: pointer;
+    text-transform: uppercase;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    flex-shrink: 0;
+  }
+
+  #main-nav-mobile button {
+    width: 100%;
+    text-align: left;
+    padding: 16px 24px;
+    font-size: 0.95rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(30,48,72,0.5);
+    color: var(--text-main);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    text-transform: uppercase;
+  }
+  #main-nav-mobile button:hover { background: rgba(231,76,60,0.07); color: var(--text-bright); }
+  #main-nav-mobile button.active { color: #e74c3c; background: rgba(231,76,60,0.1); border-left: 3px solid #e74c3c; padding-left: 21px; }
+  #main-nav-mobile button:last-child { border-bottom: none; }
+
   /* ── RESPONSIVE ───────────────────────────────── */
   @media (max-width: 1100px) {
     header { padding: 0 20px; }
-    nav button { padding: 7px 9px; font-size: 0.74rem; }
+    #main-nav-desktop button { padding: 7px 8px; font-size: 0.72rem; }
   }
 
   @media (max-width: 768px) {
-    /* Fixed header */
-    header {
-      padding: 0 16px;
-      height: 58px;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      z-index: 900;
-    }
-
-    /* Show hamburger */
+    header { padding: 0 16px; height: 58px; position: fixed; top:0; left:0; width:100%; z-index: 900; }
     .hamburger { display: flex; }
-
-    /* Show overlay */
-    #nav-overlay { display: block; }
-
-    /* Drawer */
-    nav {
-      position: fixed;
-      top: 0; left: 0;
-      width: min(300px, 85vw);
-      height: 100%;
-      height: 100dvh;
-      background: #0b1220;
-      border-right: 1px solid rgba(231,76,60,0.2);
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: flex-start;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 0;
-      gap: 0;
-      z-index: 1000;
-      transform: translateX(-100%);
-      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
-      box-shadow: 6px 0 40px rgba(0,0,0,0.6);
-    }
-    nav.is-open { transform: translateX(0); }
-
-    /* Drawer close button */
-    .nav-close {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: sticky;
-      top: 0;
-      width: 100%;
-      padding: 18px 20px;
-      background: rgba(231,76,60,0.07);
-      border: none;
-      border-bottom: 1px solid rgba(231,76,60,0.15);
-      color: #e74c3c;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-align: center;
-      cursor: pointer;
-      text-transform: uppercase;
-      z-index: 2;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-
-    /* Drawer nav buttons */
-    nav button {
-      width: 100%;
-      text-align: left;
-      padding: 16px 24px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      border: none;
-      border-radius: 0;
-      border-bottom: 1px solid rgba(30,48,72,0.5);
-      color: var(--text-main);
-      white-space: normal;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-    nav button:hover { background: rgba(231,76,60,0.07); color: var(--text-bright); }
-    nav button.active { color: #e74c3c; background: rgba(231,76,60,0.1); border-left: 3px solid #e74c3c; padding-left: 21px; }
-    nav button.active::after { display: none; }
-    nav button:last-child { border-bottom: none; }
-
-    /* main content push-down */
+    #main-nav-desktop { display: none; }
+    #main-nav-mobile { display: flex; }
     main { padding: 16px; margin-top: 58px; }
-
-    /* Hero */
     .hero { padding: 22px 0 18px; }
     .hero h1 { font-size: 1.9rem; }
-    .hero-sub { font-size: 0.8rem; letter-spacing: 0.07em; }
+    .hero-sub { font-size: 0.8rem; }
     .hero-tag { font-size: 0.6rem; }
-
-    /* Stats */
     .stats-row { flex-wrap: wrap; gap: 6px; justify-content: center; }
     .stat-box { padding: 12px 14px; min-width: 70px; flex: 1; }
     .stat-num { font-size: 1.3rem; }
     .stat-label { font-size: 0.58rem; }
-
-    /* Grid */
     .cards-grid { grid-template-columns: 1fr; gap: 10px; }
     .info-grid { grid-template-columns: 1fr; }
     .two-col { grid-template-columns: 1fr; }
     .calc-wrapper { grid-template-columns: 1fr; }
     .glossary-grid { grid-template-columns: 1fr; }
-
-    /* Logo */
     .logo { gap: 10px; }
     .logo-icon { width: 32px; height: 32px; }
     .logo-icon svg { width: 32px; height: 32px; }
     .logo-text { font-size: 1rem; }
     .logo-sub { display: none; }
-
-    /* Topic */
     .topic-header { flex-wrap: wrap; gap: 10px; padding-bottom: 12px; }
     .topic-header h2 { font-size: 1rem; }
     .topic-icon { width: 38px; height: 38px; font-size: 1.1rem; }
-
-    /* Tabs */
     .tabs { flex-wrap: wrap; gap: 5px; border-bottom: none; margin-bottom: 16px; }
-    .tab-btn { padding: 6px 12px; font-size: 0.7rem; border: 1px solid var(--border); border-radius: 20px; margin-bottom: 0; }
-    .tab-btn.active { border-color: var(--teal); background: rgba(30,200,200,0.1); border-bottom: 2px solid var(--teal); }
-
-    /* Tables */
-    .table-wrap { -webkit-overflow-scrolling: touch; overflow-x: auto; }
+    .tab-btn { padding: 6px 12px; font-size: 0.7rem; border: 1px solid var(--border); border-radius: 20px; }
+    .tab-btn.active { border-color: var(--teal); background: rgba(30,200,200,0.1); }
+    .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table { font-size: 0.74rem; min-width: 440px; }
     th, td { padding: 7px 9px; }
-
     .section-title h2 { font-size: 0.85rem; }
     .depth-label { width: 60px; font-size: 0.6rem; }
     .depth-track span { font-size: 0.6rem; }
-
     .process-step { gap: 12px; }
     .step-num { width: 32px; height: 32px; font-size: 0.68rem; flex-shrink: 0; }
     .step-body h4 { font-size: 0.9rem; }
     .step-body p { font-size: 0.8rem; }
     .step-body { padding-bottom: 18px; }
-
     .formula-box { font-size: 0.76rem; padding: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .formula-box .formula-label { white-space: normal; font-size: 0.6rem; }
-
     .back-btn { margin-bottom: 14px; }
     .card { padding: 16px; }
     .card h3 { font-size: 0.76rem; }
     .card p { font-size: 0.82rem; }
-
     .calc-panel, .results-panel { padding: 18px 14px; }
     .input-group label { font-size: 0.7rem; }
     .input-group input, .input-group select { padding: 9px 12px; font-size: 0.85rem; }
     .unit-tag { font-size: 0.62rem; width: 48px; }
     .calc-btn { font-size: 0.8rem; }
-
     .result-label { font-size: 0.76rem; }
     .result-value { font-size: 0.95rem; }
     .result-highlight .value { font-size: 1.25rem; }
-
     .search-bar input { font-size: 0.88rem; }
     .accordion-head { font-size: 0.84rem; padding: 12px 14px; }
     .accordion-body { font-size: 0.8rem; padding: 14px 16px; }
@@ -380,12 +341,10 @@
     .info-card h4 { font-size: 0.82rem; }
     .info-card p, .info-card li { font-size: 0.82rem; }
     .alert-box { font-size: 0.82rem; padding: 12px 14px; }
-
     footer { padding: 14px 16px; flex-direction: column; gap: 4px; text-align: center; }
     footer p { font-size: 0.66rem; }
   }
 
-  /* Small phones ≤ 420px */
   @media (max-width: 420px) {
     .hero h1 { font-size: 1.55rem; }
     main { padding: 12px; }
@@ -397,845 +356,11 @@
     table { font-size: 0.7rem; }
   }
 
-  /* Notch / safe-area support */
   @supports (padding: env(safe-area-inset-top)) {
     @media (max-width: 768px) {
-      header {
-        padding-left: max(16px, env(safe-area-inset-left));
-        padding-right: max(16px, env(safe-area-inset-right));
-        height: calc(58px + env(safe-area-inset-top));
-        padding-top: env(safe-area-inset-top);
-      }
+      header { padding-top: env(safe-area-inset-top); height: calc(58px + env(safe-area-inset-top)); }
       main { margin-top: calc(58px + env(safe-area-inset-top)); }
     }
-  }
-
-  /* MAIN */
-  main {
-    position: relative;
-    z-index: 1;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 40px;
-  }
-
-  .page { display: none; animation: fadeIn 0.3s ease; }
-  .page.active { display: block; }
-
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 60px 0 50px;
-  }
-
-  .hero-tag {
-    display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    color: var(--teal);
-    text-transform: uppercase;
-    border: 1px solid rgba(30,200,200,0.25);
-    padding: 4px 14px;
-    border-radius: 2px;
-    margin-bottom: 24px;
-  }
-
-  .hero h1 {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    font-weight: 900;
-    color: var(--accent-gold);
-    text-shadow: 0 0 40px rgba(232,160,32,0.3);
-    letter-spacing: 0.05em;
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-
-  .hero h1 span { color: var(--text-bright); }
-
-  .hero-sub {
-    font-size: 1.05rem;
-    color: var(--text-dim);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 48px;
-    font-weight: 500;
-  }
-
-  .stats-row {
-    display: flex;
-    justify-content: center;
-    gap: 2px;
-    margin-bottom: 50px;
-  }
-
-  .stat-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 20px 32px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .stat-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
-  }
-
-  .stat-box:first-child { border-radius: 6px 0 0 6px; }
-  .stat-box:last-child { border-radius: 0 6px 6px 0; }
-
-  .stat-num {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.8rem;
-    font-weight: 800;
-    color: var(--accent-amber);
-    display: block;
-  }
-
-  .stat-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    display: block;
-    margin-top: 2px;
-  }
-
-  /* SECTION TITLE */
-  .section-title {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-
-  .section-title h2 {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--text-bright);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .section-title .line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, var(--border), transparent);
-  }
-
-  .section-title .badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--accent-gold);
-    border: 1px solid rgba(232,160,32,0.3);
-    padding: 3px 10px;
-    border-radius: 2px;
-  }
-
-  /* CARDS GRID */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
-    margin-bottom: 50px;
-  }
-
-  .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 24px;
-    cursor: pointer;
-    transition: all 0.25s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(232,160,32,0.04) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-
-  .card:hover { border-color: rgba(232,160,32,0.4); transform: translateY(-2px); box-shadow: var(--shadow-gold); }
-  .card:hover::before { opacity: 1; }
-
-  .card-icon {
-    font-size: 2rem;
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  .card h3 {
-    font-family: 'Orbitron', monospace;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--accent-gold);
-    letter-spacing: 0.08em;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-  }
-
-  .card p {
-    font-size: 0.88rem;
-    color: var(--text-dim);
-    line-height: 1.55;
-  }
-
-  .card-arrow {
-    position: absolute;
-    bottom: 18px;
-    right: 20px;
-    color: var(--accent-gold);
-    opacity: 0.5;
-    font-size: 1.1rem;
-    transition: all 0.2s;
-  }
-
-  .card:hover .card-arrow { opacity: 1; transform: translateX(4px); }
-
-  /* KNOWLEDGE PAGES */
-  .knowledge-section {
-    margin-bottom: 50px;
-  }
-
-  .topic-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .topic-icon {
-    width: 48px;
-    height: 48px;
-    background: rgba(232,160,32,0.1);
-    border: 1px solid rgba(232,160,32,0.25);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
-
-  .topic-header h2 {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.3rem;
-    font-weight: 800;
-    color: var(--text-bright);
-    letter-spacing: 0.06em;
-  }
-
-  .topic-header p { font-size: 0.88rem; color: var(--text-dim); margin-top: 4px; }
-
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
-    margin-bottom: 30px;
-  }
-
-  .info-card {
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 20px;
-  }
-
-  .info-card h4 {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: var(--teal);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .info-card h4::before {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 14px;
-    background: var(--teal);
-    border-radius: 2px;
-  }
-
-  .info-card p, .info-card li {
-    font-size: 0.86rem;
-    color: var(--text-main);
-    line-height: 1.6;
-  }
-
-  .info-card ul { padding-left: 16px; }
-  .info-card li { margin-bottom: 4px; }
-
-  .table-wrap {
-    overflow-x: auto;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    margin-bottom: 24px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.84rem;
-  }
-
-  thead { background: rgba(232,160,32,0.08); }
-
-  th {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent-gold);
-    padding: 12px 16px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-  }
-
-  td {
-    padding: 11px 16px;
-    color: var(--text-main);
-    border-bottom: 1px solid rgba(30,48,72,0.5);
-  }
-
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(232,160,32,0.03); }
-
-  .td-mono {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--accent-amber);
-  }
-
-  /* FORMULA BOX */
-  .formula-box {
-    background: rgba(30,200,200,0.05);
-    border: 1px solid rgba(30,200,200,0.2);
-    border-radius: 6px;
-    padding: 20px 24px;
-    margin: 16px 0;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    color: var(--teal);
-    text-align: center;
-    letter-spacing: 0.05em;
-  }
-
-  .formula-box .formula-label {
-    display: block;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 8px;
-    font-family: 'Rajdhani', sans-serif;
-  }
-
-  /* ALERT BOX */
-  .alert-box {
-    background: rgba(212,97,26,0.08);
-    border-left: 3px solid var(--accent-orange);
-    padding: 14px 18px;
-    border-radius: 0 4px 4px 0;
-    margin: 12px 0;
-    font-size: 0.86rem;
-    color: var(--text-main);
-  }
-
-  .alert-box strong { color: var(--accent-orange); }
-
-  /* DEPTH DIAGRAM */
-  .depth-diagram {
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 28px;
-    margin-bottom: 24px;
-    position: relative;
-  }
-
-  .depth-bar {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 10px;
-  }
-
-  .depth-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--text-dim);
-    width: 100px;
-    text-align: right;
-    flex-shrink: 0;
-  }
-
-  .depth-track {
-    flex: 1;
-    height: 26px;
-    border-radius: 3px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding-left: 10px;
-  }
-
-  .depth-track span {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: rgba(0,0,0,0.7);
-    z-index: 1;
-    letter-spacing: 0.05em;
-  }
-
-  /* CALCULATOR */
-  .calc-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 50px;
-  }
-
-  
-
-  .calc-panel {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 28px;
-  }
-
-  .calc-panel h3 {
-    font-family: 'Orbitron', monospace;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--accent-gold);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 22px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .input-group {
-    margin-bottom: 16px;
-  }
-
-  .input-group label {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 6px;
-  }
-
-  .input-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .input-group input, .input-group select {
-    width: 100%;
-    background: var(--bg-deep);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 10px 14px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.9rem;
-    color: var(--text-bright);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .input-group input:focus, .input-group select:focus {
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 0 2px rgba(232,160,32,0.12);
-  }
-
-  .input-group select option { background: var(--bg-deep); }
-
-  .unit-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-    width: 60px;
-    flex-shrink: 0;
-    text-align: right;
-  }
-
-  .calc-btn {
-    width: 100%;
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-orange));
-    border: none;
-    border-radius: 4px;
-    padding: 14px;
-    font-family: 'Orbitron', monospace;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #0d0800;
-    cursor: pointer;
-    margin-top: 20px;
-    transition: all 0.2s;
-  }
-
-  .calc-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(232,160,32,0.35);
-  }
-
-  .calc-btn:active { transform: translateY(0); }
-
-  .calc-reset {
-    width: 100%;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 10px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    cursor: pointer;
-    margin-top: 8px;
-    transition: all 0.2s;
-  }
-
-  .calc-reset:hover { border-color: rgba(232,160,32,0.3); color: var(--text-main); }
-
-  /* RESULTS */
-  .results-panel {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 28px;
-  }
-
-  .results-panel h3 {
-    font-family: 'Orbitron', monospace;
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--teal);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 22px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .result-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(30,48,72,0.4);
-  }
-
-  .result-item:last-child { border-bottom: none; }
-
-  .result-label {
-    font-size: 0.82rem;
-    color: var(--text-dim);
-    font-weight: 500;
-  }
-
-  .result-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: var(--accent-amber);
-  }
-
-  .result-unit {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    margin-left: 4px;
-  }
-
-  .result-highlight {
-    background: rgba(232,160,32,0.07);
-    border: 1px solid rgba(232,160,32,0.2);
-    border-radius: 6px;
-    padding: 16px 18px;
-    margin-top: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .result-highlight .label {
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent-gold);
-  }
-
-  .result-highlight .value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--accent-gold);
-  }
-
-  .placeholder-text {
-    color: var(--text-muted);
-    font-style: italic;
-    font-size: 0.86rem;
-    text-align: center;
-    padding: 40px 20px;
-    border: 1px dashed var(--border);
-    border-radius: 6px;
-  }
-
-  /* WELLBORE DIAGRAM */
-  .wellbore-visual {
-    text-align: center;
-    padding: 20px;
-  }
-
-  /* GLOSSARY */
-  .glossary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-
-  .glossary-item {
-    background: var(--bg-card2);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 14px 16px;
-    transition: border-color 0.2s;
-  }
-
-  .glossary-item:hover { border-color: rgba(232,160,32,0.3); }
-
-  .glossary-term {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: var(--accent-gold);
-    letter-spacing: 0.05em;
-    margin-bottom: 6px;
-    text-transform: uppercase;
-  }
-
-  .glossary-def {
-    font-size: 0.82rem;
-    color: var(--text-dim);
-    line-height: 1.5;
-  }
-
-  /* SEARCH */
-  .search-bar {
-    position: relative;
-    margin-bottom: 28px;
-  }
-
-  .search-bar input {
-    width: 100%;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 13px 48px 13px 18px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.95rem;
-    color: var(--text-bright);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .search-bar input:focus { border-color: var(--accent-gold); }
-  .search-bar input::placeholder { color: var(--text-muted); }
-
-  .search-bar .icon {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    font-size: 1.1rem;
-  }
-
-  /* TABS */
-  .tabs {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 28px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .tab-btn {
-    background: none;
-    border: none;
-    padding: 10px 20px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-    transition: all 0.2s;
-  }
-
-  .tab-btn:hover { color: var(--text-bright); }
-
-  .tab-btn.active {
-    color: var(--teal);
-    border-bottom-color: var(--teal);
-  }
-
-  .tab-content { display: none; }
-  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
-
-  /* BACK BUTTON */
-  .back-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    cursor: pointer;
-    margin-bottom: 28px;
-    transition: all 0.2s;
-  }
-
-  .back-btn:hover { border-color: rgba(232,160,32,0.4); color: var(--text-bright); }
-
-  /* PROCESS FLOW */
-  .process-flow {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: 30px;
-  }
-
-  .process-step {
-    display: flex;
-    gap: 20px;
-    position: relative;
-  }
-
-  .process-step::before {
-    content: '';
-    position: absolute;
-    left: 19px;
-    top: 48px;
-    bottom: -8px;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--border), transparent);
-  }
-
-  .process-step:last-child::before { display: none; }
-
-  .step-num {
-    width: 40px;
-    height: 40px;
-    background: rgba(232,160,32,0.1);
-    border: 1px solid rgba(232,160,32,0.3);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Orbitron', monospace;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--accent-gold);
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-
-  .step-body {
-    flex: 1;
-    padding: 4px 0 28px;
-  }
-
-  .step-body h4 {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--text-bright);
-    letter-spacing: 0.05em;
-    margin-bottom: 6px;
-  }
-
-  .step-body p {
-    font-size: 0.86rem;
-    color: var(--text-dim);
-    line-height: 1.6;
-  }
-
-  /* FOOTER */
-  footer {
-    position: relative;
-    z-index: 1;
-    border-top: 1px solid var(--border);
-    padding: 24px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 60px;
-  }
-
-  footer p {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-  }
-
-  footer .version {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--teal-dim);
   }
 
   /* CEMENT DIAGRAM */
@@ -1407,13 +532,27 @@
   <button class="hamburger" id="hamburger" aria-label="Otwórz menu">
     <span></span><span></span><span></span>
   </button>
+  <!-- DESKTOP NAV (hidden on mobile, replaced by drawer) -->
+  <nav id="main-nav-desktop">
+    <button class="active" onclick="showPage('home')">⌂ Start</button>
+    <button onclick="showPage('geology')">⛰ Geologia</button>
+    <button onclick="showPage('drilling')">⚙ Wiercenie</button>
+    <button onclick="showPage('fluids')">💧 Płuczka</button>
+    <button onclick="showPage('cement')">🏗 Cementowanie</button>
+    <button onclick="showPage('calculator')">🧮 Kalkulator</button>
+    <button onclick="showPage('glossary')">📖 Słownik</button>
+    <button onclick="showPage('safety')">🛡 BHP</button>
+    <button onclick="showPage('pipes')">🔩 Rury API</button>
+    <button onclick="showPage('hydro')">⚡ Hydraulika</button>
+    <button onclick="showPage('hydrogeo')">🌊 Hydrogeologia</button>
+  </nav>
 </header>
 <!-- Overlay backdrop -->
 <div id="nav-overlay"></div>
-<!-- DRAWER NAV -->
-<nav id="main-nav">
+<!-- MOBILE DRAWER NAV -->
+<nav id="main-nav-mobile">
   <button class="nav-close" id="nav-close-btn">✕ ZAMKNIJ</button>
-  <button class="active" onclick="showPage('home')">⌂ Start</button>
+  <button onclick="showPage('home')">⌂ Start</button>
   <button onclick="showPage('geology')">⛰ Geologia</button>
   <button onclick="showPage('drilling')">⚙ Wiercenie</button>
   <button onclick="showPage('fluids')">💧 Płuczka</button>
@@ -3723,42 +2862,37 @@
 <script>
 // ===================== MOBILE MENU =====================
 (function() {
-  var nav, hamburger, overlay, isOpen = false;
+  var drawer, hamburger, overlay, isOpen = false;
 
   function init() {
-    nav       = document.getElementById('main-nav');
+    drawer    = document.getElementById('main-nav-mobile');
     hamburger = document.getElementById('hamburger');
     overlay   = document.getElementById('nav-overlay');
     var closeBtn = document.getElementById('nav-close-btn');
-
-    if (!nav || !hamburger || !overlay) return;
-
+    if (!drawer || !hamburger) return;
     hamburger.addEventListener('click', toggleMenu);
-    overlay.addEventListener('click', closeMenu);
+    if (overlay)  overlay.addEventListener('click', closeMenu);
     if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && isOpen) closeMenu();
     });
   }
 
-  function toggleMenu() {
-    isOpen ? closeMenu() : openMenu();
-  }
+  function toggleMenu() { isOpen ? closeMenu() : openMenu(); }
 
   function openMenu() {
     isOpen = true;
-    nav.classList.add('is-open');
+    drawer.classList.add('is-open');
     hamburger.classList.add('is-open');
-    overlay.classList.add('visible');
+    if (overlay) { overlay.style.display = 'block'; setTimeout(function(){ overlay.classList.add('visible'); }, 10); }
     document.body.style.overflow = 'hidden';
   }
 
   window.closeMenu = function() {
     isOpen = false;
-    nav.classList.remove('is-open');
-    hamburger.classList.remove('is-open');
-    overlay.classList.remove('visible');
+    if (drawer)    drawer.classList.remove('is-open');
+    if (hamburger) hamburger.classList.remove('is-open');
+    if (overlay)   { overlay.classList.remove('visible'); setTimeout(function(){ overlay.style.display = 'none'; }, 260); }
     document.body.style.overflow = '';
   };
 
@@ -3771,14 +2905,22 @@
 
 // ===================== NAVIGATION =====================
 function showPage(pageId) {
+  // Hide all pages
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-  document.querySelectorAll('#main-nav button').forEach(function(b) { b.classList.remove('active'); });
+  // Activate target page
   var pg = document.getElementById('page-' + pageId);
   if (pg) pg.classList.add('active');
-  // nav buttons: index 0 = close-btn, 1=home, 2=geology ...
-  var map = { home:1, geology:2, drilling:3, fluids:4, cement:5, calculator:6, glossary:7, safety:8, pipes:9, hydro:10, hydrogeo:11 };
-  var navBtns = document.querySelectorAll('#main-nav button');
-  if (map[pageId] !== undefined && navBtns[map[pageId]]) navBtns[map[pageId]].classList.add('active');
+  // Update active button in BOTH navs
+  var map = { home:0, geology:1, drilling:2, fluids:3, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10 };
+  // Desktop nav (no close button offset)
+  var deskBtns = document.querySelectorAll('#main-nav-desktop button');
+  deskBtns.forEach(function(b){ b.classList.remove('active'); });
+  if (map[pageId] !== undefined && deskBtns[map[pageId]]) deskBtns[map[pageId]].classList.add('active');
+  // Mobile nav (index 0 = close btn, so offset +1)
+  var mobBtns = document.querySelectorAll('#main-nav-mobile button');
+  mobBtns.forEach(function(b){ b.classList.remove('active'); });
+  if (map[pageId] !== undefined && mobBtns[map[pageId]+1]) mobBtns[map[pageId]+1].classList.add('active');
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (typeof closeMenu === 'function') closeMenu();
   if (pageId === 'glossary') renderGlossary();
@@ -3786,9 +2928,9 @@ function showPage(pageId) {
 
 // ===================== TABS =====================
 function switchTab(btn, tabId) {
-  const parent = btn.closest('.page') || document.body;
-  parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  var parent = btn.closest('.page') || document.body;
+  parent.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  parent.querySelectorAll('.tab-content').forEach(function(c){ c.classList.remove('active'); });
   btn.classList.add('active');
   document.getElementById(tabId).classList.add('active');
 }
@@ -3796,436 +2938,234 @@ function switchTab(btn, tabId) {
 // ===================== ACCORDION =====================
 document.addEventListener('click', function(e) {
   if (e.target.closest('.accordion-head')) {
-    const head = e.target.closest('.accordion-head');
-    const body = head.nextElementSibling;
+    var head = e.target.closest('.accordion-head');
+    var body = head.nextElementSibling;
     head.classList.toggle('open');
     body.classList.toggle('open');
   }
 });
 
-// ===================== CALCULATOR =====================
+// ===================== CEMENT CALCULATOR =====================
 function calculateCement() {
-  const mm2m = 0.001;
+  var mm2m = 0.001;
+  var bitSizeMM    = parseFloat(document.getElementById('bitSize').value);
+  var casingODMM   = parseFloat(document.getElementById('casingOD').value);
+  var casingWTMM   = parseFloat(document.getElementById('casingWT').value);
+  var casingDepth  = parseFloat(document.getElementById('casingDepth').value);
+  var topCement    = parseFloat(document.getElementById('topCement').value);
+  var excess       = parseFloat(document.getElementById('excess').value);
+  var slurryDens   = parseFloat(document.getElementById('slurryDensity').value);
+  var wcRatio      = parseFloat(document.getElementById('wcRatio').value);
+  var slurryYield  = parseFloat(document.getElementById('slurryYield').value);
+  var pumpRate     = parseFloat(document.getElementById('pumpRate').value);
 
-  const bitSizeMM = parseFloat(document.getElementById('bitSize').value);
-  const casingODMM = parseFloat(document.getElementById('casingOD').value);
-  const casingWTMM = parseFloat(document.getElementById('casingWT').value);
-  const casingDepth = parseFloat(document.getElementById('casingDepth').value);
-  const topCement = parseFloat(document.getElementById('topCement').value);
-  const excess = parseFloat(document.getElementById('excess').value);
-  const slurryDensity = parseFloat(document.getElementById('slurryDensity').value);
-  const wcRatio = parseFloat(document.getElementById('wcRatio').value);
-  const slurryYield = parseFloat(document.getElementById('slurryYield').value);
-  const pumpRate = parseFloat(document.getElementById('pumpRate').value);
-
-  if ([bitSizeMM, casingODMM, casingWTMM, casingDepth, topCement, excess, slurryDensity, wcRatio, slurryYield, pumpRate].some(isNaN)) {
+  if ([bitSizeMM,casingODMM,casingWTMM,casingDepth,topCement,excess,slurryDens,wcRatio,slurryYield,pumpRate].some(isNaN)) {
     alert('Proszę wypełnić wszystkie pola danych.'); return;
   }
+  if (topCement >= casingDepth) { alert('TOC musi być płytszy niż głębokość kolumny.'); return; }
+  if (bitSizeMM <= casingODMM)  { alert('Średnica otworu musi być większa niż OD rur!'); return; }
 
-  if (topCement >= casingDepth) {
-    alert('Szczyt cementu (TOC) musi być płytszy niż głębokość zapuszczenia kolumny.'); return;
-  }
+  var bitSizeM   = bitSizeMM * mm2m;
+  var casingODM  = casingODMM * mm2m;
+  var casingIDMM = casingODMM - 2 * casingWTMM;
+  var casingIDM  = casingIDMM * mm2m;
+  var cementLen  = casingDepth - topCement;
 
-  if (bitSizeMM <= casingODMM) {
-    alert('Średnica otworu musi być większa niż OD rur!'); return;
-  }
+  var V_ann      = (Math.PI / 4) * (bitSizeM*bitSizeM - casingODM*casingODM) * cementLen * excess;
+  var V_displ    = (Math.PI / 4) * casingIDM*casingIDM * casingDepth;
+  var V_total    = V_ann + V_displ;
+  var mass_cem   = V_ann / slurryYield;
+  var V_water    = wcRatio * mass_cem;
+  var pumpM3min  = pumpRate / 1000;
+  var t_slurry   = V_ann   / pumpM3min;
+  var t_displ    = V_displ / pumpM3min;
+  var t_total    = V_total / pumpM3min;
+  var P_hydro    = slurryDens * 1000 * 9.81 * casingDepth / 1e5;
+  var sacks      = Math.ceil((mass_cem * 1000) / 42.6);
+  var bags25     = Math.ceil((mass_cem * 1000) / 25);
 
-  // Convert mm to m
-  const bitSizeM = bitSizeMM * mm2m;
-  const casingODM = casingODMM * mm2m;
-  const casingIDMM = casingODMM - 2 * casingWTMM;
-  const casingIDM = casingIDMM * mm2m;
+  function fmt(v,d){ return isFinite(v) ? v.toFixed(d||2) : '–'; }
 
-  const cementLength = casingDepth - topCement; // m
-
-  // Annular volume
-  const V_ann = (Math.PI / 4) * (bitSizeM ** 2 - casingODM ** 2) * cementLength * excess;
-
-  // Internal casing volume (displacement)
-  const V_int = (Math.PI / 4) * casingIDM ** 2 * casingDepth;
-
-  // Total slurry volume
-  const V_total_slurry = V_ann;
-
-  // Cement mass
-  const mass_cement = V_total_slurry / slurryYield; // tonnes
-
-  // Water volume
-  const V_water = wcRatio * mass_cement; // m³
-
-  // Displacement volume
-  const V_displacement = V_int;
-
-  // Total pumped volume
-  const V_total_pump = V_total_slurry + V_displacement;
-
-  // Pump time
-  const pumpRateM3min = pumpRate / 1000; // l/min -> m³/min
-  const t_total = V_total_pump / pumpRateM3min; // minutes
-  const t_slurry = V_total_slurry / pumpRateM3min;
-  const t_displ = V_displacement / pumpRateM3min;
-
-  // Hydrostatic pressure at bottom
-  const g = 9.81;
-  const P_slurry_hydrostatic = slurryDensity * 1000 * g * casingDepth / 1e5; // bar
-
-  // Sacks (42.6 kg API standard)
-  const sacks = (mass_cement * 1000) / 42.6;
-
-  // Big bags 25 kg
-  const bags25 = Math.ceil((mass_cement * 1000) / 25);
-
-  const fmt = (v, d=2) => v.toFixed(d);
-
-  document.getElementById('resultsContent').innerHTML = `
-    <div class="result-item">
-      <span class="result-label">Długość cementowania (L_cem)</span>
-      <span><span class="result-value">${fmt(cementLength, 0)}</span><span class="result-unit">m</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Średnica wewnętrzna rur (ID)</span>
-      <span><span class="result-value">${fmt(casingIDMM, 2)}</span><span class="result-unit">mm</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Objętość przestrzeni anularnej</span>
-      <span><span class="result-value">${fmt(V_ann, 3)}</span><span class="result-unit">m³</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Objętość zaczynu (łącznie)</span>
-      <span><span class="result-value">${fmt(V_total_slurry, 3)}</span><span class="result-unit">m³ = ${fmt(V_total_slurry*1000, 0)} l</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Objętość przemywu (displacement)</span>
-      <span><span class="result-value">${fmt(V_displacement, 3)}</span><span class="result-unit">m³ = ${fmt(V_displacement*1000, 0)} l</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Ilość cementu</span>
-      <span><span class="result-value">${fmt(mass_cement, 2)}</span><span class="result-unit">t = ${fmt(mass_cement*1000, 0)} kg</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Worki 42,6 kg (API sacks)</span>
-      <span><span class="result-value">${Math.ceil(sacks)}</span><span class="result-unit">szt.</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Worki 25 kg</span>
-      <span><span class="result-value">${bags25}</span><span class="result-unit">szt.</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Objętość wody zarobowej</span>
-      <span><span class="result-value">${fmt(V_water, 3)}</span><span class="result-unit">m³ = ${fmt(V_water*1000, 0)} l</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Czas pompowania zaczynu</span>
-      <span><span class="result-value">${fmt(t_slurry, 1)}</span><span class="result-unit">min</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Czas przemywu (displacement)</span>
-      <span><span class="result-value">${fmt(t_displ, 1)}</span><span class="result-unit">min</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Ciśnienie hydrostatyczne (dno)</span>
-      <span><span class="result-value">${fmt(P_slurry_hydrostatic, 1)}</span><span class="result-unit">bar</span></span>
-    </div>
-
-    <div class="result-highlight">
-      <span class="label">⏱ Łączny czas pompowania</span>
-      <span class="value">${fmt(t_total, 1)} <small style="font-size:0.9rem;font-weight:400">min</small></span>
-    </div>
-
-    <div class="program-box" style="margin-top:16px">
-      <h4>📋 Program Zatłaczania</h4>
-      <div class="program-line"><span class="pl-key">Wydajność pomp</span><span class="pl-val">${pumpRate} l/min</span></div>
-      <div class="program-line"><span class="pl-key">Zaczyn: ${fmt(V_total_slurry*1000, 0)} l przez</span><span class="pl-val">${fmt(t_slurry, 1)} min</span></div>
-      <div class="program-line"><span class="pl-key">Przemyw: ${fmt(V_displacement*1000, 0)} l przez</span><span class="pl-val">${fmt(t_displ, 1)} min</span></div>
-      <div class="program-line"><span class="pl-key">Łączna objętość zatłoczona</span><span class="pl-val">${fmt(V_total_pump*1000, 0)} l</span></div>
-      <div class="program-line"><span class="pl-key">Gęstość zaczynu</span><span class="pl-val">${slurryDensity} g/cm³</span></div>
-      <div class="program-line"><span class="pl-key">Średnica otworu</span><span class="pl-val">${bitSizeMM} mm</span></div>
-      <div class="program-line"><span class="pl-key">OD rur okładzinowych</span><span class="pl-val">${casingODMM} mm</span></div>
-      <div class="program-line"><span class="pl-key">Cementowany interwał</span><span class="pl-val">${topCement} – ${casingDepth} m</span></div>
-    </div>
-
-    <div class="alert-box" style="margin-top:16px">
-      <strong>⚠ Uwaga:</strong> Obliczenia wykonane dla cementowania pierwotnego (primary cementing). Podane wartości są szacunkowe – projekt pola powinien uwzględniać caliper log, dokładną krzywą kalibru oraz wyniki testów laboratoryjnych zaczynu.
-    </div>
-  `;
+  document.getElementById('resultsContent').innerHTML =
+    '<div class="result-item"><span class="result-label">Długość cementowania</span><span><span class="result-value">' + fmt(cementLen,0) + '</span><span class="result-unit"> m</span></span></div>' +
+    '<div class="result-item"><span class="result-label">ID rur (wewnętrzna śr.)</span><span><span class="result-value">' + fmt(casingIDMM,2) + '</span><span class="result-unit"> mm</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Objętość przestrzeni anularnej</span><span><span class="result-value">' + fmt(V_ann,3) + '</span><span class="result-unit"> m³</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Objętość zaczynu</span><span><span class="result-value">' + fmt(V_ann*1000,0) + '</span><span class="result-unit"> l</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Objętość przemywu</span><span><span class="result-value">' + fmt(V_displ*1000,0) + '</span><span class="result-unit"> l</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Ilość cementu</span><span><span class="result-value">' + fmt(mass_cem,2) + '</span><span class="result-unit"> t (' + fmt(mass_cem*1000,0) + ' kg)</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Worki API 42,6 kg</span><span><span class="result-value">' + sacks + '</span><span class="result-unit"> szt.</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Worki 25 kg</span><span><span class="result-value">' + bags25 + '</span><span class="result-unit"> szt.</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Woda zarobowa</span><span><span class="result-value">' + fmt(V_water*1000,0) + '</span><span class="result-unit"> l</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Czas pompowania zaczynu</span><span><span class="result-value">' + fmt(t_slurry,1) + '</span><span class="result-unit"> min</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Czas przemywu</span><span><span class="result-value">' + fmt(t_displ,1) + '</span><span class="result-unit"> min</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Ciśnienie hydrostatyczne (dno)</span><span><span class="result-value">' + fmt(P_hydro,1) + '</span><span class="result-unit"> bar</span></span></div>' +
+    '<div class="result-highlight"><span class="label">⏱ Łączny czas pompowania</span><span class="value">' + fmt(t_total,1) + ' <small style="font-size:0.9rem;font-weight:400">min</small></span></div>' +
+    '<div class="program-box" style="margin-top:16px"><h4>📋 Program Zatłaczania</h4>' +
+    '<div class="program-line"><span class="pl-key">Wydajność pomp</span><span class="pl-val">' + pumpRate + ' l/min</span></div>' +
+    '<div class="program-line"><span class="pl-key">Zaczyn: ' + fmt(V_ann*1000,0) + ' l przez</span><span class="pl-val">' + fmt(t_slurry,1) + ' min</span></div>' +
+    '<div class="program-line"><span class="pl-key">Przemyw: ' + fmt(V_displ*1000,0) + ' l przez</span><span class="pl-val">' + fmt(t_displ,1) + ' min</span></div>' +
+    '<div class="program-line"><span class="pl-key">Gęstość zaczynu</span><span class="pl-val">' + slurryDens + ' g/cm³</span></div>' +
+    '<div class="program-line"><span class="pl-key">Otwór / OD rur</span><span class="pl-val">' + bitSizeMM + ' / ' + casingODMM + ' mm</span></div>' +
+    '<div class="program-line"><span class="pl-key">Interwał cementowania</span><span class="pl-val">' + topCement + ' – ' + casingDepth + ' m</span></div></div>' +
+    '<div class="alert-box" style="margin-top:16px"><strong>⚠ Uwaga:</strong> Wartości szacunkowe. Projekt pola powinien uwzględniać caliper log i testy laboratoryjne zaczynu.</div>';
 }
 
 function resetCalc() {
-  document.getElementById('resultsContent').innerHTML = `
-    <div class="placeholder-text">
-      Wprowadź dane i naciśnij<br><strong>OBLICZ CEMENTOWANIE</strong>
-    </div>`;
-}
-
-// ===================== GLOSSARY DATA =====================
-const glossaryData = [
-  { term: "BHA – Bottom Hole Assembly", def: "Zespół narzędzi wiertniczych na dole przewodu wiertniczego: świder, motor, MWD, DC." },
-  { term: "BOP – Blow-Out Preventer", def: "Prewenter wyrzutu – urządzenie bezpieczeństwa zapobiegające niekontrolowanemu wypływowi złożowych płynów." },
-  { term: "Casing – Rury Okładzinowe", def: "Stalowa kolumna rur spuszczana do otworu i cementowana w celu jego umocnienia i izolacji." },
-  { term: "CBL – Cement Bond Log", def: "Akustyczny dziennik wiertniczy oceniający jakość połączenia cementu z rurami i formacją." },
-  { term: "Centralizator", def: "Urządzenie zakładane na rurę okładzinową centrujące ją w otworze, zapewniające równomierną przestrzeń anularną." },
-  { term: "Conductor Pipe", def: "Rury kierunkowe – pierwsza i największa kolumna rur, spuszczana tuż przy powierzchni." },
-  { term: "Core – Rdzeń Wiertniczy", def: "Cylindryczny próbek skały pobierany z otworu za pomocą rdzennicy dla celów analizy geologicznej." },
-  { term: "DC – Drill Collar", def: "Grubościenne, ciężkie rury wiertnicze służące do obciążenia świdera (WOB)." },
-  { term: "DLS – Dog-Leg Severity", def: "Intensywność zakrzywienia toru otworu, wyrażona w stopniach na 30 metrów [°/30m]." },
-  { term: "DP – Drill Pipe", def: "Rury wiertnicze tworzące górną część kolumny wiertniczej, przenoszące moment skręcający i płuczkę." },
-  { term: "DST – Drill Stem Test", def: "Test otworu wykonywany przez przewód wiertniczy w celu oceny złoża i pobrania próbek płynów." },
-  { term: "ECD – Equiv. Circulating Density", def: "Równoważna gęstość cyrkulacyjna – suma gęstości płuczki i oporu przepływu w przestrzeni anularnej." },
-  { term: "Float Collar", def: "Kołnierz pławikowy – element w dolnej części kolumny rur z zaworem zwrotnym zatrzymującym zaczyn po cementowaniu." },
-  { term: "Float Shoe", def: "Butka pławikowa – dolny element kolumny rur z zaworem zwrotnym, wchodzi jako ostatni podczas spuszczania." },
-  { term: "Geosteering", def: "Nawigowanie otworu kierunkowego w oparciu o dane MWD/LWD w czasie rzeczywistym, utrzymując świder w strefie złożowej." },
-  { term: "HWDP – Heavy Weight DP", def: "Ciężkie rury wiertnicze pośrednie między DC a DP, zmniejszające zmęczenie materiału." },
-  { term: "KOP – Kick-Off Point", def: "Punkt rozpoczęcia odchylenia otworu od pionu w wierceniu kierunkowym." },
-  { term: "Liner – Liner Cementowany", def: "Kolumna rur okładzinowych nie sięgająca do powierzchni, zawieszona wewnątrz poprzedniej kolumny rur." },
-  { term: "LWD – Logging While Drilling", def: "Pomiary geofizyczne wykonywane w trakcie wiercenia przy użyciu narzędzi wbudowanych w BHA." },
-  { term: "MD – Measured Depth", def: "Głębokość mierzona wzdłuż toru otworu, różni się od TVD w otworach kierunkowych." },
-  { term: "MWD – Measurement While Drilling", def: "Pomiar parametrów kierunkowych (inklinacja, azymut) i innych podczas wiercenia, transmit przez mud pulse." },
-  { term: "OBM – Oil Based Mud", def: "Płuczka na bazie olejowej – doskonałe właściwości inhibicji łupków, wysoki koszt i wymagania utylizacji." },
-  { term: "PDC – Polycrystalline Diamond Compact", def: "Typ świdra z wkładkami z polikrystalicznego diamentu. Brak ruchomych części, wysoka ROP w jednorodnych skałach." },
-  { term: "Perforacja", def: "Wykonywanie otworów przez ścianę rur okładzinowych i cement do formacji złożowej, umożliwiając przepływ płynów." },
-  { term: "Porowatość (φ)", def: "Stosunek objętości przestrzeni porowej do całkowitej objętości skały [%]." },
-  { term: "Przepuszczalność (k)", def: "Zdolność skały do przewodzenia płynów, mierzona w milidarcy [mD]. Opisana prawem Darcy'ego." },
-  { term: "ROP – Rate of Penetration", def: "Prędkość postępu wiercenia, wyrażona w metrach na godzinę [m/h]." },
-  { term: "RPM – Revolutions Per Minute", def: "Prędkość obrotowa świdra lub kolumny wiertniczej na minutę." },
-  { term: "RSS – Rotary Steerable System", def: "System kierunkowy sterujący trajektorią otworu podczas obrotu całej kolumny, bez silnika wgłębnego." },
-  { term: "Skrawki wiertnicze (Cuttings)", def: "Okruchy skały pokruszone przez świder, wynoszone na powierzchnię przez płuczkę wiertniczą." },
-  { term: "Spacer – Odstępnik", def: "Ciecz buforowa pompowana między płuczką a zaczynem cementowym, zapobiegająca ich mieszaniu." },
-  { term: "SCP – Sustained Casing Pressure", def: "Trwałe ciśnienie w przestrzeni anularnej kolumny rur – sygnał braku szczelności cementu lub rur." },
-  { term: "TBT – Thickening Time", def: "Czas wiązania zaczynu cementowego – czas od zmieszania do osiągnięcia konsystencji 100 Bc (Bearden units)." },
-  { term: "TDS – Top Drive System", def: "Napęd górny zastępujący kelly – silnik elektryczny lub hydrauliczny napędzający kolumnę wiertniczą." },
-  { term: "TOC – Top Of Cement", def: "Górna granica zaczynu cementowego w przestrzeni anularnej po wykonaniu cementowania." },
-  { term: "TVD – True Vertical Depth", def: "Prawdziwa głębokość pionowa – pionowa składowa głębokości zmierzonej MD." },
-  { term: "UCS – Uniaxial Compressive Strength", def: "Wytrzymałość na ściskanie jednoosiowe stwardniałego cementu lub skały [MPa]." },
-  { term: "Wiper Dart – Korek Gumowy", def: "Elastyczny korek pompowany za zaczynem, czyszczący wnętrze rur i lądujący w float collar (bump pressure)." },
-  { term: "WBM – Water Based Mud", def: "Płuczka na bazie wodnej – najpopularniejszy i najtańszy typ, liczne systemy: bentonitowy, KCl, PHPA." },
-  { term: "WOB – Weight On Bit", def: "Obciążenie osiowe przyłożone do świdra, przenoszone przez DC. Mierzone w kiloniutonach lub tonach." },
-  { term: "WOC – Wait On Cement", def: "Czas oczekiwania po zacementowaniu na osiągnięcie przez cement wymaganej wytrzymałości." },
-  { term: "Yield – Wydajność Zaczynu", def: "Objętość zaczynu uzyskana z jednej tony cementu [m³/t] przy danym wskaźniku W/C." },
-  { term: "Zaczyn Cementowy (Slurry)", def: "Mieszanina cementu, wody i domieszek, zatłaczana do przestrzeni anularnej w celu izolacji." },
-  { term: "Geofizyka Otworowa", def: "Pomiary fizyczne wykonywane w otworze wiertniczym (gamma-ray, oporność, gęstość, neutronowy) do oceny formacji." },
-  { term: "Inhibicja Łupków", def: "Zdolność płuczki do zapobiegania pęcznieniu i rozpadowi łupków ilastych przez kontakt z wodą." },
-  { term: "Karotaż Gamma-Ray", def: "Pomiar naturalnej promieniotwórczości skał (K, U, Th) – wskaźnik zawartości iłów/łupków w formacji." },
-  { term: "Nadciśnienie (Overpressure)", def: "Ciśnienie złożowe wyższe od hydrostatycznego dla danej głębokości. Wymaga cięższej płuczki i specjalnego BOP." },
-  { term: "Szczelina Hydrauliczna", def: "Sztuczne spękanie skały złożowej przez wtłaczanie cieczy pod ciśnieniem (fracking) dla poprawy wydobycia." },
-  { term: "Solanka Złożowa", def: "Woda zasolona towarzysząca złożom węglowodorów. Gęstość 1,01–1,25 g/cm³." },
-  { term: "BUR – Build-Up Rate", def: "Tempo narastania inklinacji otworu kierunkowego [°/30m]. Typowo 2–6°/30m dla otworów normalnych." },
-  { term: "Air Lift – Podnośnik Powietrzny", def: "Metoda wynoszenia płuczki ze zwiercin w wierceniach wielkoś­rednicowych. Sprężone powietrze wdmuchiwane przez mieszacz powietrzny zmniejsza gęstość cieczy w przewodzie wiertniczym, powodując jej unoszenie na powierzchnię." },
-  { term: "Artezyjski – Otwór Artezyjski", def: "Otwór, w którym ciśnienie złożowe powoduje samoczynny wypływ wody powyżej powierzchni terenu. Zwierciadło hydrostatyczne wody sięga ponad powierzchnię terenu." },
-  { term: "Depresja Studni", def: "Obniżenie zwierciadła wody w studni w stosunku do stanu statycznego (przed pompowaniem). Różnica między stanem statycznym a dynamicznym zwierciadła wody [m]." },
-  { term: "Freatyczny – Poziom Freatyczny", def: "Poziom wód podziemnych oddzielony od powierzchni strefą aeracji. Może mieć zwierciadło swobodne lub napięte." },
-  { term: "Hydrogeologia", def: "Nauka o wodach podziemnych – ich genezie, rozmieszczeniu, właściwościach, dynamice i związkach z wodami powierzchniowymi. Podstawa projektowania ujęć wód podziemnych." },
-  { term: "Infiltracja", def: "Wnikanie wody opadowej do gruntu i przemieszczanie się w dół przez strefę aeracji aż do strefy saturacji. Główne źródło zasilania warstw wodonośnych." },
-  { term: "Izolacja Warstw Wodonośnych", def: "Uszczelnienie otworu wiertniczego mające na celu odizolowanie różnych warstw wodonośnych od siebie. Wykonywana cementem lub korkami iłowymi przez kolumnę rur okładzinowych." },
-  { term: "Kolumna Filtrowa", def: "Zestaw elementów studni: rura nadfiltrowa + filtr właściwy + rura podfiltrowa. Umożliwia dopływ wody podziemnej do wnętrza studni przy zatrzymaniu ziarn skalnych." },
-  { term: "Łyżka Wiertnicza", def: "Narzędzie do oczyszczania dna otworu ze zwiercin przy wierceniu udarowym. Zapuszczana na linie po wyciągnięciu świdra. Rodzaje: z zaworem klapowym, kulowym, grzybkowym, ssące." },
-  { term: "Mieszacz Powietrzny", def: "Element układu podnośnika powietrznego (air lift) – dysa wprowadzająca sprężone powietrze do wnętrza przewodu wiertniczego. Głębokość zanurzenia mieszacza (H_E) jest kluczowym parametrem projektowym." },
-  { term: "Miąższość Warstwy Wodonośnej", def: "Grubość (pionowa) warstwy skalnej wypełnionej wodą podziemną [m]. Jeden z podstawowych parametrów hydrogeologicznych przy projektowaniu studni." },
-  { term: "Nożyce Wolnospadowe", def: "Element przyrządu wiertniczego w wierceniu udarowym. Dwa ogniwa połączone ze sobą. Funkcja: podbijanie świdra przy wcinaniu w dno otworu oraz amortyzacja udaru przy wierceniu na przewodzie rurowym." },
-  { term: "Obsypka Żwirowa", def: "Warstwa żwiru kwarcowego (czystość >95%) zasypywana w przestrzeń pierścieniową między filtrem a ścianą otworu. Funkcja: filtracja mechaniczna, zwiększenie przepuszczalności strefy przyfiltrowej, ochrona przed sufozją." },
-  { term: "Odpiaszczenie Studni", def: "Zabieg usuwania drobnych frakcji piaszczystych i pyłowych ze strefy przyfiltrowej warstwy wodonośnej. Zwiększa przepuszczalność warstwy wokół filtru i poprawia wydajność studni." },
-  { term: "Otwór Subartezyjski", def: "Otwór wiertniczy, w którym zwierciadło hydrostatyczne wody napiętej znajduje się poniżej powierzchni terenu. Wymaga pompy do eksploatacji, lecz istnieje nadciśnienie złożowe." },
-  { term: "Pasterka", def: "Element przyrządu wiertniczego w wierceniu linowo-udarowym. Łączy nożyce wolnospadowe z liną. Umożliwia swobodny obrót świdra w procesie wiercenia otworu przy jednoczesnym zawieszeniu na linie." },
-  { term: "Perforacja Filtra", def: "System otworów (okrągłych lub szczelinowych) w ścianie rury filtrowej umożliwiających przepływ wody. Powierzchnia czynna: maks. 30% (okrągłe) lub maks. 20% (szczelinowe)." },
-  { term: "Pompa Strumieniowa (Ejektor)", def: "Urządzenie do transportu płuczki w metodzie odwrotnego obiegu. Wykorzystuje efekt Venturiego – strumień napędowy tworzy podciśnienie zasysające płuczkę z otworu przez przewód wiertniczy." },
-  { term: "Reologia Płuczki Wiertniczej", def: "Nauka o właściwościach przepływu płuczki wiertniczej. Kluczowe parametry: lepkość plastyczna (PV), granica płynięcia (YP), tiksotropia (gel strength), decydujące o hydraulice otworu." },
-  { term: "Studnia Wiercona", def: "Otwór wiertniczy służący do ujmowania wód podziemnych. Składa się z kolumny rur okładzinowych, kolumny filtrowej i obudowy. Podstawowe ujęcie wód podziemnych w Polsce." },
-  { term: "Strefa Saturacji", def: "Strefa w skorupie ziemskiej, w której wszystkie pustki skalne (pory, szczeliny) są całkowicie wypełnione wodą wolną. Górna granica tej strefy to zwierciadło wody podziemnej." },
-  { term: "Sufozja", def: "Mechaniczne wypłukiwanie drobnych cząstek skalnych przez przepływającą wodę. Zjawisko niekorzystne w warstwach wodonośnych – niszczy strukturę skały i może powodować zasklepienie filtra. Zapobiega mu prawidłowo dobrana obsypka żwirowa." },
-  { term: "Świder Mimośrodowy (Ekscentryczny)", def: "Świder udarowy z łopatą i ostrzem niesymetrycznie położonymi względem osi. Umożliwia wiercenie otworu o większej średnicy niż średnica łopaty – pozwala na jednoczesne orurowanie otworu." },
-  { term: "Świdor Okrętny", def: "Narzędzie wiertnicze stosowane w okrętnym wierceniu ręcznym. Typy: rurowy, spiralny, spiralno-rurowy, talerzowy, skrzynkowy, ślimakowy, czółenkowy. Dobór zależy od rodzaju skały." },
-  { term: "Warstwa Wodonośna", def: "Ośrodek skalny o dużym rozprzestrzenieniu bez warstwowej niejednorodności właściwości filtracyjnych, wypełniony wodą wolną do pełnej pojemności lub częściowo." },
-  { term: "Wiertnica UP-200-2", def: "Polska linowo-udarowa wiertnica przewoźna (Fabryka Glinik, Gorlice). Głębokość do 300 m, śr. rur 508→305 mm, silnik 44 kW. Trzy bębny: świdrowy, łyżkowy, ciężarowy. Na platformie dwuosiowej." },
-  { term: "Wiercenie Udarowe Linowe", def: "Metoda wiercenia otworów hydrogeologicznych – typ pensylwański. Świder zapuszczany na linie stalowej, podnoszony i opuszczany wahaczem z korbą. Zastosowanie: do ~400 m. Wypierana przez metody obrotowe." },
-  { term: "Wiercenie Wielkoś­rednicowe", def: "Wiercenie otworów hydrogeologicznych o dużych średnicach (0,5÷1,5 m) metodą obrotową z odwrotnym obiegiem płuczki lub z użyciem podnośnika powietrznego (air lift)." },
-  { term: "Wydajność Studni", def: "Strumień objętości wody pompowanej ze studni [m³/h lub l/s] przy określonej depresji. Zależy od właściwości warstwy wodonośnej, konstrukcji i wymiarów filtra oraz sprawności hydraulicznej studni." },
-  { term: "Zwierciadło Wody Podziemnej", def: "Granica między strefą aeracji a strefą saturacji. Może być swobodne (pod ciśnieniem atmosferycznym) lub napięte (pod ciśnieniem wyższym od atmosferycznego przez strop warstwy nieprzepuszczalnej)." },
-  { term: "Open Hole Completion", def: "Zakończenie otworu bez rur okładzinowych w strefie produkcyjnej. Stosowane w twardych formacjach." },
-];
-
-function renderGlossary(filter = '') {
-  const container = document.getElementById('glossaryContainer');
-  const filtered = filter
-    ? glossaryData.filter(g => g.term.toLowerCase().includes(filter.toLowerCase()) || g.def.toLowerCase().includes(filter.toLowerCase()))
-    : glossaryData;
-
-  const sorted = [...filtered].sort((a, b) => a.term.localeCompare(b.term, 'pl'));
-  container.innerHTML = sorted.map(g => `
-    <div class="glossary-item">
-      <div class="glossary-term">${g.term}</div>
-      <div class="glossary-def">${g.def}</div>
-    </div>
-  `).join('');
-}
-
-function filterGlossary() {
-  const val = document.getElementById('glossarySearch').value;
-  renderGlossary(val);
+  document.getElementById('resultsContent').innerHTML =
+    '<div class="placeholder-text">Wprowadź dane i naciśnij<br><strong>OBLICZ CEMENTOWANIE</strong></div>';
 }
 
 // ===================== HYDRAULICS CALCULATOR =====================
 function calculateHydraulics() {
-  const mm2m = 0.001;
-  const rho = parseFloat(document.getElementById('h_density').value) * 1000; // kg/m³
-  const PV = parseFloat(document.getElementById('h_pv').value) * 0.001; // Pa·s
-  const YP_lbft = parseFloat(document.getElementById('h_yp').value);
-  const YP = YP_lbft * 0.4788; // Pa
-  const Q_lpm = parseFloat(document.getElementById('h_flow').value);
-  const Q = Q_lpm / 60000; // m³/s
-  const D_hole = parseFloat(document.getElementById('h_dhole').value) * mm2m;
-  const D_dp_od = parseFloat(document.getElementById('h_dpod').value) * mm2m;
-  const D_dp_id = parseFloat(document.getElementById('h_dpid').value) * mm2m;
-  const depth = parseFloat(document.getElementById('h_depth').value);
-  const A_nozzle = parseFloat(document.getElementById('h_nozzle').value) / 10000; // cm² -> m²
+  var mm2m = 0.001;
+  var rho      = parseFloat(document.getElementById('h_density').value) * 1000;
+  var PV       = parseFloat(document.getElementById('h_pv').value) * 0.001;
+  var YP       = parseFloat(document.getElementById('h_yp').value) * 0.4788;
+  var Q_lpm    = parseFloat(document.getElementById('h_flow').value);
+  var Q        = Q_lpm / 60000;
+  var D_hole   = parseFloat(document.getElementById('h_dhole').value) * mm2m;
+  var D_dp_od  = parseFloat(document.getElementById('h_dpod').value) * mm2m;
+  var D_dp_id  = parseFloat(document.getElementById('h_dpid').value) * mm2m;
+  var depth    = parseFloat(document.getElementById('h_depth').value);
+  var A_nozzle = parseFloat(document.getElementById('h_nozzle').value) / 10000;
 
   if ([rho,PV,YP,Q,D_hole,D_dp_od,D_dp_id,depth,A_nozzle].some(isNaN)) {
     alert('Uzupełnij wszystkie pola!'); return;
   }
+  if (D_hole <= D_dp_od) { alert('Średnica otworu musi być większa niż OD rur!'); return; }
 
-  if (D_hole <= D_dp_od) {
-    alert('Średnica otworu musi być większa niż OD rur wiertniczych!'); return;
-  }
-  if (D_dp_id >= D_dp_od) {
-    alert('ID rur musi być mniejsze niż OD rur!'); return;
-  }
+  var A_ann   = Math.PI/4 * (D_hole*D_hole - D_dp_od*D_dp_od);
+  var A_pipe  = Math.PI/4 * D_dp_id*D_dp_id;
+  var v_ann   = Q / A_ann;
+  var v_pipe  = Q / A_pipe;
+  var D_h_ann = D_hole - D_dp_od;
 
-  // Cross sectional areas
-  const A_ann = Math.PI/4 * (D_hole**2 - D_dp_od**2);
-  const A_pipe = Math.PI/4 * D_dp_id**2;
+  var Re_ann  = rho * v_ann  * D_h_ann / (PV + YP * D_h_ann / (6 * v_ann));
+  var Re_pipe = rho * v_pipe * D_dp_id  / PV;
 
-  // Velocities
-  const v_ann = Q / A_ann;
-  const v_pipe = Q / A_pipe;
+  var regime_ann  = Re_ann  < 2100 ? 'Laminarny' : Re_ann  < 3000 ? 'Przejściowy' : 'Turbulentny';
+  var regime_pipe = Re_pipe < 2100 ? 'Laminarny' : Re_pipe < 3000 ? 'Przejściowy' : 'Turbulentny';
 
-  // Hydraulic diameter annular
-  const D_h_ann = D_hole - D_dp_od;
-
-  // Effective viscosity (Bingham Plastic) - annular
-  const mu_eff_ann = PV + (YP * D_h_ann) / (0.0208 * v_ann) * 0.001;
-
-  // Reynolds numbers
-  const Re_ann = rho * v_ann * D_h_ann / (PV + YP * D_h_ann / (6 * v_ann));
-  const Re_pipe = rho * v_pipe * D_dp_id / PV;
-
-  // Flow regime
-  const regime_ann = Re_ann < 2100 ? 'Laminarny' : Re_ann < 3000 ? 'Przejściowy' : 'Turbulentny';
-  const regime_pipe = Re_pipe < 2100 ? 'Laminarny' : Re_pipe < 3000 ? 'Przejściowy' : 'Turbulentny';
-
-  // Pressure losses (simplified Bingham Plastic)
-  // Annular: dP/dL (Pa/m)
-  let dP_ann_m;
+  var dP_ann_m, dP_pipe_m;
   if (Re_ann < 2100) {
-    // Laminar Bingham
-    dP_ann_m = (PV * v_ann / (D_h_ann**2) * 48 + YP * 6 / D_h_ann);
+    dP_ann_m = PV * v_ann / (D_h_ann*D_h_ann) * 48 + YP * 6 / D_h_ann;
   } else {
-    // Turbulent approximation (Newtonian-like with effective mu)
-    const f_ann = 0.046 * Math.pow(Re_ann, -0.2);
-    dP_ann_m = f_ann * rho * v_ann**2 / (2 * D_h_ann);
+    var f_ann = 0.046 * Math.pow(Re_ann, -0.2);
+    dP_ann_m = f_ann * rho * v_ann*v_ann / (2 * D_h_ann);
   }
-
-  let dP_pipe_m;
   if (Re_pipe < 2100) {
-    dP_pipe_m = 128 * PV * Q / (Math.PI * D_dp_id**4) + YP * 4 / (3 * D_dp_id);
+    dP_pipe_m = 128 * PV * Q / (Math.PI * Math.pow(D_dp_id,4)) + YP * 4 / (3 * D_dp_id);
   } else {
-    const f_pipe = 0.046 * Math.pow(Re_pipe, -0.2);
-    dP_pipe_m = f_pipe * rho * v_pipe**2 / (2 * D_dp_id);
+    var f_pipe = 0.046 * Math.pow(Re_pipe, -0.2);
+    dP_pipe_m = f_pipe * rho * v_pipe*v_pipe / (2 * D_dp_id);
   }
 
-  const dP_ann_total = dP_ann_m * depth; // Pa
-  const dP_pipe_total = dP_pipe_m * depth; // Pa
+  var dP_ann   = dP_ann_m  * depth;
+  var dP_pipe  = dP_pipe_m * depth;
+  var dP_bit   = rho * Q*Q / (2 * 0.95*0.95 * A_nozzle*A_nozzle);
+  var dP_total = dP_ann + dP_pipe + dP_bit;
+  var ECD      = rho/1000 + dP_ann / (9.81 * depth * 1000);
+  var HHP_bit  = dP_bit   * Q / 1000;
+  var HHP_tot  = dP_total * Q / 1000;
+  var D_bit_mm = parseFloat(document.getElementById('h_dhole').value);
+  var A_bit_cm2= Math.PI/4 * Math.pow(D_bit_mm/10, 2);
+  var HHP_cm2  = HHP_bit / A_bit_cm2;
+  var v_nozzle = Q / A_nozzle;
+  var transport= Math.max(0, (v_ann - 0.3) / v_ann * 100);
 
-  // Bit pressure drop
-  const Cd = 0.95; // discharge coefficient
-  const dP_bit = rho * Q**2 / (2 * Cd**2 * A_nozzle**2);
+  function fmt(v,d){ return isFinite(v) ? v.toFixed(d||2) : '–'; }
+  function bar(v){ return fmt(v/100000, 2); }
 
-  // Total surface pressure
-  const dP_total = dP_ann_total + dP_pipe_total + dP_bit;
+  document.getElementById('hydro-results').innerHTML =
+    '<div class="result-item"><span class="result-label">Prędkość anularna</span><span><span class="result-value">' + fmt(v_ann,3) + '</span><span class="result-unit"> m/s</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Reżim – annulus</span><span><span class="result-value" style="font-size:0.95rem">' + regime_ann + '</span><span class="result-unit"> Re=' + fmt(Re_ann,0) + '</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Prędkość w rurach DP</span><span><span class="result-value">' + fmt(v_pipe,3) + '</span><span class="result-unit"> m/s</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Reżim – rury DP</span><span><span class="result-value" style="font-size:0.95rem">' + regime_pipe + '</span><span class="result-unit"> Re=' + fmt(Re_pipe,0) + '</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Straty ciśnienia – annulus</span><span><span class="result-value">' + bar(dP_ann) + '</span><span class="result-unit"> bar</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Straty ciśnienia – rury DP</span><span><span class="result-value">' + bar(dP_pipe) + '</span><span class="result-unit"> bar</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Spadek ciśnienia na dyszkach</span><span><span class="result-value">' + bar(dP_bit) + '</span><span class="result-unit"> bar</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Łączne ciśnienie powierzchniowe</span><span><span class="result-value">' + bar(dP_total) + '</span><span class="result-unit"> bar = ' + fmt(dP_total/6894.76,0) + ' psi</span></span></div>' +
+    '<div class="result-item"><span class="result-label">ECD</span><span><span class="result-value">' + fmt(ECD,3) + '</span><span class="result-unit"> g/cm³</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Moc hydrauliczna – świder</span><span><span class="result-value">' + fmt(HHP_bit,1) + '</span><span class="result-unit"> kW</span></span></div>' +
+    '<div class="result-item"><span class="result-label">HHP/cm² powierzchni świdra</span><span><span class="result-value">' + fmt(HHP_cm2,3) + '</span><span class="result-unit"> kW/cm²</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Prędkość wylotu z dysz</span><span><span class="result-value">' + fmt(v_nozzle,1) + '</span><span class="result-unit"> m/s</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Transport urobku</span><span><span class="result-value">' + fmt(transport,1) + '</span><span class="result-unit"> %</span></span></div>' +
+    '<div class="result-highlight"><span class="label">⚡ Łączna moc hydrauliczna</span><span class="value">' + fmt(HHP_tot,1) + ' <small style="font-size:0.9rem;font-weight:400">kW</small></span></div>' +
+    '<div class="alert-box" style="margin-top:14px">' + (v_ann < 0.5 ? '⚠ Prędkość anularna poniżej 0,5 m/s – ryzyko osadzania urobku!' : '✅ Prędkość anularna wystarczająca do transportu urobku.') + '</div>';
+}
 
-  // ECD
-  const g = 9.81;
-  const ECD = rho/1000 + dP_ann_total / (g * depth * 1000);
+// ===================== GLOSSARY =====================
+var glossaryData = [
+  { term: "BHA – Bottom Hole Assembly", def: "Zespół narzędzi wiertniczych na dole przewodu wiertniczego: świder, motor, MWD, DC." },
+  { term: "BOP – Blow-Out Preventer", def: "Prewenter wyrzutu – urządzenie bezpieczeństwa zapobiegające niekontrolowanemu wypływowi płynów złożowych." },
+  { term: "Casing – Rury Okładzinowe", def: "Stalowa kolumna rur spuszczana do otworu i cementowana w celu jego umocnienia i izolacji." },
+  { term: "CBL – Cement Bond Log", def: "Akustyczny log oceniający jakość połączenia cementu z rurami i formacją." },
+  { term: "Centralizator", def: "Urządzenie zakładane na rurę okładzinową centrujące ją w otworze, zapewniające równomierną przestrzeń anularną." },
+  { term: "DC – Drill Collar", def: "Grubościenne, ciężkie rury wiertnicze służące do obciążenia świdera (WOB)." },
+  { term: "DLS – Dog-Leg Severity", def: "Intensywność zakrzywienia toru otworu wyrażona w stopniach na 30 metrów [°/30m]." },
+  { term: "DP – Drill Pipe", def: "Rury wiertnicze tworzące górną część kolumny wiertniczej, przenoszące moment skręcający i płuczkę." },
+  { term: "DST – Drill Stem Test", def: "Test otworu wykonywany przez przewód wiertniczy w celu oceny złoża i pobrania próbek płynów." },
+  { term: "ECD – Equiv. Circulating Density", def: "Równoważna gęstość cyrkulacyjna – suma gęstości płuczki i oporu przepływu w przestrzeni anularnej." },
+  { term: "Float Collar", def: "Kołnierz pławikowy z zaworem zwrotnym zatrzymującym zaczyn po cementowaniu." },
+  { term: "Float Shoe", def: "Butka pławikowa – dolny element kolumny rur z zaworem zwrotnym." },
+  { term: "Geosteering", def: "Nawigowanie otworu kierunkowego na podstawie danych MWD/LWD w czasie rzeczywistym." },
+  { term: "HWDP – Heavy Weight DP", def: "Ciężkie rury wiertnicze pośrednie między DC a DP, zmniejszające zmęczenie materiału." },
+  { term: "KOP – Kick-Off Point", def: "Punkt rozpoczęcia odchylenia otworu od pionu w wierceniu kierunkowym." },
+  { term: "Liner", def: "Kolumna rur okładzinowych nie sięgająca do powierzchni, zawieszona wewnątrz poprzedniej kolumny." },
+  { term: "LWD – Logging While Drilling", def: "Pomiary geofizyczne wykonywane podczas wiercenia przy użyciu narzędzi w BHA." },
+  { term: "MD – Measured Depth", def: "Głębokość mierzona wzdłuż toru otworu, różni się od TVD w otworach kierunkowych." },
+  { term: "MWD – Measurement While Drilling", def: "Pomiar inklinacji i azymutu podczas wiercenia, transmisja przez mud pulse." },
+  { term: "OBM – Oil Based Mud", def: "Płuczka na bazie olejowej – doskonałe właściwości inhibicji łupków, wysoki koszt." },
+  { term: "PDC – Polycrystalline Diamond Compact", def: "Świder z wkładkami z polikrystalicznego diamentu. Brak ruchomych części, wysoka ROP." },
+  { term: "Perforacja", def: "Wykonywanie otworów przez ścianę rur okładzinowych do formacji złożowej." },
+  { term: "Porowatość (φ)", def: "Stosunek objętości przestrzeni porowej do całkowitej objętości skały [%]." },
+  { term: "Przepuszczalność (k)", def: "Zdolność skały do przewodzenia płynów, mierzona w milidarcy [mD]. Prawo Darcy'ego." },
+  { term: "ROP – Rate of Penetration", def: "Prędkość wiercenia [m/h]. Zależy od WOB, RPM, wydajności pompy i właściwości skał." },
+  { term: "RSS – Rotary Steerable System", def: "System kierunkowy sterujący trajektorią podczas obrotu całej kolumny." },
+  { term: "SCP – Sustained Casing Pressure", def: "Trwałe ciśnienie w przestrzeni anularnej – sygnał braku szczelności cementu lub rur." },
+  { term: "TBT – Thickening Time", def: "Czas wiązania zaczynu cementowego – czas do osiągnięcia konsystencji 100 Bc." },
+  { term: "TOC – Top Of Cement", def: "Górna granica zaczynu cementowego w przestrzeni anularnej po cementowaniu." },
+  { term: "TVD – True Vertical Depth", def: "Prawdziwa głębokość pionowa – pionowa składowa głębokości MD." },
+  { term: "UCS – Uniaxial Compressive Strength", def: "Wytrzymałość na ściskanie jednoosiowe cementu lub skały [MPa]." },
+  { term: "WBM – Water Based Mud", def: "Płuczka na bazie wodnej – najpopularniejszy typ: bentonitowy, KCl, PHPA." },
+  { term: "WOB – Weight On Bit", def: "Obciążenie osiowe przyłożone do świdra. Mierzone w kiloniutonach lub tonach." },
+  { term: "WOC – Wait On Cement", def: "Czas oczekiwania po zacementowaniu na osiągnięcie wymaganej wytrzymałości przez cement." },
+  { term: "Yield – Wydajność Zaczynu", def: "Objętość zaczynu z jednej tony cementu [m³/t] przy danym wskaźniku W/C." },
+  { term: "Air Lift – Podnośnik Powietrzny", def: "Metoda wynoszenia płuczki ze zwiercin w wierceniach wielkoś­rednicowych. Sprężone powietrze wdmuchiwane przez mieszacz powietrzny." },
+  { term: "Artezyjski – Otwór Artezyjski", def: "Otwór, w którym ciśnienie złożowe powoduje samoczynny wypływ wody powyżej powierzchni terenu." },
+  { term: "BUR – Build-Up Rate", def: "Tempo narastania inklinacji otworu kierunkowego [°/30m]. Typowo 2–6°/30m." },
+  { term: "Depresja Studni", def: "Obniżenie zwierciadła wody w studni względem stanu statycznego [m]." },
+  { term: "Filtracja API", def: "Objętość filtrat oddanego przez zaczyn/płuczkę w ciągu 30 min pod ciśnieniem 0,69 MPa [cm³/30 min]." },
+  { term: "Hydrogeologia", def: "Nauka o wodach podziemnych – genezie, rozmieszczeniu, właściwościach i dynamice wód." },
+  { term: "Inhibicja Łupków", def: "Zdolność płuczki do zapobiegania pęcznieniu i rozpadowi łupków ilastych." },
+  { term: "Kick", def: "Napływ płynów złożowych do otworu wiertniczego spowodowany zbyt małą gęstością płuczki. Nieleczony prowadzi do blow-out." },
+  { term: "Kolumna Filtrowa", def: "Zestaw: rura nadfiltrowa + filtr + rura podfiltrowa. Umożliwia dopływ wody do studni." },
+  { term: "MAASP", def: "Maximum Allowable Annular Surface Pressure – maksymalne dopuszczalne ciśnienie anularne na powierzchni." },
+  { term: "Obsypka Żwirowa", def: "Warstwa żwiru kwarcowego w przestrzeni pierścieniowej między filtrem a ścianą otworu hydrogeologicznego." },
+  { term: "Płuczka Syntetyczna (SBM)", def: "Płuczka na bazie syntetycznej (estry, polialkeny). Właściwości jak OBM, niższa toksyczność." },
+  { term: "Strefa Saturacji", def: "Strefa w skorupie ziemskiej, w której wszystkie pustki skalne są wypełnione wodą wolną." },
+  { term: "Sufozja", def: "Mechaniczne wypłukiwanie drobnych cząstek skalnych przez przepływającą wodę. Zapobiega jej obsypka żwirowa." },
+  { term: "Warstwa Wodonośna", def: "Ośrodek skalny wypełniony wodą wolną o znacznym rozprzestrzenieniu i przepuszczalności." },
+  { term: "Wydajność Studni", def: "Strumień objętości wody pompowanej ze studni [m³/h lub l/s] przy określonej depresji." },
+  { term: "Zwierciadło Wody Podziemnej", def: "Granica między strefą aeracji a strefą saturacji. Może być swobodne lub napięte." }
+];
 
-  // Hydraulic Horsepower at bit
-  const HHP_bit = dP_bit * Q / 1000; // kW
-  const HHP_total = dP_total * Q / 1000;
+function renderGlossary(filter) {
+  var container = document.getElementById('glossaryContainer');
+  if (!container) return;
+  var f = (filter || '').toLowerCase();
+  var data = f ? glossaryData.filter(function(g){
+    return g.term.toLowerCase().includes(f) || g.def.toLowerCase().includes(f);
+  }) : glossaryData;
+  var sorted = data.slice().sort(function(a,b){ return a.term.localeCompare(b.term,'pl'); });
+  container.innerHTML = sorted.map(function(g){
+    return '<div class="glossary-item"><div class="glossary-term">' + g.term + '</div><div class="glossary-def">' + g.def + '</div></div>';
+  }).join('');
+}
 
-  // HHP per cm2 of bit area
-  const D_bit_mm = parseFloat(document.getElementById('h_dhole').value);
-  const A_bit_cm2 = Math.PI/4 * (D_bit_mm / 10)**2; // mm -> cm
-  const HHP_per_cm2 = HHP_bit / A_bit_cm2;
-
-  // Bit velocity (impact velocity at nozzle exit)
-  const v_nozzle = Q / A_nozzle;
-
-  // Transport ratio
-  const v_slip = 0.3; // assumed slip velocity m/s for 2cm cutting
-  const transport_ratio = (v_ann - v_slip) / v_ann;
-
-  const fmt = (v, d=2) => isFinite(v) ? v.toFixed(d) : '–';
-  const bar = v => (v/100000).toFixed(2);
-
-  document.getElementById('hydro-results').innerHTML = `
-    <div class="result-item">
-      <span class="result-label">Prędkość anularna (v_ann)</span>
-      <span><span class="result-value">${fmt(v_ann,3)}</span><span class="result-unit">m/s</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Reżim przepływu – annulus</span>
-      <span><span class="result-value" style="font-size:0.95rem">${regime_ann}</span><span class="result-unit">Re=${fmt(Re_ann,0)}</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Prędkość w rurach DP (v_pipe)</span>
-      <span><span class="result-value">${fmt(v_pipe,3)}</span><span class="result-unit">m/s</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Reżim przepływu – rury DP</span>
-      <span><span class="result-value" style="font-size:0.95rem">${regime_pipe}</span><span class="result-unit">Re=${fmt(Re_pipe,0)}</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Strata ciśnienia – annulus</span>
-      <span><span class="result-value">${bar(dP_ann_total)}</span><span class="result-unit">bar</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Strata ciśnienia – rury DP</span>
-      <span><span class="result-value">${bar(dP_pipe_total)}</span><span class="result-unit">bar</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Spadek ciśnienia na dyszkach</span>
-      <span><span class="result-value">${bar(dP_bit)}</span><span class="result-unit">bar</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Łączne ciśnienie powierzchniowe</span>
-      <span><span class="result-value">${bar(dP_total)}</span><span class="result-unit">bar = ${fmt(dP_total/6894.76,0)} psi</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">ECD (w przestrzeni anularnej)</span>
-      <span><span class="result-value">${fmt(ECD,3)}</span><span class="result-unit">g/cm³</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Moc hydrauliczna na świdzie (HHP_bit)</span>
-      <span><span class="result-value">${fmt(HHP_bit,1)}</span><span class="result-unit">kW = ${fmt(HHP_bit*1.341,1)} HP</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">HHP na cm² powierzchni świdra</span>
-      <span><span class="result-value">${fmt(HHP_per_cm2,2)}</span><span class="result-unit">kW/cm²</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Prędkość wylotu z dysz</span>
-      <span><span class="result-value">${fmt(v_nozzle,1)}</span><span class="result-unit">m/s</span></span>
-    </div>
-    <div class="result-item">
-      <span class="result-label">Wskaźnik transportu urobku</span>
-      <span><span class="result-value">${fmt(transport_ratio*100,1)}</span><span class="result-unit">% (min. zalecane 50%)</span></span>
-    </div>
-    <div class="result-highlight">
-      <span class="label">⚡ Łączna moc hydrauliczna</span>
-      <span class="value">${fmt(HHP_total,1)} <small style="font-size:0.9rem;font-weight:400">kW</small></span>
-    </div>
-    <div class="alert-box" style="margin-top:14px">
-      <strong>Zalecenia:</strong>
-      ${v_ann < 0.5 ? '⚠ Prędkość anularna poniżej 0,5 m/s – ryzyko osadzania urobku! Zwiększ wydajność pompy.' : '✅ Prędkość anularna wystarczająca do transportu urobku.'}
-      ${ECD > parseFloat(document.getElementById('h_density').value)*1.05 ? '<br>⚠ ECD znacznie wyższy od gęstości statycznej – sprawdź gradient pękania.' : ''}
-    </div>
-  `;
+function filterGlossary() {
+  var val = document.getElementById('glossarySearch').value;
+  renderGlossary(val);
 }
 
 // ===================== INIT =====================
