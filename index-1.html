@@ -1,0 +1,4286 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Drilling App">
+<meta name="theme-color" content="#e74c3c">
+<meta name="description" content="Profesjonalne Kompendium Wiedzy Wiertniczej – geologia, wiercenie, cementowanie, hydraulika, hydrogeologia">
+<title>Drilling App | Kompendium Wiedzy Wiertniczej</title>
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
+<link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144.png">
+<link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #080c12;
+    --bg-panel: #0d1520;
+    --bg-card: #111d2e;
+    --bg-card2: #0f1a28;
+    --accent-gold: #e8a020;
+    --accent-amber: #f5c842;
+    --accent-orange: #d4611a;
+    --accent-rust: #8b3a0f;
+    --teal: #1ec8c8;
+    --teal-dim: #0e8080;
+    --blue: #2a6fd4;
+    --text-bright: #f0e8d8;
+    --text-main: #c8baa8;
+    --text-dim: #7a6e5e;
+    --text-muted: #4a4030;
+    --border: #1e3048;
+    --border-glow: rgba(232,160,32,0.3);
+    --grid-line: rgba(30,192,200,0.07);
+    --shadow-gold: 0 0 30px rgba(232,160,32,0.15);
+    --shadow-teal: 0 0 20px rgba(30,200,200,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-main);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,160,32,0.04) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 0% 50%, rgba(30,200,200,0.03) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: rgba(8,12,18,0.97);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    gap: 12px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    position: relative;
+  }
+
+  .logo-icon svg { width: 36px; height: 36px; }
+
+  .logo-text {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    color: #e74c3c;
+    text-shadow: 0 0 20px rgba(231,76,60,0.5);
+  }
+
+  .logo-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    color: var(--teal);
+    text-transform: uppercase;
+    margin-top: -4px;
+  }
+
+  /* ── HAMBURGER BUTTON ── */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: rgba(231,76,60,0.1);
+    border: 1px solid rgba(231,76,60,0.35);
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #e74c3c;
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+    transform-origin: center;
+  }
+  .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.is-open span:nth-child(2) { opacity: 0; }
+  .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Overlay backdrop */
+  #nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 800;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #nav-overlay.visible { opacity: 1; }
+
+  .nav-close { display: none; }
+
+  /* ── NAV DESKTOP ── */
+  nav {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    align-items: center;
+  }
+  nav::-webkit-scrollbar { display: none; }
+
+  nav button {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    position: relative;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+  }
+  nav button:hover { color: var(--text-bright); background: rgba(231,76,60,0.08); }
+  nav button.active { color: #e74c3c; background: rgba(231,76,60,0.1); }
+  nav button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 12px; right: 12px;
+    height: 2px;
+    background: #e74c3c;
+    border-radius: 2px;
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────── */
+  @media (max-width: 1100px) {
+    header { padding: 0 20px; }
+    nav button { padding: 7px 9px; font-size: 0.74rem; }
+  }
+
+  @media (max-width: 768px) {
+    /* Fixed header */
+    header {
+      padding: 0 16px;
+      height: 58px;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 900;
+    }
+
+    /* Show hamburger */
+    .hamburger { display: flex; }
+
+    /* Show overlay */
+    #nav-overlay { display: block; }
+
+    /* Drawer */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: min(300px, 85vw);
+      height: 100%;
+      height: 100dvh;
+      background: #0b1220;
+      border-right: 1px solid rgba(231,76,60,0.2);
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 0;
+      gap: 0;
+      z-index: 1000;
+      transform: translateX(-100%);
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 6px 0 40px rgba(0,0,0,0.6);
+    }
+    nav.is-open { transform: translateX(0); }
+
+    /* Drawer close button */
+    .nav-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      width: 100%;
+      padding: 18px 20px;
+      background: rgba(231,76,60,0.07);
+      border: none;
+      border-bottom: 1px solid rgba(231,76,60,0.15);
+      color: #e74c3c;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-align: center;
+      cursor: pointer;
+      text-transform: uppercase;
+      z-index: 2;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* Drawer nav buttons */
+    nav button {
+      width: 100%;
+      text-align: left;
+      padding: 16px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px solid rgba(30,48,72,0.5);
+      color: var(--text-main);
+      white-space: normal;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    nav button:hover { background: rgba(231,76,60,0.07); color: var(--text-bright); }
+    nav button.active { color: #e74c3c; background: rgba(231,76,60,0.1); border-left: 3px solid #e74c3c; padding-left: 21px; }
+    nav button.active::after { display: none; }
+    nav button:last-child { border-bottom: none; }
+
+    /* main content push-down */
+    main { padding: 16px; margin-top: 58px; }
+
+    /* Hero */
+    .hero { padding: 22px 0 18px; }
+    .hero h1 { font-size: 1.9rem; }
+    .hero-sub { font-size: 0.8rem; letter-spacing: 0.07em; }
+    .hero-tag { font-size: 0.6rem; }
+
+    /* Stats */
+    .stats-row { flex-wrap: wrap; gap: 6px; justify-content: center; }
+    .stat-box { padding: 12px 14px; min-width: 70px; flex: 1; }
+    .stat-num { font-size: 1.3rem; }
+    .stat-label { font-size: 0.58rem; }
+
+    /* Grid */
+    .cards-grid { grid-template-columns: 1fr; gap: 10px; }
+    .info-grid { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .calc-wrapper { grid-template-columns: 1fr; }
+    .glossary-grid { grid-template-columns: 1fr; }
+
+    /* Logo */
+    .logo { gap: 10px; }
+    .logo-icon { width: 32px; height: 32px; }
+    .logo-icon svg { width: 32px; height: 32px; }
+    .logo-text { font-size: 1rem; }
+    .logo-sub { display: none; }
+
+    /* Topic */
+    .topic-header { flex-wrap: wrap; gap: 10px; padding-bottom: 12px; }
+    .topic-header h2 { font-size: 1rem; }
+    .topic-icon { width: 38px; height: 38px; font-size: 1.1rem; }
+
+    /* Tabs */
+    .tabs { flex-wrap: wrap; gap: 5px; border-bottom: none; margin-bottom: 16px; }
+    .tab-btn { padding: 6px 12px; font-size: 0.7rem; border: 1px solid var(--border); border-radius: 20px; margin-bottom: 0; }
+    .tab-btn.active { border-color: var(--teal); background: rgba(30,200,200,0.1); border-bottom: 2px solid var(--teal); }
+
+    /* Tables */
+    .table-wrap { -webkit-overflow-scrolling: touch; overflow-x: auto; }
+    table { font-size: 0.74rem; min-width: 440px; }
+    th, td { padding: 7px 9px; }
+
+    .section-title h2 { font-size: 0.85rem; }
+    .depth-label { width: 60px; font-size: 0.6rem; }
+    .depth-track span { font-size: 0.6rem; }
+
+    .process-step { gap: 12px; }
+    .step-num { width: 32px; height: 32px; font-size: 0.68rem; flex-shrink: 0; }
+    .step-body h4 { font-size: 0.9rem; }
+    .step-body p { font-size: 0.8rem; }
+    .step-body { padding-bottom: 18px; }
+
+    .formula-box { font-size: 0.76rem; padding: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .formula-box .formula-label { white-space: normal; font-size: 0.6rem; }
+
+    .back-btn { margin-bottom: 14px; }
+    .card { padding: 16px; }
+    .card h3 { font-size: 0.76rem; }
+    .card p { font-size: 0.82rem; }
+
+    .calc-panel, .results-panel { padding: 18px 14px; }
+    .input-group label { font-size: 0.7rem; }
+    .input-group input, .input-group select { padding: 9px 12px; font-size: 0.85rem; }
+    .unit-tag { font-size: 0.62rem; width: 48px; }
+    .calc-btn { font-size: 0.8rem; }
+
+    .result-label { font-size: 0.76rem; }
+    .result-value { font-size: 0.95rem; }
+    .result-highlight .value { font-size: 1.25rem; }
+
+    .search-bar input { font-size: 0.88rem; }
+    .accordion-head { font-size: 0.84rem; padding: 12px 14px; }
+    .accordion-body { font-size: 0.8rem; padding: 14px 16px; }
+    .info-card { padding: 14px; }
+    .info-card h4 { font-size: 0.82rem; }
+    .info-card p, .info-card li { font-size: 0.82rem; }
+    .alert-box { font-size: 0.82rem; padding: 12px 14px; }
+
+    footer { padding: 14px 16px; flex-direction: column; gap: 4px; text-align: center; }
+    footer p { font-size: 0.66rem; }
+  }
+
+  /* Small phones ≤ 420px */
+  @media (max-width: 420px) {
+    .hero h1 { font-size: 1.55rem; }
+    main { padding: 12px; }
+    .stat-num { font-size: 1.1rem; }
+    .formula-box { font-size: 0.68rem; }
+    .result-highlight { flex-direction: column; gap: 4px; text-align: center; }
+    .result-highlight .value { font-size: 1.3rem; }
+    .calc-btn { font-size: 0.72rem; padding: 11px; }
+    table { font-size: 0.7rem; }
+  }
+
+  /* Notch / safe-area support */
+  @supports (padding: env(safe-area-inset-top)) {
+    @media (max-width: 768px) {
+      header {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        height: calc(58px + env(safe-area-inset-top));
+        padding-top: env(safe-area-inset-top);
+      }
+      main { margin-top: calc(58px + env(safe-area-inset-top)); }
+    }
+  }
+
+  /* MAIN */
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px;
+  }
+
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 60px 0 50px;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--teal);
+    text-transform: uppercase;
+    border: 1px solid rgba(30,200,200,0.25);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    color: var(--accent-gold);
+    text-shadow: 0 0 40px rgba(232,160,32,0.3);
+    letter-spacing: 0.05em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+
+  .hero h1 span { color: var(--text-bright); }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+    font-weight: 500;
+  }
+
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: 50px;
+  }
+
+  .stat-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 20px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+  }
+
+  .stat-box:first-child { border-radius: 6px 0 0 6px; }
+  .stat-box:last-child { border-radius: 0 6px 6px 0; }
+
+  .stat-num {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-amber);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .section-title h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .section-title .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  .section-title .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-gold);
+    border: 1px solid rgba(232,160,32,0.3);
+    padding: 3px 10px;
+    border-radius: 2px;
+  }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232,160,32,0.04) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .card:hover { border-color: rgba(232,160,32,0.4); transform: translateY(-2px); box-shadow: var(--shadow-gold); }
+  .card:hover::before { opacity: 1; }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .card h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .card p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .card-arrow {
+    position: absolute;
+    bottom: 18px;
+    right: 20px;
+    color: var(--accent-gold);
+    opacity: 0.5;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+  }
+
+  .card:hover .card-arrow { opacity: 1; transform: translateX(4px); }
+
+  /* KNOWLEDGE PAGES */
+  .knowledge-section {
+    margin-bottom: 50px;
+  }
+
+  .topic-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topic-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(232,160,32,0.1);
+    border: 1px solid rgba(232,160,32,0.25);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .topic-header h2 {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--text-bright);
+    letter-spacing: 0.06em;
+  }
+
+  .topic-header p { font-size: 0.88rem; color: var(--text-dim); margin-top: 4px; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 30px;
+  }
+
+  .info-card {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+  }
+
+  .info-card h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--teal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-card h4::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 14px;
+    background: var(--teal);
+    border-radius: 2px;
+  }
+
+  .info-card p, .info-card li {
+    font-size: 0.86rem;
+    color: var(--text-main);
+    line-height: 1.6;
+  }
+
+  .info-card ul { padding-left: 16px; }
+  .info-card li { margin-bottom: 4px; }
+
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  thead { background: rgba(232,160,32,0.08); }
+
+  th {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 11px 16px;
+    color: var(--text-main);
+    border-bottom: 1px solid rgba(30,48,72,0.5);
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(232,160,32,0.03); }
+
+  .td-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent-amber);
+  }
+
+  /* FORMULA BOX */
+  .formula-box {
+    background: rgba(30,200,200,0.05);
+    border: 1px solid rgba(30,200,200,0.2);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--teal);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  .formula-box .formula-label {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  /* ALERT BOX */
+  .alert-box {
+    background: rgba(212,97,26,0.08);
+    border-left: 3px solid var(--accent-orange);
+    padding: 14px 18px;
+    border-radius: 0 4px 4px 0;
+    margin: 12px 0;
+    font-size: 0.86rem;
+    color: var(--text-main);
+  }
+
+  .alert-box strong { color: var(--accent-orange); }
+
+  /* DEPTH DIAGRAM */
+  .depth-diagram {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 28px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .depth-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .depth-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    width: 100px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .depth-track {
+    flex: 1;
+    height: 26px;
+    border-radius: 3px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+
+  .depth-track span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: rgba(0,0,0,0.7);
+    z-index: 1;
+    letter-spacing: 0.05em;
+  }
+
+  /* CALCULATOR */
+  .calc-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 50px;
+  }
+
+  
+
+  .calc-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+  }
+
+  .calc-panel h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .input-group {
+    margin-bottom: 16px;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .input-group input, .input-group select {
+    width: 100%;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--text-bright);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .input-group input:focus, .input-group select:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 2px rgba(232,160,32,0.12);
+  }
+
+  .input-group select option { background: var(--bg-deep); }
+
+  .unit-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    width: 60px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .calc-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-orange));
+    border: none;
+    border-radius: 4px;
+    padding: 14px;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #0d0800;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.2s;
+  }
+
+  .calc-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(232,160,32,0.35);
+  }
+
+  .calc-btn:active { transform: translateY(0); }
+
+  .calc-reset {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s;
+  }
+
+  .calc-reset:hover { border-color: rgba(232,160,32,0.3); color: var(--text-main); }
+
+  /* RESULTS */
+  .results-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+  }
+
+  .results-panel h3 {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(30,48,72,0.4);
+  }
+
+  .result-item:last-child { border-bottom: none; }
+
+  .result-label {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  .result-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--accent-amber);
+  }
+
+  .result-unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-left: 4px;
+  }
+
+  .result-highlight {
+    background: rgba(232,160,32,0.07);
+    border: 1px solid rgba(232,160,32,0.2);
+    border-radius: 6px;
+    padding: 16px 18px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .result-highlight .label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-gold);
+  }
+
+  .result-highlight .value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+  }
+
+  .placeholder-text {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 0.86rem;
+    text-align: center;
+    padding: 40px 20px;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+  }
+
+  /* WELLBORE DIAGRAM */
+  .wellbore-visual {
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* GLOSSARY */
+  .glossary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .glossary-item {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 14px 16px;
+    transition: border-color 0.2s;
+  }
+
+  .glossary-item:hover { border-color: rgba(232,160,32,0.3); }
+
+  .glossary-term {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--accent-gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .glossary-def {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* SEARCH */
+  .search-bar {
+    position: relative;
+    margin-bottom: 28px;
+  }
+
+  .search-bar input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 13px 48px 13px 18px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-bright);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-bar input:focus { border-color: var(--accent-gold); }
+  .search-bar input::placeholder { color: var(--text-muted); }
+
+  .search-bar .icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s;
+  }
+
+  .tab-btn:hover { color: var(--text-bright); }
+
+  .tab-btn.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.25s ease; }
+
+  /* BACK BUTTON */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    margin-bottom: 28px;
+    transition: all 0.2s;
+  }
+
+  .back-btn:hover { border-color: rgba(232,160,32,0.4); color: var(--text-bright); }
+
+  /* PROCESS FLOW */
+  .process-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 30px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 20px;
+    position: relative;
+  }
+
+  .process-step::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 48px;
+    bottom: -8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--border), transparent);
+  }
+
+  .process-step:last-child::before { display: none; }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    background: rgba(232,160,32,0.1);
+    border: 1px solid rgba(232,160,32,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Orbitron', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .step-body {
+    flex: 1;
+    padding: 4px 0 28px;
+  }
+
+  .step-body h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-bright);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+
+  .step-body p {
+    font-size: 0.86rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  footer p {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  footer .version {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--teal-dim);
+  }
+
+  /* CEMENT DIAGRAM */
+  .cement-diagram {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .program-box {
+    background: rgba(30,200,200,0.05);
+    border: 1px solid rgba(30,200,200,0.15);
+    border-radius: 6px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+
+  .program-box h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    margin-bottom: 12px;
+  }
+
+  .program-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(30,48,72,0.4);
+    font-size: 0.82rem;
+  }
+
+  .program-line:last-child { border-bottom: none; }
+  .program-line .pl-key { color: var(--text-dim); }
+  .program-line .pl-val { font-family: 'JetBrains Mono', monospace; color: var(--accent-amber); }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 2px;
+  }
+
+  .tag-gold { background: rgba(232,160,32,0.12); color: var(--accent-gold); border: 1px solid rgba(232,160,32,0.25); }
+  .tag-teal { background: rgba(30,200,200,0.08); color: var(--teal); border: 1px solid rgba(30,200,200,0.2); }
+  .tag-red { background: rgba(212,97,26,0.1); color: #e07040; border: 1px solid rgba(212,97,26,0.25); }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  
+
+  /* ---- pill label for tabs ---- */
+  .pill {
+    display: inline-block;
+    background: rgba(232,160,32,0.1);
+    border: 1px solid rgba(232,160,32,0.25);
+    border-radius: 20px;
+    font-size: 0.7rem;
+    padding: 2px 10px;
+    color: var(--accent-gold);
+    letter-spacing: 0.1em;
+    margin-left: 8px;
+  }
+
+  /* accordion */
+  .accordion-item {
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .accordion-head {
+    padding: 14px 18px;
+    background: var(--bg-card2);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-main);
+    transition: background 0.2s;
+    user-select: none;
+  }
+
+  .accordion-head:hover { background: rgba(232,160,32,0.05); }
+
+  .accordion-head.open { color: var(--accent-gold); }
+  .accordion-head .chevron { transition: transform 0.25s; color: var(--text-dim); }
+  .accordion-head.open .chevron { transform: rotate(180deg); color: var(--accent-gold); }
+
+  .accordion-body {
+    display: none;
+    padding: 16px 18px;
+    background: var(--bg-deep);
+    font-size: 0.86rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    border-top: 1px solid var(--border);
+  }
+
+  .accordion-body.open { display: block; animation: fadeIn 0.2s; }
+</style>
+</head>
+<body>
+
+  <header>
+  <div class="logo">
+    <div class="logo-icon">
+      <!-- Red tricone drill bit SVG -->
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Bit body / shank -->
+        <rect x="18" y="1" width="8" height="10" rx="2" fill="#c0392b"/>
+        <rect x="17" y="10" width="10" height="6" rx="1" fill="#a93226"/>
+        <!-- Bit leg left -->
+        <path d="M16 16 L10 28 L14 30 L18 18 Z" fill="#c0392b"/>
+        <!-- Bit leg right -->
+        <path d="M28 16 L34 28 L30 30 L26 18 Z" fill="#c0392b"/>
+        <!-- Bit leg center -->
+        <path d="M19 16 L17 32 L22 33 L27 32 L25 16 Z" fill="#a93226"/>
+        <!-- Cone left (circle) -->
+        <circle cx="12" cy="31" r="6" fill="#e74c3c"/>
+        <circle cx="12" cy="31" r="3.5" fill="#c0392b"/>
+        <!-- Cone right -->
+        <circle cx="32" cy="31" r="6" fill="#e74c3c"/>
+        <circle cx="32" cy="31" r="3.5" fill="#c0392b"/>
+        <!-- Cone center -->
+        <circle cx="22" cy="35" r="6" fill="#e74c3c"/>
+        <circle cx="22" cy="35" r="3.5" fill="#c0392b"/>
+        <!-- TCI inserts on cones -->
+        <circle cx="10" cy="29" r="1" fill="#ff8a80"/>
+        <circle cx="14" cy="32" r="1" fill="#ff8a80"/>
+        <circle cx="12" cy="26" r="1" fill="#ff8a80"/>
+        <circle cx="30" cy="29" r="1" fill="#ff8a80"/>
+        <circle cx="34" cy="32" r="1" fill="#ff8a80"/>
+        <circle cx="32" cy="26" r="1" fill="#ff8a80"/>
+        <circle cx="20" cy="33" r="1" fill="#ff8a80"/>
+        <circle cx="24" cy="33" r="1" fill="#ff8a80"/>
+        <circle cx="22" cy="38" r="1" fill="#ff8a80"/>
+        <!-- Nozzles -->
+        <circle cx="17" cy="28" r="1.5" fill="#ff5252"/>
+        <circle cx="27" cy="28" r="1.5" fill="#ff5252"/>
+        <circle cx="22" cy="27" r="1.5" fill="#ff5252"/>
+        <!-- Highlight shank -->
+        <rect x="20" y="2" width="2" height="8" rx="1" fill="rgba(255,160,160,0.3)"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">Drilling<span style="color:var(--text-bright);font-weight:400"> App</span></div>
+      <div class="logo-sub">Kompendium Wiedzy Wiertniczej</div>
+    </div>
+  </div>
+  <!-- HAMBURGER -->
+  <button class="hamburger" id="hamburger" aria-label="Otwórz menu">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+<!-- Overlay backdrop -->
+<div id="nav-overlay"></div>
+<!-- DRAWER NAV -->
+<nav id="main-nav">
+  <button class="nav-close" id="nav-close-btn">✕ ZAMKNIJ</button>
+  <button class="active" onclick="showPage('home')">⌂ Start</button>
+  <button onclick="showPage('geology')">⛰ Geologia</button>
+  <button onclick="showPage('drilling')">⚙ Wiercenie</button>
+  <button onclick="showPage('fluids')">💧 Płuczka</button>
+  <button onclick="showPage('cement')">🏗 Cementowanie</button>
+  <button onclick="showPage('calculator')">🧮 Kalkulator</button>
+  <button onclick="showPage('glossary')">📖 Słownik</button>
+  <button onclick="showPage('safety')">🛡 BHP</button>
+  <button onclick="showPage('pipes')">🔩 Rury API</button>
+  <button onclick="showPage('hydro')">⚡ Hydraulika</button>
+  <button onclick="showPage('hydrogeo')">🌊 Hydrogeologia</button>
+</nav>
+
+<main>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-tag">v2.0 • Inżynieria Naftowa i Gazownicza</div>
+    <h1>Drilling<span> App</span></h1>
+    <p class="hero-sub">Profesjonalne Kompendium Wiedzy Wiertniczej</p>
+    <button id="pwa-install-btn" onclick="installPWA()" style="display:none;margin:0 auto 24px;align-items:center;gap:10px;background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.4);border-radius:8px;padding:12px 24px;color:#e74c3c;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">
+      📲 Zainstaluj Drilling App
+    </button>
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-num">11</span><span class="stat-label">Działów</span></div>
+      <div class="stat-box"><span class="stat-num">200+</span><span class="stat-label">Haseł</span></div>
+      <div class="stat-box"><span class="stat-num">40+</span><span class="stat-label">Wzorów</span></div>
+      <div class="stat-box"><span class="stat-num">3</span><span class="stat-label">Kalkulatory</span></div>
+      <div class="stat-box"><span class="stat-num">∞</span><span class="stat-label">Obliczeń</span></div>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <h2>Moduły Wiedzy</h2>
+    <div class="line"></div>
+    <div class="badge">WYBIERZ DZIAŁ</div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card" onclick="showPage('geology')">
+      <span class="card-icon">⛰️</span>
+      <h3>Geologia Wiertnicza</h3>
+      <p>Budowa geologiczna złóż, stratygrafia, skały zbiornikowe, parametry petrograficzne, analiza rdzeni.</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('drilling')">
+      <span class="card-icon">⚙️</span>
+      <h3>Technologia Wiercenia</h3>
+      <p>Proces wiercenia, narzędzia wiertnicze, kolumna rur wiertniczych, parametry wiercenia, kierunkowość.</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('fluids')">
+      <span class="card-icon">💧</span>
+      <h3>Płuczki Wiertnicze</h3>
+      <p>Rodzaje płuczek, właściwości reologiczne, hydraulika, programowanie hydrauliki, utrata płuczki.</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('cement')">
+      <span class="card-icon">🏗️</span>
+      <h3>Cementowanie Otworów</h3>
+      <p>Zaczyny cementowe, właściwości, rodzaje cementowań, program zatłaczania, izolacja stref złożowych.</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('calculator')">
+      <span class="card-icon">🧮</span>
+      <h3>Kalkulator Cementowania</h3>
+      <p>Oblicz objętość zaczynu, ilość cementu i wody, czas pompowania, ciśnienie na głowicy wiertniczej.</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('glossary')">
+      <span class="card-icon">📖</span>
+      <h3>Słownik Techniczny</h3>
+      <p>Kompletny słownik terminologii wiertniczej, naftowej i gazowniczej. Polsko-angielskie tłumaczenia.</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('safety')">
+      <span class="card-icon">🛡️</span>
+      <h3>Bezpieczeństwo Wiertnicze</h3>
+      <p>BOP, detekcja kicku, procedury awaryjne, klasyfikacja ryzyka H₂S, Well Control.</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('pipes')">
+      <span class="card-icon">🔩</span>
+      <h3>Rury API – Tabele Specyfikacji</h3>
+      <p>Wymiary, grubości ścianek, właściwości mechaniczne rur wiertniczych i okładzinowych API 5CT/5DP.</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('hydro')">
+      <span class="card-icon">⚡</span>
+      <h3>Kalkulator Hydrauliki Płuczki</h3>
+      <p>Oblicz prędkości anularne, ECD, straty ciśnienia w przewodzie wiertniczym, optymalizacja dysz świdra.</p>
+      <div class="card-arrow">→</div>
+    </div>
+  </div>
+
+    <div class="card" onclick="showPage('hydrogeo')">
+      <span class="card-icon">🌊</span>
+      <h3>Wiertnictwo Hydrogeologiczne</h3>
+      <p>Wody podziemne, metody wiercenia studni, konstrukcje otworów, filtry studzienne, obsypki żwirowe. Wg Gonet &amp; Macuda (AGH 2004).</p>
+      <div class="card-arrow">→</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===================== GEOLOGY PAGE ===================== -->
+<div id="page-geology" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">⛰️</div>
+    <div>
+      <h2>Geologia Wiertnicza</h2>
+      <p>Podstawy geologiczne dla inżynierów wiertniczych</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'geo-skaly')">Skały i Złoża</button>
+    <button class="tab-btn" onclick="switchTab(this,'geo-param')">Parametry Petrograficzne</button>
+    <button class="tab-btn" onclick="switchTab(this,'geo-cisr')">Ciśnienia Złożowe</button>
+    <button class="tab-btn" onclick="switchTab(this,'geo-rdzen')">Rdzeniowanie</button>
+  </div>
+
+  <!-- TAB: Skały -->
+  <div id="geo-skaly" class="tab-content active">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Skały Zbiornikowe</h4>
+        <ul>
+          <li>Piaskowce (porowatość 10–35%)</li>
+          <li>Wapienie i dolomity (skrasowiałe)</li>
+          <li>Łupki gazonośne (shale gas)</li>
+          <li>Zlepieńce i mułowce</li>
+          <li>Skały magmowe spękane</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Skały Uszczelniające (Cap Rock)</h4>
+        <ul>
+          <li>Łupki ilaste (nieprzepuszczalne)</li>
+          <li>Anhydryty i gipsy</li>
+          <li>Sole kambru i cechsztynu</li>
+          <li>Margle ilaste</li>
+          <li>Wymagana przepuszczalność &lt;0,001 mD</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Typy Pułapek Złożowych</h4>
+        <ul>
+          <li>Antyklinalne (strukturalne)</li>
+          <li>Stratygraficzne (litologiczne)</li>
+          <li>Tektoniczne (uskoki, zręby)</li>
+          <li>Kombinowane</li>
+          <li>Złoża hydrodynamiczne</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Rodzaje Cieczy Złożowych</h4>
+        <ul>
+          <li>Ropa naftowa (olej)</li>
+          <li>Gaz ziemny suchy</li>
+          <li>Gaz kondensatowy (mokry)</li>
+          <li>Woda złożowa</li>
+          <li>Ropa z gazem w czapce gazowej</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Stratygrafia Polski</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Era</th><th>Okres</th><th>Wiek [Ma]</th><th>Znaczenie naftowe</th></tr></thead>
+        <tbody>
+          <tr><td>Kenozoik</td><td>Miocen/Oligocen</td><td class="td-mono">2–25</td><td>Złoża gazu w Karpatach, Pogórzu</td></tr>
+          <tr><td>Mezozoik</td><td>Kreda, Jura</td><td class="td-mono">65–200</td><td>Złoża ropy na Niżu Polskim</td></tr>
+          <tr><td>Mezozoik</td><td>Trias</td><td class="td-mono">200–250</td><td>Złoża gazowe (rotliegend)</td></tr>
+          <tr><td>Paleozoik</td><td>Perm (Rotliegend)</td><td class="td-mono">250–300</td><td>Główny horizont gazowy PL</td></tr>
+          <tr><td>Paleozoik</td><td>Karbon</td><td class="td-mono">300–360</td><td>Węgiel, gaz kopalniani</td></tr>
+          <tr><td>Paleozoik</td><td>Dewon</td><td class="td-mono">360–420</td><td>Złoża ropy Lubelszczyzna</td></tr>
+          <tr><td>Paleozoik</td><td>Sylur/Ordowik</td><td class="td-mono">420–490</td><td>Potencjał łupków gazonośnych</td></tr>
+          <tr><td>Prekambr</td><td>Kambr</td><td class="td-mono">490–540</td><td>Złoża bałtyckie (ropa, gaz)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: Parametry -->
+  <div id="geo-param" class="tab-content">
+    <div class="two-col">
+      <div>
+        <div class="section-title"><h2>Porowatość</h2><div class="line"></div></div>
+        <div class="info-card" style="margin-bottom:16px">
+          <h4>Definicja i Klasyfikacja</h4>
+          <p>Porowatość (φ) to stosunek objętości porów do całkowitej objętości skały.</p>
+        </div>
+        <div class="formula-box">
+          <span class="formula-label">Porowatość</span>
+          φ = V_p / V_t × 100 [%]
+        </div>
+        <div class="table-wrap" style="margin-top:16px">
+          <table>
+            <thead><tr><th>Klasa</th><th>Porowatość [%]</th><th>Ocena</th></tr></thead>
+            <tbody>
+              <tr><td>Bardzo dobra</td><td class="td-mono">&gt; 25</td><td>Doskonały zbiornik</td></tr>
+              <tr><td>Dobra</td><td class="td-mono">15 – 25</td><td>Dobry zbiornik</td></tr>
+              <tr><td>Średnia</td><td class="td-mono">8 – 15</td><td>Zbiornik przeciętny</td></tr>
+              <tr><td>Słaba</td><td class="td-mono">2 – 8</td><td>Zbiornik ubogi</td></tr>
+              <tr><td>B. słaba</td><td class="td-mono">&lt; 2</td><td>Nieopłacalny</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="section-title"><h2>Przepuszczalność</h2><div class="line"></div></div>
+        <div class="info-card" style="margin-bottom:16px">
+          <h4>Prawo Darcy'ego</h4>
+          <p>Przepuszczalność określa zdolność skały do przepuszczania cieczy. Jednostka: Darcy (D) lub milidarcy (mD).</p>
+        </div>
+        <div class="formula-box">
+          <span class="formula-label">Prawo Darcy'ego</span>
+          Q = k·A·ΔP / (μ·L)
+        </div>
+        <div class="table-wrap" style="margin-top:16px">
+          <table>
+            <thead><tr><th>Klasa</th><th>Przepuszczalność [mD]</th></tr></thead>
+            <tbody>
+              <tr><td>Bardzo wysoka</td><td class="td-mono">&gt; 500</td></tr>
+              <tr><td>Wysoka</td><td class="td-mono">100 – 500</td></tr>
+              <tr><td>Średnia</td><td class="td-mono">10 – 100</td></tr>
+              <tr><td>Niska</td><td class="td-mono">1 – 10</td></tr>
+              <tr><td>Tight</td><td class="td-mono">0,001 – 1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Nasycenie Cieczami</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Nasycenie Wodą (Sw)</h4>
+        <p>Udział wody w przestrzeni porowej. Sw + So + Sg = 1. Minimalne Sw dla opłacalności &lt; 0,40.</p>
+      </div>
+      <div class="info-card">
+        <h4>Nasycenie Ropą (So)</h4>
+        <p>Zawartość ropy w porach. Uzupełnia pozostałe saturacje do jedności.</p>
+      </div>
+      <div class="info-card">
+        <h4>Nasycenie Gazem (Sg)</h4>
+        <p>Udział gazu w przestrzeni porowej. W złożach gazowych Sg = 0,6–0,9.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Ciśnienia -->
+  <div id="geo-cisr" class="tab-content">
+    <div class="section-title"><h2>Gradients i Ciśnienia Złożowe</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Ciśnienie Hydrostatyczne</h4>
+        <p>P_h = ρ_f · g · h</p>
+        <p style="margin-top:8px">Gradient normalny: 0,0981 bar/m (woda słodka), 0,1036 bar/m (solanka).</p>
+      </div>
+      <div class="info-card">
+        <h4>Ciśnienie Złożowe</h4>
+        <p>Ciśnienie płynu w przestrzeni porowej. Może być normalne (=hydrostatyczne), podwyższone (nadciśnienie) lub obniżone.</p>
+      </div>
+      <div class="info-card">
+        <h4>Ciśnienie Geostatyczne</h4>
+        <p>Ciśnienie słupa skał ponad punktem. Gradient ~0,225 bar/m (śr. gęstość skał = 2,3 g/cm³).</p>
+      </div>
+      <div class="info-card">
+        <h4>Gradient Pękania Skał</h4>
+        <p>Minimalny gradient ciśnienia powodujący hydrauliczne szczelinowanie skały. Ogranicza maksymalne ciśnienie płuczki.</p>
+      </div>
+    </div>
+    <div class="alert-box">
+      <strong>⚠ OKNO WIERTNICZE:</strong> Różnica między gradientem ciśnienia złożowego a gradientem pękania. Im węższe okno, tym trudniejszy dobór gęstości płuczki.
+    </div>
+    <div class="formula-box">
+      <span class="formula-label">Gradient Ciśnienia Złożowego</span>
+      G_p = P_z / H_z [bar/m lub psi/ft]
+    </div>
+  </div>
+
+  <!-- TAB: Rdzeniowanie -->
+  <div id="geo-rdzen" class="tab-content">
+    <div class="section-title"><h2>Rdzeniowanie</h2><div class="line"></div></div>
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>Dobór Interwału Rdzeniowania</h4>
+          <p>Wybór odcinków do pobrania rdzeni na podstawie danych geofizyki otworowej, analizy skrawków wiertniczych i korelacji regionalnej. Typowo strefy złożowe, skały uszczelniające i kontakty litologiczne.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>Rdzeniowanie Wiertnicze</h4>
+          <p>Wykonanie rdzeniowania koronką rdzeniową (⌀ 3–4") z użyciem rdzennicy pojedynczej lub podwójnej. Prędkość rdzeniowania 2–5 m/h. Wskaźnik uzysku rdzenia (core recovery) &gt;90%.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>Wydobycie i Zabezpieczenie</h4>
+          <p>Wydobycie rdzennicy, wysunięcie rdzenia, cięcie na odcinki 1 m, opisanie, fotografowanie i zabezpieczenie rdzeni w drewnianych skrzyniach z zaznaczeniem orientacji góra/dół.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>Analiza Laboratoryjna</h4>
+          <p>Oznaczanie porowatości, przepuszczalności, nasycenia, gęstości, składu mineralnego (XRD), analizy palinologiczne, pomiary kapilarności. Wyniki stanowią podstawę oceny złoża.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== DRILLING PAGE ===================== -->
+<div id="page-drilling" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">⚙️</div>
+    <div>
+      <h2>Technologia Wiercenia</h2>
+      <p>Kompleksowa wiedza o procesie wiercenia otworów</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'dr-process')">Proces Wiercenia</button>
+    <button class="tab-btn" onclick="switchTab(this,'dr-narz')">Narzędzia Wiertnicze</button>
+    <button class="tab-btn" onclick="switchTab(this,'dr-param')">Parametry WOB/RPM</button>
+    <button class="tab-btn" onclick="switchTab(this,'dr-kier')">Wiercenie Kierunkowe</button>
+  </div>
+
+  <div id="dr-process" class="tab-content active">
+    <div class="section-title"><h2>Etapy Procesu Wiercenia</h2><div class="line"></div></div>
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>Przygotowanie Placu Wiertni</h4>
+          <p>Niwelacja terenu, utwardzenie nawierzchni, instalacja zbiorników, połączenie sieci wodociągowej i energetycznej, montaż systemu BOP (Blow-Out Preventer).</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>Wiercenie Interwałów i Zabudowa Rur</h4>
+          <p>Kolejne interwały wierci się świdrem o malejącej średnicy. Po każdym interwale opuszczana jest kolumna rur stalowych uszczelniana zaczynem cementowym. Standardowe sekwencje: 30" → 20" → 13⅜" → 9⅝" → 7".</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>Geofizyka Otworowa (Well Logging)</h4>
+          <p>Po każdym interwale lub w trakcie wiercenia (LWD) wykonywane są pomiary geofizyczne: gamma-ray, oporność, gęstość, neutronowy, akustyczny, obrazowy (FMI). Dane służą do korelacji litologicznej i oceny złoża.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>Badania Złożowe (DST/MDT)</h4>
+          <p>Testy złożowe pozwalają na pobranie próbek płynów złożowych i pomiar ciśnienia złożowego. DST (Drillstem Test) lub MDT (Modular Formation Dynamics Tester) w interwałach perspektywicznych.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h4>Zakończenie lub Zabudowa Otworu</h4>
+          <p>Otwór można zakończyć jako produkcyjny (zabudowa głowicy, perforacja, szczelinowanie), obserwacyjny lub zlikwidować (cementowanie likwidacyjne, demontaż wiertnicy).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dr-narz" class="tab-content">
+    <div class="section-title"><h2>Narzędzia Wiertnicze</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Świdry Rolkowe (Rock Bits)</h4>
+        <ul>
+          <li>Świdry trójstożkowe (TCI, Milled Tooth)</li>
+          <li>Zęby frezowane – skały miękkie</li>
+          <li>Wkładki węglikowe (TCI) – twarde</li>
+          <li>Zastosowanie: 0–4000 m głębokości</li>
+          <li>WOB: 5–25 ton, RPM: 60–200</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Świdry PDC</h4>
+        <ul>
+          <li>Polikrystaliczny diament (PDC)</li>
+          <li>Wkładki skrawające – brak ruchomych części</li>
+          <li>Wyższa prędkość wiercenia (ROP)</li>
+          <li>Optymalne: skały homogeniczne</li>
+          <li>WOB: 3–15 ton, RPM: 100–350</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Świdry Diamentowe (Impreg)</h4>
+        <ul>
+          <li>Impregnowane diamentem naturalnym/szt.</li>
+          <li>Do skał bardzo twardych i ściernych</li>
+          <li>Niska ROP, b. długa żywotność</li>
+          <li>Rdzeniowanie w trudnych skałach</li>
+          <li>WOB: 1–5 ton, RPM: 400–1200</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Klasyfikacja IADC</h4>
+        <ul>
+          <li>Pierwsza cyfra: typ skały (1-3 stożkowe, 4-8 PDC)</li>
+          <li>Druga cyfra: twardość formacji (1=mięk.–4=b.tward.)</li>
+          <li>Trzecia cyfra: właściwości (lagr., uszcz.)</li>
+          <li>Czwarta cyfra: dodatkowe cechy</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Przewód Wiertniczy (BHA)</h4>
+        <ul>
+          <li>Świder (Bit)</li>
+          <li>Silnik skręcający / RSS</li>
+          <li>MWD/LWD (pomiary w trakcie)</li>
+          <li>Collar'y (Heavy Weight DC)</li>
+          <li>Drill Collar (DC)</li>
+          <li>Drill Pipe (DP) – rury wiertnicze</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Silniki Wgłębne (Mud Motors)</h4>
+        <ul>
+          <li>Silnik spiralny Moino (Progressive Cavity)</li>
+          <li>Zamiana przepływu hydraulicznego na obrót</li>
+          <li>Zastosowanie w wierceniu kierunkowym</li>
+          <li>Zakres: 60–400 RPM świdera</li>
+          <li>Przełożenie: 1,0–6,0 obr/impuls</li>
+        </ul>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Element BHA</th><th>Funkcja</th><th>Materiał</th><th>OD typowe</th></tr></thead>
+        <tbody>
+          <tr><td>Świder (Bit)</td><td>Urabiane skały</td><td>Stal / PDC / Diament</td><td class="td-mono">3½" – 26"</td></tr>
+          <tr><td>Drill Collar (DC)</td><td>Obciążenie świdera (WOB)</td><td>Stal chromowo-niklowa</td><td class="td-mono">4¾" – 11"</td></tr>
+          <tr><td>HWDP</td><td>Przejście DC–DP</td><td>Stal wzmocniona</td><td class="td-mono">3½" – 5"</td></tr>
+          <tr><td>Drill Pipe (DP)</td><td>Kolumna wiertnicza</td><td>Stal Grade E/X/G/S</td><td class="td-mono">2⅞" – 6⅝"</td></tr>
+          <tr><td>Kelly / TDS</td><td>Napęd obrotowy</td><td>Stal specjalna</td><td>Kelly 4½"×4½"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="dr-param" class="tab-content">
+    <div class="section-title"><h2>Parametry Wiercenia</h2><div class="line"></div></div>
+    <div class="two-col">
+      <div>
+        <div class="info-card" style="margin-bottom:16px">
+          <h4>WOB – Weight On Bit</h4>
+          <p>Obciążenie osiowe na świder. Zbyt małe = niska ROP, zbyt duże = szybkie zużycie świdra lub zagięcie kolumny.</p>
+        </div>
+        <div class="formula-box">
+          <span class="formula-label">Optymalne WOB</span>
+          WOB_opt = k_f · D_b [kN/mm średnicy]
+        </div>
+        <div class="info-card" style="margin-top:16px">
+          <h4>RPM – Prędkość Obrotowa</h4>
+          <p>Obroty świdera (+ kolumny lub tylko świder przy silniku wgłębnym). Wyższe RPM = wyższa ROP w skałach miękkich, niższe = twarde.</p>
+        </div>
+      </div>
+      <div>
+        <div class="info-card" style="margin-bottom:16px">
+          <h4>ROP – Rate of Penetration</h4>
+          <p>Prędkość wiercenia [m/h]. Zależy od WOB, RPM, wydajności pompy, właściwości skał i stanu świdra.</p>
+        </div>
+        <div class="formula-box">
+          <span class="formula-label">MSE – Mechanical Specific Energy</span>
+          MSE = (WOB/A_b) + (2π·T·N)/(A_b·ROP)
+        </div>
+        <div class="info-card" style="margin-top:16px">
+          <h4>Wskaźnik MSE</h4>
+          <p>Mechaniczna energia właściwa – ilość energii potrzebnej do urobienia jednostki objętości skały. Minimalizacja MSE = optymalne wiercenie.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Tabela Zalecanych Parametrów</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Skała</th><th>WOB [ton]</th><th>RPM</th><th>Flow [l/min]</th><th>Typ świdra</th></tr></thead>
+        <tbody>
+          <tr><td>Miękka (iłowce, margle)</td><td class="td-mono">3–8</td><td class="td-mono">150–250</td><td class="td-mono">1500–2500</td><td>PDC, MT</td></tr>
+          <tr><td>Średnia (piaskowce)</td><td class="td-mono">8–15</td><td class="td-mono">100–180</td><td class="td-mono">1200–2000</td><td>PDC, TCI</td></tr>
+          <tr><td>Twarda (wapienie, dolomity)</td><td class="td-mono">12–22</td><td class="td-mono">60–120</td><td class="td-mono">1000–1800</td><td>TCI 3-stożk.</td></tr>
+          <tr><td>Bardzo twarda (granit, kwarcyt)</td><td class="td-mono">15–30</td><td class="td-mono">40–80</td><td class="td-mono">800–1500</td><td>TCI, Impreg</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="dr-kier" class="tab-content">
+    <div class="section-title"><h2>Wiercenie Kierunkowe i Poziome</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Rodzaje Trajektorii</h4>
+        <ul>
+          <li>S-shape: z powrotem do pionu</li>
+          <li>J-shape: jednostronne zakrzywienie</li>
+          <li>Extended Reach (ERD): poziome &gt;8km</li>
+          <li>Multilateral: odgałęzienia z jednego tułowia</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Narzędzia Kierunkowe</h4>
+        <ul>
+          <li>Silnik wgłębny + bent sub</li>
+          <li>RSS (Rotary Steerable System)</li>
+          <li>MWD – pomiar kierunku i inklinacji</li>
+          <li>LWD – geofizyka podczas wiercenia</li>
+          <li>Geosteering – naprowadzanie w złożu</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Parametry Trajektorii</h4>
+        <ul>
+          <li>Inklinacja (inclination) [°]</li>
+          <li>Azymut (azimuth) [°]</li>
+          <li>Dog-leg severity (DLS) [°/30m]</li>
+          <li>Build-up rate (BUR) [°/30m]</li>
+          <li>TVD, MD, departure [m]</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Pomiary MWD</h4>
+        <ul>
+          <li>Inklinometr (magnetometr + akcelerometr)</li>
+          <li>Gamma-Ray at bit</li>
+          <li>Ciśnienie ECD (Equivalent Circulating Density)</li>
+          <li>Temperatura formacji</li>
+          <li>Pomiary Shock & Vibration</li>
+        </ul>
+      </div>
+    </div>
+    <div class="formula-box">
+      <span class="formula-label">Dog-Leg Severity</span>
+      DLS = (180/π) · arccos(cos(Δi) - sin(I₁)·sin(I₂)·(1-cos(Δa))) / ΔMD · 30 [°/30m]
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FLUIDS PAGE ===================== -->
+<div id="page-fluids" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">💧</div>
+    <div>
+      <h2>Płuczki Wiertnicze</h2>
+      <p>Systemy płuczkowe, właściwości i hydraulika</p>
+    </div>
+  </div>
+
+  <div class="section-title"><h2>Rodzaje Płuczek</h2><div class="line"></div></div>
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>Płuczka Wodna (WBM)</h4>
+      <ul>
+        <li>Bentonitowa (niskociśnieniowe)</li>
+        <li>KCl-polimerowa (ochrona czoła)</li>
+        <li>Wapienno-gipsowa (twarde łupki)</li>
+        <li>Zasolona (solne formacje)</li>
+        <li>Niska cena, łatwa w obróbce</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Płuczka Olejowa (OBM)</h4>
+      <ul>
+        <li>Baza: olej mineralny, syntetyczny</li>
+        <li>Doskonała inhibicja łupków</li>
+        <li>Wysoka stabilność termiczna</li>
+        <li>Mała szkodliwość na złoże</li>
+        <li>Wysoki koszt, utylizacja odpadów</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Płuczka Syntetyczna (SBM)</h4>
+      <ul>
+        <li>Baza: estry, polialkeny</li>
+        <li>Właściwości podobne do OBM</li>
+        <li>Niższa toksyczność środowiskowa</li>
+        <li>Przepisy offshore favoryzują SBM</li>
+        <li>Najwyższy koszt ze wszystkich</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h4>Pneumatyczne (Air/Mist/Foam)</h4>
+      <ul>
+        <li>Powietrze, mgła, piana, gaz</li>
+        <li>Szybkie wiercenie w twardych suchych</li>
+        <li>Niskie ciśnienie denna (underpressure)</li>
+        <li>Ryzyko zapłonu gazu</li>
+        <li>Konieczność suchych formacji</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title"><h2>Właściwości Płuczki</h2><div class="line"></div></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Parametr</th><th>Symbol</th><th>Jednostka</th><th>Typowy zakres</th><th>Znaczenie</th></tr></thead>
+      <tbody>
+        <tr><td>Gęstość</td><td class="td-mono">ρ</td><td class="td-mono">g/cm³</td><td class="td-mono">1,00 – 2,30</td><td>Kontrola ciśnienia dennego</td></tr>
+        <tr><td>Lepkość Marsha</td><td class="td-mono">MV</td><td class="td-mono">s/l</td><td class="td-mono">28 – 80</td><td>Zdolność wynoszenia urobku</td></tr>
+        <tr><td>Lepkość plastyczna</td><td class="td-mono">PV</td><td class="td-mono">cP</td><td class="td-mono">10 – 60</td><td>Hydraulika, ECD</td></tr>
+        <tr><td>Granica płynięcia</td><td class="td-mono">YP</td><td class="td-mono">lb/100ft²</td><td class="td-mono">5 – 40</td><td>Zawieszenie urobku</td></tr>
+        <tr><td>Gel strength (10s/10min)</td><td class="td-mono">GS</td><td class="td-mono">lb/100ft²</td><td class="td-mono">2/5 – 10/20</td><td>Stałość przy przerwach</td></tr>
+        <tr><td>Filtracja API</td><td class="td-mono">FL</td><td class="td-mono">cm³/30min</td><td class="td-mono">2 – 12</td><td>Stabilność czoła odwiertu</td></tr>
+        <tr><td>pH</td><td class="td-mono">pH</td><td>–</td><td class="td-mono">8,5 – 11,5</td><td>Inhibicja korozji</td></tr>
+        <tr><td>Chlorki</td><td class="td-mono">Cl⁻</td><td class="td-mono">mg/l</td><td class="td-mono">varies</td><td>Agresywność korozyjna</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title"><h2>Hydraulika Wiertnicza</h2><div class="line"></div></div>
+  <div class="two-col">
+    <div>
+      <div class="formula-box">
+        <span class="formula-label">Ciśnienie Hydrauliczne (ECD)</span>
+        ECD = ρ_m + (ΔP_ann / (0,0519 · TVD))
+      </div>
+      <div class="formula-box" style="margin-top:12px">
+        <span class="formula-label">Liczba Reynoldsa</span>
+        Re = (928 · ρ · V · D) / μ_eff
+      </div>
+      <div class="formula-box" style="margin-top:12px">
+        <span class="formula-label">Prędkość Wynoszenia Urobku</span>
+        v_ann = Q / (A_out – A_pipe) [m/s]
+      </div>
+    </div>
+    <div class="info-card">
+      <h4>Optymalizacja Hydrauliki</h4>
+      <ul>
+        <li>Minimalna prędkość anularna: 0,5–0,8 m/s</li>
+        <li>Moc na świdzie: maksymalizacja HHP_bit</li>
+        <li>Transport cuttings ratio &gt; 0,5</li>
+        <li>ECD poniżej gradientu pękania skał</li>
+        <li>Ciśnienie powierzchniowe &lt; limitu pomp</li>
+        <li>Wydajność pompy Q obliczona z Re i kryt. strumienia</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CEMENT PAGE ===================== -->
+<div id="page-cement" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">🏗️</div>
+    <div>
+      <h2>Cementowanie Otworów Wiertniczych</h2>
+      <p>Teoria i praktyka cementowania – izolacja stref i uszczelnienie kolumn</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'cem-cel')">Cele i Rodzaje</button>
+    <button class="tab-btn" onclick="switchTab(this,'cem-zaczyn')">Zaczyny i Właściwości</button>
+    <button class="tab-btn" onclick="switchTab(this,'cem-tech')">Technologia Zatłaczania</button>
+    <button class="tab-btn" onclick="switchTab(this,'cem-ocena')">Ocena Jakości</button>
+  </div>
+
+  <div id="cem-cel" class="tab-content active">
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Cel Cementowania Pierwotnego</h4>
+        <ul>
+          <li>Uszczelnienie przestrzeni pierścieniowej</li>
+          <li>Izolacja stref wodonośnych od złożowych</li>
+          <li>Podwieszenie kolumny rur w otworze</li>
+          <li>Ochrona rur przed korozją</li>
+          <li>Zapobieganie migracji gazu (SCP)</li>
+          <li>Wzmocnienie ściany otworu</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Rodzaje Cementowania</h4>
+        <ul>
+          <li><strong>Pierwotne</strong> – po zapuszczeniu kolumny rur</li>
+          <li><strong>Wtórne (squeeze)</strong> – uzupełnienie braków</li>
+          <li><strong>Rdzeniowe</strong> – przez kolumnę w górę</li>
+          <li><strong>Plugging</strong> – most cementowy, likwidacja</li>
+          <li><strong>Cementowanie linera</strong> – częściowe podwieszenie</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Klasy Cementu API (API 10A)</h4>
+        <ul>
+          <li>Klasa A/B – do 1830 m, bez dod.</li>
+          <li>Klasa C – szybkie wiązanie</li>
+          <li>Klasa D/E – 1830–3050 m, opóźniony</li>
+          <li>Klasa G/H – uniwersalna, z dod. (dominuje)</li>
+          <li>Klasa J – głęboka, b. wolne wiązanie</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Kryteria Dobrze Wykonanego Cementowania</h4>
+        <ul>
+          <li>Pełna izolacja stref złożowych</li>
+          <li>Wytrzymałość &gt; 3,5 MPa (500 psi)</li>
+          <li>Brak kanałów przepływu gazu/cieczy</li>
+          <li>Czas wiązania: 2–6 h (Thickening Time)</li>
+          <li>Potwierdzona CBL/VDL lub Ultrasonic log</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="cem-zaczyn" class="tab-content">
+    <div class="section-title"><h2>Składniki i Właściwości Zaczynu</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Składniki Zaczynu</h4>
+        <ul>
+          <li><strong>Cement</strong> (klasa G/H – podstawa)</li>
+          <li><strong>Woda</strong> (W/C = 0,38–0,60)</li>
+          <li><strong>Opóźniacz</strong> (Retarder – AMPS, Lignosulfonaty)</li>
+          <li><strong>Przyspieszacz</strong> (CaCl₂, NaCl)</li>
+          <li><strong>Lekki wypełniacz</strong> (mikrobalony, perlyt)</li>
+          <li><strong>Ciężki wypełniacz</strong> (baryt, hematyt)</li>
+          <li><strong>Domieszka filtracyjna</strong> (HPMC, CMC)</li>
+          <li><strong>Środek odpieniający</strong> (defoamer)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Kluczowe Właściwości Zaczynu</h4>
+        <ul>
+          <li>Gęstość: 1,60 – 2,10 g/cm³</li>
+          <li>Lepkość (Fann 600/300 RPM)</li>
+          <li>Czas wiązania (Thickening Time)</li>
+          <li>Filtracja API: &lt;50 ml/30 min</li>
+          <li>Stabilność sedymentacyjna</li>
+          <li>Wytrzymałość na ściskanie (UCS)</li>
+          <li>Wytrzymałość udarowa (Impact)</li>
+          <li>Permeability stwardniałego cementu</li>
+        </ul>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Domieszka</th><th>Efekt</th><th>Dawkowanie</th><th>Zakres temp.</th></tr></thead>
+        <tbody>
+          <tr><td>Opóźniacz AMPS</td><td>Wydłuża czas pompowania</td><td class="td-mono">0,1–2,0 %BWOC</td><td class="td-mono">60–180°C</td></tr>
+          <tr><td>CaCl₂ (przyspieszacz)</td><td>Skraca czas wiązania</td><td class="td-mono">1–3 %BWOC</td><td class="td-mono">&lt;50°C</td></tr>
+          <tr><td>Mikrobalony (SG&lt;1)</td><td>Zmniejsza gęstość zaczynu</td><td class="td-mono">5–30 %BWOC</td><td class="td-mono">&lt;120°C</td></tr>
+          <tr><td>Baryt (BaSO₄)</td><td>Zwiększa gęstość zaczynu</td><td class="td-mono">do 35 %BWOC</td><td class="td-mono">dowolna</td></tr>
+          <tr><td>Bentonit</td><td>Lekki, obniża gęstość</td><td class="td-mono">2–12 %BWOC</td><td class="td-mono">&lt;100°C</td></tr>
+          <tr><td>Silica Flour</td><td>Wytrzymałość w T&gt;110°C</td><td class="td-mono">35–40 %BWOC</td><td class="td-mono">110–200°C</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert-box">
+      <strong>⚠ BHST vs BHCT:</strong> Temperatura Dna (BHST – Bottom Hole Static Temperature) jest wyższa od temperatury cyrkulacyjnej (BHCT). Opóźniacz dobiera się na BHCT, nie BHST. Zignorowanie tego może spowodować przedwczesne wiązanie zaczynu w miejscu cementowania.
+    </div>
+  </div>
+
+  <div id="cem-tech" class="tab-content">
+    <div class="section-title"><h2>Metodologia Zatłaczania Zaczynu</h2><div class="line"></div></div>
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>Projektowanie Zaczynu (Lab)</h4>
+          <p>Dobór składu zaczynu do warunków temperaturowych (BHCT/BHST) i ciśnieniowych. Testy API: Thickening Time, Compressive Strength, API Filtration, Rheology. Wyniki testów laboratoryjnych = podstawa projektu pola.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>Przygotowanie Przestrzeni Anularnej</h4>
+          <p>Centralizatory na kolumnie rur (co 3–6 rur), kaliper otworu, obliczenie rzeczywistej objętości przestrzeni anularnej z uwzględnieniem overshooting (powiększenia kalibrowego). Przepłukanie otworu i conditioning płuczki.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>Kolejność Zatłaczania</h4>
+          <p>1) Płuczka (wstępne przepłukanie) → 2) Odstępnik chemiczny (spacer) → 3) Zaczyn wiodący (lead slurry) – lekki → 4) Zaczyn główny (tail slurry) – ciężki → 5) Tłok cementowy (cement plug/wiper dart) → 6) Przemyw wodny (displacement fluid).</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>Parametry Pompowania</h4>
+          <p>Kontrola wydajności pomp cementacyjnych (do 1200 l/min), ciśnienia wtłaczania (powierzchniowe) i ECD na dnie otworu. Ciągły monitoring wskazań powierzchniowego odczytu ciśnienia i objętości zatłoczonego zaczynu.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h4>Zakończenie – Lądowanie Korka</h4>
+          <p>Koreks (floating equipment): butka float shoe + float collar. Wiper dart "ląduje" w float collar dając sygnał wzrostu ciśnienia – "bump pressure". Po uzyskaniu bump pressure odcina się pompy i czeka na wiązanie zaczynu (WOC – Wait On Cement).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <span class="formula-label">Ciśnienie Powierzchniowe (Cementowanie)</span>
+      P_surface = P_hydrostatic_slurry − P_hydrostatic_mud + P_friction_loss
+    </div>
+  </div>
+
+  <div id="cem-ocena" class="tab-content">
+    <div class="section-title"><h2>Ocena Jakości Cementowania</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>CBL – Cement Bond Log</h4>
+        <p>Akustyczny log spoistości cementu. Mierzy amplitudę pierwszego przybycia fali akustycznej. Dobry cement: amplituda &lt;5 mV. Wolna przestrzeń: amplituda = amplitudzie rur bez cementu.</p>
+      </div>
+      <div class="info-card">
+        <h4>VDL – Variable Density Log</h4>
+        <p>Uzupełnienie CBL. Pokazuje kształt fali w funkcji głębokości. Widać zarówno falę rur jak i formacji. Fala formacji = dobry kontakt cement-skała.</p>
+      </div>
+      <div class="info-card">
+        <h4>Ultrasonic Imaging (USIT/CAST)</h4>
+        <p>360° obrazowanie zaczynu w przestrzeni anularnej. Podaje grubość i stan cementu za rurą. Najdokładniejsza metoda, szczególnie skuteczna przy OBM (olej w otworze).</p>
+      </div>
+      <div class="info-card">
+        <h4>Kryteria Odbioru</h4>
+        <ul>
+          <li>CBL &lt; 10% swobodnych rur</li>
+          <li>Izolacja wszystkich stref złożowych</li>
+          <li>Górna granica cementu na projektowanym poziomie</li>
+          <li>Brak SCP (Sustained Casing Pressure)</li>
+          <li>UCS &gt; 3,5 MPa po 24h WOC</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CALCULATOR PAGE ===================== -->
+<div id="page-calculator" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">🧮</div>
+    <div>
+      <h2>Kalkulator Cementowania</h2>
+      <p>Obliczenia ilości zaczynu cementowego do zatłaczania do otworu wiertniczego</p>
+    </div>
+  </div>
+
+  <div class="calc-wrapper">
+    <div class="calc-panel">
+      <h3>📐 Dane Geometryczne Otworu</h3>
+
+      <div class="input-group">
+        <label>Średnica Otworu (Bit Size)</label>
+        <div class="input-row">
+          <input type="number" id="bitSize" placeholder="215.9" step="0.1" value="215.9">
+          <span class="unit-tag">mm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Średnica Zewnętrzna Rur (OD casing)</label>
+        <div class="input-row">
+          <input type="number" id="casingOD" placeholder="177.8" step="0.1" value="177.8">
+          <span class="unit-tag">mm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Grubość Ścianki Rur</label>
+        <div class="input-row">
+          <input type="number" id="casingWT" placeholder="8.05" step="0.01" value="8.05">
+          <span class="unit-tag">mm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Głębokość Zapuszczenia Kolumny (MD)</label>
+        <div class="input-row">
+          <input type="number" id="casingDepth" placeholder="3000" step="10" value="3000">
+          <span class="unit-tag">m</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Głębokość Szczytu Cementu (TOC)</label>
+        <div class="input-row">
+          <input type="number" id="topCement" placeholder="800" step="10" value="800">
+          <span class="unit-tag">m</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Współczynnik Powiększenia Kalibrowego (Excess)</label>
+        <div class="input-row">
+          <input type="number" id="excess" placeholder="1.20" step="0.01" value="1.20">
+          <span class="unit-tag">x (np. 1.20)</span>
+        </div>
+      </div>
+
+      <h3 style="margin-top:28px">🧪 Parametry Zaczynu</h3>
+
+      <div class="input-group">
+        <label>Gęstość Zaczynu Cementowego</label>
+        <div class="input-row">
+          <input type="number" id="slurryDensity" placeholder="1.89" step="0.01" value="1.89">
+          <span class="unit-tag">g/cm³</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Wskaźnik Wodno-Cementowy (W/C)</label>
+        <div class="input-row">
+          <input type="number" id="wcRatio" placeholder="0.44" step="0.01" value="0.44">
+          <span class="unit-tag">–</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Wydajność Zaczynu (Yield)</label>
+        <div class="input-row">
+          <input type="number" id="slurryYield" placeholder="0.76" step="0.01" value="0.76">
+          <span class="unit-tag">m³/t</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Wydajność Pomp Cementacyjnych</label>
+        <div class="input-row">
+          <input type="number" id="pumpRate" placeholder="600" step="10" value="600">
+          <span class="unit-tag">l/min</span>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calculateCement()">⚡ OBLICZ CEMENTOWANIE</button>
+      <button class="calc-reset" onclick="resetCalc()">↺ Wyczyść wyniki</button>
+    </div>
+
+    <div class="results-panel" id="resultsPanel">
+      <h3>📊 Wyniki Obliczeń</h3>
+      <div id="resultsContent">
+        <div class="placeholder-text">
+          Wprowadź dane i naciśnij<br><strong>OBLICZ CEMENTOWANIE</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><h2>Wzory Obliczeniowe</h2><div class="line"></div></div>
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>Objętość Przestrzeni Anularnej</h4>
+      <div class="formula-box" style="font-size:0.82rem;padding:12px">
+        V_ann = π/4 · (D_hole² − OD_cas²) · L_cem · excess [m³]
+      <br><small style="font-size:0.72rem;opacity:0.6">D_hole, OD_cas w metrach (przelicz mm ÷ 1000)</small>
+      </div>
+    </div>
+    <div class="info-card">
+      <h4>Pojemność Wewnętrzna Kolumny</h4>
+      <div class="formula-box" style="font-size:0.82rem;padding:12px">
+        V_int = π/4 · ID_cas² · L_cas [m³]
+      </div>
+    </div>
+    <div class="info-card">
+      <h4>Ilość Cementu i Wody</h4>
+      <div class="formula-box" style="font-size:0.82rem;padding:12px">
+        m_cem = V_total / Yield [t]<br>V_woda = W/C × m_cem [m³]
+      </div>
+    </div>
+    <div class="info-card">
+      <h4>Czas Pompowania</h4>
+      <div class="formula-box" style="font-size:0.82rem;padding:12px">
+        t = (V_zaczyn + V_displ) / Q_pump [min]
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== GLOSSARY PAGE ===================== -->
+<div id="page-glossary" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">📖</div>
+    <div>
+      <h2>Słownik Techniczny</h2>
+      <p>Terminologia wiertnicza, naftowa i geologiczna PL–EN</p>
+    </div>
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="glossarySearch" placeholder="Szukaj terminu..." oninput="filterGlossary()">
+    <span class="icon">🔍</span>
+  </div>
+
+  <div id="glossaryContainer" class="glossary-grid"></div>
+</div>
+
+<!-- ===================== SAFETY PAGE ===================== -->
+<div id="page-safety" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">🛡️</div>
+    <div>
+      <h2>Bezpieczeństwo Wiertnicze – Well Control</h2>
+      <p>BOP, detekcja kicku, procedury awaryjne, H₂S, klasyfikacja ryzyk</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'saf-bop')">BOP – Preventer</button>
+    <button class="tab-btn" onclick="switchTab(this,'saf-kick')">Detekcja Kicku</button>
+    <button class="tab-btn" onclick="switchTab(this,'saf-h2s')">H₂S – Siarkowodór</button>
+    <button class="tab-btn" onclick="switchTab(this,'saf-proc')">Procedury Awaryjne</button>
+  </div>
+
+  <!-- BOP -->
+  <div id="saf-bop" class="tab-content active">
+    <div class="section-title"><h2>Blow-Out Preventer (BOP) – Prewenter Wyrzutu</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Prewenter Szczękowy (RAM BOP)</h4>
+        <ul>
+          <li><strong>Pipe Rams</strong> – zaciśnięcie na rurach</li>
+          <li><strong>Blind Rams</strong> – zamknięcie pustego otworu</li>
+          <li><strong>Shear Rams</strong> – przecięcie rur + zamknięcie</li>
+          <li><strong>Variable Bore Rams</strong> – różne średnice DP</li>
+          <li>Ciśnienie robocze: 10 000–15 000 psi</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Prewenter Pierścieniowy (Annular BOP)</h4>
+        <ul>
+          <li>Uszczelnienie przestrzeni anularnej</li>
+          <li>Może pracować z lub bez rur w otworze</li>
+          <li>Materiał: guma syntetyczna (Buna-N, Neoprene)</li>
+          <li>Ciśnienie robocze: 5 000–10 000 psi</li>
+          <li>Używany jako pierwsza bariera robocza</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Kolumna BOP (Stack)</h4>
+        <ul>
+          <li>Annular BOP (góra)</li>
+          <li>Upper RAM (pipe rams)</li>
+          <li>Middle RAM (variable bore)</li>
+          <li>Lower RAM (blind/shear)</li>
+          <li>Spool (kill/choke manifold)</li>
+          <li>Casing head (dół)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Wymagania Testowe BOP</h4>
+        <ul>
+          <li>Test niskim ciśnieniem: 200–300 psi przez 5 min</li>
+          <li>Test wysokim ciśnieniem: do MAASP przez 5 min</li>
+          <li>Frequency: po każdym montażu, co 14 dni</li>
+          <li>Dokumentacja: API RP 53 / ISO 13533</li>
+          <li>Test funkcjonalny (pełne otwarcie/zamknięcie)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Bariery Otworowe (Well Barriers)</h2><div class="line"></div></div>
+    <div class="alert-box">
+      <strong>Zasada 2 Barier:</strong> W każdym otwórze wiertniczym muszą być zawsze co najmniej <strong>dwie niezależne bariery</strong> między strefą złożową a atmosferą. Utrata obu barier = sytuacja awaryjna WELL CONTROL.
+    </div>
+    <div class="two-col" style="margin-top:20px">
+      <div class="info-card">
+        <h4>Pierwotna Bariera (Primary)</h4>
+        <ul>
+          <li>Hydrostatyczna kolumna płuczki</li>
+          <li>Utrzymanie BHP &gt; ciśnienia złożowego</li>
+          <li>Nadgęstość płuczki (overbalance 50–200 psi)</li>
+          <li>Float equipment (zawory zwrotne)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Wtórna Bariera (Secondary)</h4>
+        <ul>
+          <li>BOP – zamknięcie otworu</li>
+          <li>Kolumna rur okładzinowych + cement</li>
+          <li>Wellhead (głowica wiertnicza)</li>
+          <li>Riser (instalacje offshore)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- KICK -->
+  <div id="saf-kick" class="tab-content">
+    <div class="section-title"><h2>Detekcja i Likwidacja Kicku</h2><div class="line"></div></div>
+    <div class="alert-box">
+      <strong>⚠ KICK</strong> – napływ płynów złożowych (ropy, gazu, wody) do otworu wiertniczego spowodowany zbyt niską gęstością płuczki lub innymi przyczynami. Nieleczony prowadzi do <strong>BLOW-OUT</strong> (wyrzutu).
+    </div>
+    <div class="section-title" style="margin-top:24px"><h2>Wskaźniki Kicku</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Wskaźniki Pierwotne (Natychmiastowe)</h4>
+        <ul>
+          <li>🔴 Wzrost objętości w zbiornikach płuczki</li>
+          <li>🔴 Wzrost wydatku płuczki na wylocie (trip tank)</li>
+          <li>🔴 Wzrost ROP (rate of penetration)</li>
+          <li>🔴 Wzrost ciśnienia na pompach</li>
+          <li>🔴 Napływ przy wyłączonych pompach</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Wskaźniki Wtórne (Ostrzegawcze)</h4>
+        <ul>
+          <li>🟡 Zmniejszenie gęstości wracającej płuczki</li>
+          <li>🟡 Zmiana lepkości lub zawartości gazu (gas cut)</li>
+          <li>🟡 Spadek ciśnienia przy podnoszeniu (swab)</li>
+          <li>🟡 Wzrost momentu obrotowego / odciąży</li>
+          <li>🟡 Zmiany detekcji gazów (H₂S, CH₄)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Procedura SHUT-IN po Wykryciu Kicku</h2><div class="line"></div></div>
+    <div class="process-flow">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>Wyłącz Pompy i Podnieś Kelly / Zatrzymaj TDS</h4>
+          <p>Natychmiastowe wyłączenie pomp wiertniczych, zatrzymanie obrotów. Podnieść narzędzia wiertnicze ponad BOP jeśli możliwe.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>Zamknij Annular BOP</h4>
+          <p>Zamknąć prewenter pierścieniowy jako pierwszy (soft shut-in). Obserwować wskazanie ciśnienia na zamknięciu.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>Odczyt SIDPP i SICP</h4>
+          <p>Shut-In Drill Pipe Pressure (SIDPP) – ciśnienie w przewodzie wiertniczym. Shut-In Casing Pressure (SICP) – w przestrzeni anularnej. Oba niezbędne do obliczenia gęstości płuczki zlikwidowania kicku.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-body">
+          <h4>Obliczenie i Przygotowanie Kill Mud</h4>
+          <p>Obliczenie wymaganej gęstości płuczki „kill weight" na podstawie SIDPP i głębokości TVD. Przygotowanie odpowiedniej ilości ociężałonej płuczki.</p>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div>
+        <div class="step-body">
+          <h4>Likwidacja – Metoda Drillers lub Wait & Weight</h4>
+          <p><strong>Driller's Method:</strong> dwa obiegi – najpierw wypchanie kicku, potem cyrkulacja kill mud. <strong>Wait & Weight (Engineer's Method):</strong> jeden obieg z kill mud po przygotowaniu.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-box">
+      <span class="formula-label">Gęstość Płuczki Likwidacyjnej (Kill Weight Mud)</span>
+      ρ_kill = ρ_mud + SIDPP / (0,0981 · TVD) [g/cm³]
+    </div>
+    <div class="formula-box" style="margin-top:12px">
+      <span class="formula-label">Maksymalne Dopuszczalne Ciśnienie Anularne (MAASP)</span>
+      MAASP = (G_frac − G_mud) × TVD_shoe [bar]
+    </div>
+  </div>
+
+  <!-- H2S -->
+  <div id="saf-h2s" class="tab-content">
+    <div class="section-title"><h2>H₂S – Siarkowodór w Wiertnictwie</h2><div class="line"></div></div>
+    <div class="alert-box" style="border-left-color:#cc2222;background:rgba(180,30,30,0.1)">
+      <strong>⚠ ZAGROŻENIE ŻYCIA:</strong> H₂S (siarkowodór) to gaz silnie toksyczny, bezbarwny, o zapachu zgniłych jaj. Już stężenie <strong>100 ppm paraliżuje węch</strong>. Stężenie 1000 ppm powoduje natychmiastową śmierć. Cięższy od powietrza – zbiera się w zagłębieniach.
+    </div>
+    <div class="info-grid" style="margin-top:20px">
+      <div class="info-card">
+        <h4>Klasyfikacja Stężeń H₂S</h4>
+        <div class="table-wrap" style="border:none;border-radius:0">
+          <table style="font-size:0.82rem">
+            <thead><tr><th>Stężenie</th><th>Efekt</th></tr></thead>
+            <tbody>
+              <tr><td class="td-mono">0,01–1,5 ppm</td><td>Wyczuwalny zapach</td></tr>
+              <tr><td class="td-mono">2–5 ppm</td><td>Dyskomfort, ból głowy</td></tr>
+              <tr><td class="td-mono">10 ppm</td><td>Limit ekspozycji (OSHA TWA)</td></tr>
+              <tr><td class="td-mono">20 ppm</td><td>Alarm – nakaz maski</td></tr>
+              <tr><td class="td-mono">50–100 ppm</td><td>Zaburzenia oddychania</td></tr>
+              <tr><td class="td-mono">200–500 ppm</td><td>Obrzęk płuc, utrata świadomości</td></tr>
+              <tr><td class="td-mono">&gt;1000 ppm</td><td>Śmierć w ciągu minut</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="info-card">
+        <h4>Ochrona Osobista i Procedury</h4>
+        <ul>
+          <li>SCBA (Self-Contained Breathing Apparatus)</li>
+          <li>Ciągły monitoring H₂S na stanowiskach</li>
+          <li>Alarm progowy: 10 ppm (ostrzeżenie), 20 ppm (ewakuacja)</li>
+          <li>Wiatr pod uwagę – muster point z zawietrznej</li>
+          <li>Oznakowanie stref zagrożonych H₂S</li>
+          <li>Ćwiczenia ewakuacyjne co 2 tygodnie</li>
+          <li>H₂S scavengers w płuczce (triazyny)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Korozja SSC – Sulfide Stress Cracking</h4>
+        <ul>
+          <li>H₂S powoduje kruchość rur w środowiskach kwaśnych</li>
+          <li>Norma: NACE MR0175 / ISO 15156</li>
+          <li>Rury OCTG w klasie SSC: C90, T95, Q125</li>
+          <li>Ograniczenia twardości: HRC ≤ 22</li>
+          <li>Badania materiałowe – warunek ofertowy</li>
+          <li>Sour service design – dobór gatunków stali</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Projekt Sour Well</h4>
+        <ul>
+          <li>Kryterium: pCO₂ &gt; 0,05 psia lub pH₂S &gt; 0,05 psia</li>
+          <li>Dobór wszystkich materiałów wg NACE</li>
+          <li>Materiały elastomerów (BOP): AFLAS, Viton</li>
+          <li>Rury: certyfikat odporności na SSC</li>
+          <li>Testy laboratoryjne płuczki i zaczynu</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCEDURY -->
+  <div id="saf-proc" class="tab-content">
+    <div class="section-title"><h2>Procedury Awaryjne i Klasyfikacja Zdarzeń</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Klasyfikacja Zdarzeń (Severity)</h4>
+        <ul>
+          <li><span class="tag tag-teal">Near Miss</span> Zdarzenie potencjalne bez szkód</li>
+          <li><span class="tag tag-gold">First Aid</span> Drobny uraz</li>
+          <li><span class="tag tag-gold">RWC</span> Restricted Work Case</li>
+          <li><span class="tag tag-gold">LTI</span> Lost Time Incident (&gt;1 dzień)</li>
+          <li><span class="tag tag-red">Fatality</span> Wypadek śmiertelny</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Kluczowe Wskaźniki Bezpieczeństwa</h4>
+        <ul>
+          <li>TRIR – Total Recordable Incident Rate</li>
+          <li>LTIR – Lost Time Incident Rate</li>
+          <li>STOP Cards – obserwacje BHP</li>
+          <li>Toolbox Talks – codzienne odprawy</li>
+          <li>JSA – Job Safety Analysis</li>
+          <li>HAZOP – Hazard and Operability Study</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Wyposażenie Awaryjne Wiertnicy</h4>
+        <ul>
+          <li>Stacje SCBA (min. 4 szt. + zapas)</li>
+          <li>H₂S detectory stacjonarne i przenośne</li>
+          <li>Mgłowice wodne na floor i shaker</li>
+          <li>Apteczka AED, defibrylator</li>
+          <li>Gaśnice CO₂ i proszkowe</li>
+          <li>System alarmowy (syrena, lampy)</li>
+          <li>Emergency Shutdown (ESD)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Procedura Ewakuacji Wiertnicy</h4>
+        <ul>
+          <li>Alarm – syrena przerywana 3x10s</li>
+          <li>Nałożenie SCBA lub ucieczka z wiatrem</li>
+          <li>Muster point – zbiorka i odliczanie</li>
+          <li>Emergency Bridge Commander przejmuje dowodzenie</li>
+          <li>Kontakt z operatorem / pogotowiem</li>
+          <li>Formularz incident report w ciągu 24h</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Matryca Ryzyk Wiertniczych</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Zagrożenie</th><th>Przyczyna</th><th>Skutek</th><th>Środek Zapobiegawczy</th></tr></thead>
+        <tbody>
+          <tr><td>Kick / Blow-out</td><td>Zbyt mała gęstość płuczki</td><td>Wyrzut, pożar, śmierć</td><td>Monitoring obj. płuczki, poprawna gęstość</td></tr>
+          <tr><td>H₂S</td><td>Formacje kwaśne</td><td>Zatrucie, śmierć</td><td>Monitoring, SCBA, scavengery</td></tr>
+          <tr><td>Pożar/Wybuch</td><td>Gaz na powierzchni</td><td>Pożar, śmierć</td><td>Detekcja gazów, iskrobezpieczny sprzęt</td></tr>
+          <tr><td>Utknięcie narzędzi (Stuck Pipe)</td><td>Filtracja, key seating</td><td>Utrata narzędzi, koszty</td><td>Kontrola płuczki, monitory ECD/drag</td></tr>
+          <tr><td>Utrata cyrkulacji (Lost Circ.)</td><td>Szczeliny, niska wytrzym.</td><td>Brak kontroli głębokości</td><td>LCM, obniż gęstość, ramp up slowly</td></tr>
+          <tr><td>Awaria kołowrotu/wiertnicy</td><td>Zużycie, błąd obsługi</td><td>Wypadek, przerwa</td><td>PM, certyfikaty operatorów, PTW</td></tr>
+          <tr><td>Upadek z wysokości</td><td>Praca na derricku</td><td>Uraz, śmierć</td><td>Uprzęże, liny asekuracyjne, LOTO</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PIPES PAGE ===================== -->
+<div id="page-pipes" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">🔩</div>
+    <div>
+      <h2>Rury API – Tabele Specyfikacji</h2>
+      <p>Dane wymiarowe i właściwości mechaniczne rur okładzinowych i wiertniczych wg API</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'pip-casing')">Rury Okładzinowe (API 5CT)</button>
+    <button class="tab-btn" onclick="switchTab(this,'pip-dp')">Rury Wiertnicze (API 5DP)</button>
+    <button class="tab-btn" onclick="switchTab(this,'pip-grade')">Gatunki Stali</button>
+    <button class="tab-btn" onclick="switchTab(this,'pip-gwint')">Połączenia Gwintowe</button>
+  </div>
+
+  <div id="pip-casing" class="tab-content active">
+    <div class="section-title"><h2>Rury Okładzinowe – Typowe Wymiary API 5CT</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>OD [mm]</th><th>Grubość ścianki [mm]</th><th>ID [mm]</th>
+            <th>Masa lin. [lb/ft]</th><th>Masa lin. [kg/m]</th><th>Zastosowanie typowe</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-mono">114,3</td><td class="td-mono">5,21</td><td class="td-mono">103,9</td><td class="td-mono">9,5</td><td class="td-mono">14,1</td><td>Liner, eksploatacja</td></tr>
+          <tr><td class="td-mono">127,0</td><td class="td-mono">6,99</td><td class="td-mono">113,0</td><td class="td-mono">15,0</td><td class="td-mono">22,3</td><td>Liner, eksploatacja</td></tr>
+          <tr><td class="td-mono">139,7</td><td class="td-mono">6,99</td><td class="td-mono">125,7</td><td class="td-mono">17,0</td><td class="td-mono">25,3</td><td>Eksploatacja głęboka</td></tr>
+          <tr><td class="td-mono">177,8</td><td class="td-mono">8,05</td><td class="td-mono">161,7</td><td class="td-mono">26,0</td><td class="td-mono">38,7</td><td>Rury eksploatacyjne</td></tr>
+          <tr><td class="td-mono">177,8</td><td class="td-mono">10,36</td><td class="td-mono">157,1</td><td class="td-mono">32,0</td><td class="td-mono">47,6</td><td>Rury eksploatacyjne HW</td></tr>
+          <tr><td class="td-mono">244,5</td><td class="td-mono">8,94</td><td class="td-mono">226,6</td><td class="td-mono">40,0</td><td class="td-mono">59,5</td><td>Rury pośrednie</td></tr>
+          <tr><td class="td-mono">244,5</td><td class="td-mono">11,99</td><td class="td-mono">220,5</td><td class="td-mono">53,5</td><td class="td-mono">79,6</td><td>Rury pośrednie HW</td></tr>
+          <tr><td class="td-mono">273,1</td><td class="td-mono">9,27</td><td class="td-mono">254,5</td><td class="td-mono">45,5</td><td class="td-mono">67,7</td><td>Rury pośrednie</td></tr>
+          <tr><td class="td-mono">339,7</td><td class="td-mono">9,65</td><td class="td-mono">320,4</td><td class="td-mono">54,5</td><td class="td-mono">81,1</td><td>Rury pośrednie/pow.</td></tr>
+          <tr><td class="td-mono">339,7</td><td class="td-mono">13,06</td><td class="td-mono">313,6</td><td class="td-mono">72,0</td><td class="td-mono">107,1</td><td>Rury powierzchniowe HW</td></tr>
+          <tr><td class="td-mono">406,4</td><td class="td-mono">12,70</td><td class="td-mono">381,0</td><td class="td-mono">84,0</td><td class="td-mono">125,0</td><td>Rury powierzchniowe</td></tr>
+          <tr><td class="td-mono">473,1</td><td class="td-mono">12,70</td><td class="td-mono">447,7</td><td class="td-mono">87,5</td><td class="td-mono">130,2</td><td>Rury powierzchniowe</td></tr>
+          <tr><td class="td-mono">508,0</td><td class="td-mono">16,13</td><td class="td-mono">475,7</td><td class="td-mono">133,0</td><td class="td-mono">197,9</td><td>Rury powierzchniowe</td></tr>
+          <tr><td class="td-mono">762,0</td><td class="td-mono">19,05</td><td class="td-mono">723,9</td><td class="td-mono">240,0</td><td class="td-mono">357,1</td><td>Rury kierunkowe (conductor)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title"><h2>Właściwości Mechaniczne – Gatunki API 5CT</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Gatunek</th><th>Min Yield [psi]</th><th>Min Yield [MPa]</th><th>Min UTS [psi]</th><th>Twardość max HRC</th><th>Temp. [°C]</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-mono">J-55</td><td class="td-mono">55 000</td><td class="td-mono">379</td><td class="td-mono">75 000</td><td class="td-mono">–</td><td>do 100</td></tr>
+          <tr><td class="td-mono">K-55</td><td class="td-mono">55 000</td><td class="td-mono">379</td><td class="td-mono">95 000</td><td class="td-mono">–</td><td>do 120</td></tr>
+          <tr><td class="td-mono">N-80</td><td class="td-mono">80 000</td><td class="td-mono">552</td><td class="td-mono">100 000</td><td class="td-mono">–</td><td>do 150</td></tr>
+          <tr><td class="td-mono">L-80</td><td class="td-mono">80 000</td><td class="td-mono">552</td><td class="td-mono">95 000</td><td class="td-mono">23</td><td>sour service</td></tr>
+          <tr><td class="td-mono">C-90</td><td class="td-mono">90 000</td><td class="td-mono">621</td><td class="td-mono">105 000</td><td class="td-mono">25,4</td><td>sour service</td></tr>
+          <tr><td class="td-mono">T-95</td><td class="td-mono">95 000</td><td class="td-mono">655</td><td class="td-mono">110 000</td><td class="td-mono">25,4</td><td>sour service</td></tr>
+          <tr><td class="td-mono">P-110</td><td class="td-mono">110 000</td><td class="td-mono">758</td><td class="td-mono">125 000</td><td class="td-mono">–</td><td>deep HT</td></tr>
+          <tr><td class="td-mono">Q-125</td><td class="td-mono">125 000</td><td class="td-mono">862</td><td class="td-mono">150 000</td><td class="td-mono">–</td><td>ultra-deep</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="pip-dp" class="tab-content">
+    <div class="section-title"><h2>Rury Wiertnicze API 5DP – Typowe Wymiary</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>OD [mm]</th><th>Nominalna masa [kg/m]</th><th>ID [mm]</th><th>Grubość ścianki [mm]</th><th>Typ złącza</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-mono">73,0</td><td class="td-mono">9,9</td><td class="td-mono">62,0</td><td class="td-mono">5,51</td><td>IEU / EU</td></tr>
+          <tr><td class="td-mono">88,9</td><td class="td-mono">14,1</td><td class="td-mono">76,0</td><td class="td-mono">6,45</td><td>IEU / EU</td></tr>
+          <tr><td class="td-mono">88,9</td><td class="td-mono">19,8</td><td class="td-mono">70,2</td><td class="td-mono">9,35</td><td>IEU heavy</td></tr>
+          <tr><td class="td-mono">101,6</td><td class="td-mono">20,8</td><td class="td-mono">84,8</td><td class="td-mono">8,38</td><td>IEU / EU</td></tr>
+          <tr><td class="td-mono">114,3</td><td class="td-mono">24,7</td><td class="td-mono">97,2</td><td class="td-mono">8,56</td><td>IEU / EU</td></tr>
+          <tr><td class="td-mono">127,0</td><td class="td-mono">29,0</td><td class="td-mono">108,6</td><td class="td-mono">9,19</td><td>IEU</td></tr>
+          <tr><td class="td-mono">139,7</td><td class="td-mono">32,6</td><td class="td-mono">121,4</td><td class="td-mono">9,17</td><td>IEU</td></tr>
+          <tr><td class="td-mono">149,2</td><td class="td-mono">34,8</td><td class="td-mono">130,9</td><td class="td-mono">9,17</td><td>IEU</td></tr>
+          <tr><td class="td-mono">168,3</td><td class="td-mono">41,2</td><td class="td-mono">151,5</td><td class="td-mono">8,38</td><td>IEU</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title"><h2>Drill Collar (DC) – Wymiary Typowe</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>OD [mm]</th><th>ID [mm]</th><th>Masa [kg/m]</th><th>Masa 9m [kg]</th><th>Pasujący otwór min. [mm]</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-mono">88,9</td><td class="td-mono">38,1</td><td class="td-mono">34</td><td class="td-mono">306</td><td>120,7</td></tr>
+          <tr><td class="td-mono">120,7</td><td class="td-mono">50,8</td><td class="td-mono">69</td><td class="td-mono">621</td><td>152,4</td></tr>
+          <tr><td class="td-mono">152,4</td><td class="td-mono">57,2</td><td class="td-mono">113</td><td class="td-mono">1017</td><td>200,0</td></tr>
+          <tr><td class="td-mono">171,5</td><td class="td-mono">71,4</td><td class="td-mono">143</td><td class="td-mono">1287</td><td>215,9</td></tr>
+          <tr><td class="td-mono">203,2</td><td class="td-mono">76,2</td><td class="td-mono">204</td><td class="td-mono">1836</td><td>254,0</td></tr>
+          <tr><td class="td-mono">228,6</td><td class="td-mono">76,2</td><td class="td-mono">264</td><td class="td-mono">2376</td><td>279,4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="pip-grade" class="tab-content">
+    <div class="section-title"><h2>Gatunki Stali Rur Wiertniczych (API 5DP)</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Gatunek</th><th>Min Yield [psi]</th><th>Min UTS [psi]</th><th>Zastosowanie</th><th>Uwagi</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-mono">Grade E (E-75)</td><td class="td-mono">75 000</td><td class="td-mono">100 000</td><td>Standardowe wiercenie</td><td>Najpopularniejszy gatunek</td></tr>
+          <tr><td class="td-mono">Grade X (X-95)</td><td class="td-mono">95 000</td><td class="td-mono">105 000</td><td>Głębokie otwory</td><td>Podwyższona wytrzymałość</td></tr>
+          <tr><td class="td-mono">Grade G (G-105)</td><td class="td-mono">105 000</td><td class="td-mono">115 000</td><td>Duże głębokości</td><td>Dobra odporność na zmęczenie</td></tr>
+          <tr><td class="td-mono">Grade S (S-135)</td><td class="td-mono">135 000</td><td class="td-mono">145 000</td><td>Ultra-głębokie ERD</td><td>Najwyższa klasa standardowa</td></tr>
+          <tr><td class="td-mono">Grade V (150)</td><td class="td-mono">150 000</td><td class="td-mono">160 000</td><td>Ekstremalnie głębokie</td><td>Premium, wysoki koszt</td></tr>
+          <tr><td class="td-mono">Grade Z (Z-140)</td><td class="td-mono">140 000</td><td class="td-mono">–</td><td>Sour service ERD</td><td>Odporny na SSC</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="alert-box">
+      <strong>Uwaga dotycząca doboru gatunku:</strong> Wyższy gatunek = wyższa wytrzymałość, ale rośnie wrażliwość na korozję naprężeniową (SSC) w środowiskach z H₂S. W sour wells preferowane są gatunki z ograniczoną twardością (L-80, C-90, T-95).
+    </div>
+  </div>
+
+  <div id="pip-gwint" class="tab-content">
+    <div class="section-title"><h2>Połączenia Gwintowe – API i Premium</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Połączenia API Standardowe</h4>
+        <ul>
+          <li><strong>LTC</strong> – Long Thread Coupling (długi gwint)</li>
+          <li><strong>STC</strong> – Short Thread Coupling (krótki gwint)</li>
+          <li><strong>BTC</strong> – Buttress Thread Coupling (najszersze zastosowanie)</li>
+          <li><strong>EU/IEU</strong> – External/Internal-External Upset (rury DP)</li>
+          <li>Gwint API: stożkowy, uszczelnienie metalo-metalowe</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Połączenia Premium (VAM, TenarisHydril)</h4>
+        <ul>
+          <li><strong>VAM TOP</strong> – bez złączkowy, GAS-TIGHT</li>
+          <li><strong>VAM 21</strong> – wysokociśnieniowe, gaz szczelne</li>
+          <li><strong>Hydril 511/521</strong> – klasyki premium</li>
+          <li><strong>NS-CC</strong> – Nippon Steel, ultra-tight</li>
+          <li>Uszczelnienie metal/metal – bez uszczelki</li>
+          <li>Wymagane przy: gaz/H₂S/HPHT</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Zasady Gwintowania i Kontroli</h4>
+        <ul>
+          <li>Smarowanie: Thread Compound (API lub teflon)</li>
+          <li>Moment dokręcenia: wg tabeli producenta</li>
+          <li>Kontrola: suwmiarka, kaliber, wizualna</li>
+          <li>Inspekcja EMI/UT – po każdej kampanii</li>
+          <li>Klasyfikacja API RP 7G: Premium Class / Class 2</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Wzory Obliczeniowe Rur</h4>
+        <div class="formula-box" style="font-size:0.78rem;padding:10px;margin:6px 0">
+          <span class="formula-label">Ciśnienie Rozrywające (Burst)</span>
+          P_burst = 0,875 × 2·σ_y·t / OD
+        </div>
+        <div class="formula-box" style="font-size:0.78rem;padding:10px;margin:6px 0">
+          <span class="formula-label">Ciśnienie Zgniatające (Collapse)</span>
+          P_collapse = f(D/t, σ_y) [API Bul 5C3]
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HYDRAULICS CALCULATOR PAGE ===================== -->
+<div id="page-hydro" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">⚡</div>
+    <div>
+      <h2>Kalkulator Hydrauliki Płuczki</h2>
+      <p>Obliczenia prędkości, ECD, strat ciśnienia i optymalizacja dysz świdra</p>
+    </div>
+  </div>
+
+  <div class="calc-wrapper">
+    <div class="calc-panel">
+      <h3>💧 Dane Płuczki i Geometria</h3>
+
+      <div class="input-group">
+        <label>Gęstość Płuczki (ρ)</label>
+        <div class="input-row">
+          <input type="number" id="h_density" placeholder="1.25" step="0.01" value="1.25">
+          <span class="unit-tag">g/cm³</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Lepkość Plastyczna (PV)</label>
+        <div class="input-row">
+          <input type="number" id="h_pv" placeholder="25" step="1" value="25">
+          <span class="unit-tag">cP</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Granica Płynięcia (YP)</label>
+        <div class="input-row">
+          <input type="number" id="h_yp" placeholder="15" step="1" value="15">
+          <span class="unit-tag">lb/100ft²</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Wydajność Pompy (Q)</label>
+        <div class="input-row">
+          <input type="number" id="h_flow" placeholder="1500" step="50" value="1500">
+          <span class="unit-tag">l/min</span>
+        </div>
+      </div>
+
+      <h3 style="margin-top:24px">📐 Geometria Przewodu</h3>
+
+      <div class="input-group">
+        <label>Średnica Otworu (D_hole)</label>
+        <div class="input-row">
+          <input type="number" id="h_dhole" placeholder="215.9" step="0.1" value="215.9">
+          <span class="unit-tag">mm</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>OD Rur Wiertniczych (DP OD)</label>
+        <div class="input-row">
+          <input type="number" id="h_dpod" placeholder="127.0" step="0.1" value="127.0">
+          <span class="unit-tag">mm</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>ID Rur Wiertniczych (DP ID)</label>
+        <div class="input-row">
+          <input type="number" id="h_dpid" placeholder="108.6" step="0.1" value="108.6">
+          <span class="unit-tag">mm</span>
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Długość Przewodu (MD)</label>
+        <div class="input-row">
+          <input type="number" id="h_depth" placeholder="3000" step="100" value="3000">
+          <span class="unit-tag">m</span>
+        </div>
+      </div>
+
+      <h3 style="margin-top:24px">⚙ Dysze Świdra</h3>
+      <div class="input-group">
+        <label>Łączna Powierzchnia Dysz (suma A_n)</label>
+        <div class="input-row">
+          <input type="number" id="h_nozzle" placeholder="0.85" step="0.01" value="0.85">
+          <span class="unit-tag">cm²</span>
+        </div>
+      </div>
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-top:-8px;margin-bottom:12px">
+        Np. 3 dysze × 12/32" = 3 × 0,731 cm² = 2,19 cm²; dysze 10/32" = 0,507 cm² × 3 = 1,52 cm²
+      </div>
+
+      <button class="calc-btn" onclick="calculateHydraulics()">⚡ OBLICZ HYDRAULIKĘ</button>
+      <button class="calc-reset" onclick="document.getElementById('hydro-results').innerHTML='<div class=\'placeholder-text\'>Wprowadź dane i naciśnij OBLICZ HYDRAULIKĘ</div>'">↺ Wyczyść</button>
+    </div>
+
+    <div class="results-panel">
+      <h3>📊 Wyniki Hydrauliki</h3>
+      <div id="hydro-results">
+        <div class="placeholder-text">Wprowadź dane i naciśnij<br><strong>OBLICZ HYDRAULIKĘ</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title"><h2>Referencyjne Tabele Dysz Świdra</h2><div class="line"></div></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Rozmiar Dyszy [1/32"]</th><th>Średnica [mm]</th><th>Powierzchnia [mm²]</th><th>Powierzchnia [cm²]</th></tr></thead>
+      <tbody>
+        <tr><td class="td-mono">8</td><td class="td-mono">6,35</td><td class="td-mono">31,67</td><td class="td-mono">0,317</td></tr>
+        <tr><td class="td-mono">9</td><td class="td-mono">7,14</td><td class="td-mono">40,06</td><td class="td-mono">0,401</td></tr>
+        <tr><td class="td-mono">10</td><td class="td-mono">7,94</td><td class="td-mono">49,48</td><td class="td-mono">0,495</td></tr>
+        <tr><td class="td-mono">11</td><td class="td-mono">8,73</td><td class="td-mono">59,88</td><td class="td-mono">0,599</td></tr>
+        <tr><td class="td-mono">12</td><td class="td-mono">9,53</td><td class="td-mono">71,33</td><td class="td-mono">0,713</td></tr>
+        <tr><td class="td-mono">13</td><td class="td-mono">10,32</td><td class="td-mono">83,61</td><td class="td-mono">0,836</td></tr>
+        <tr><td class="td-mono">14</td><td class="td-mono">11,11</td><td class="td-mono">97,00</td><td class="td-mono">0,970</td></tr>
+        <tr><td class="td-mono">15</td><td class="td-mono">11,91</td><td class="td-mono">111,45</td><td class="td-mono">1,115</td></tr>
+        <tr><td class="td-mono">16</td><td class="td-mono">12,70</td><td class="td-mono">126,68</td><td class="td-mono">1,267</td></tr>
+        <tr><td class="td-mono">18</td><td class="td-mono">14,29</td><td class="td-mono">160,36</td><td class="td-mono">1,604</td></tr>
+        <tr><td class="td-mono">20</td><td class="td-mono">15,88</td><td class="td-mono">197,97</td><td class="td-mono">1,980</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title"><h2>Wzory Hydrauliki Wiertniczej</h2><div class="line"></div></div>
+  <div class="info-grid">
+    <div class="info-card">
+      <h4>Prędkość w Przestrzeni Anularnej</h4>
+      <div class="formula-box" style="font-size:0.8rem;padding:12px">
+        v_ann = Q / [π/4 · (D_h² − D_dp²)] [m/s]<br><small style="font-size:0.72rem;opacity:0.6">D_h, D_dp w metrach (przelicz mm ÷ 1000)</small>
+      </div>
+    </div>
+    <div class="info-card">
+      <h4>Prędkość w Rurach DP</h4>
+      <div class="formula-box" style="font-size:0.8rem;padding:12px">
+        v_pipe = Q / [π/4 · D_id²] [m/s]
+      </div>
+    </div>
+    <div class="info-card">
+      <h4>Ciśnienie na Dyszkach</h4>
+      <div class="formula-box" style="font-size:0.8rem;padding:12px">
+        ΔP_bit = ρ·Q² / (2·C_d²·A_n²) [Pa]
+      </div>
+    </div>
+    <div class="info-card">
+      <h4>ECD w Przestrzeni Anularnej</h4>
+      <div class="formula-box" style="font-size:0.8rem;padding:12px">
+        ECD = ρ_mud + ΔP_ann/(g·TVD) [g/cm³]
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== HYDROGEOLOGY PAGE ===================== -->
+<div id="page-hydrogeo" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">🌊</div>
+    <div>
+      <h2>Wiertnictwo Hydrogeologiczne</h2>
+      <p>Źródło: Gonet A., Macuda J. – <em>Wiertnictwo Hydrogeologiczne</em>, AGH Kraków 2004 (wyd. III)</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'hg-wody')">Wody Podziemne</button>
+    <button class="tab-btn" onclick="switchTab(this,'hg-metody')">Metody Wiercenia</button>
+    <button class="tab-btn" onclick="switchTab(this,'hg-konstr')">Konstrukcje Otworów</button>
+    <button class="tab-btn" onclick="switchTab(this,'hg-filtry')">Filtry Studzienne</button>
+    <button class="tab-btn" onclick="switchTab(this,'hg-wzory')">Wzory Obliczeniowe</button>
+  </div>
+
+  <!-- TAB: WODY PODZIEMNE -->
+  <div id="hg-wody" class="tab-content active">
+    <div class="section-title"><h2>Występowanie i Klasyfikacja Wód Podziemnych</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Strefy Hydrogeologiczne</h4>
+        <ul>
+          <li><strong>Strefa aeracji (napowietrzenia)</strong> – pustki skalne wypełnione powietrzem; woda w postaci pary, higroskopijnej i błonkowatej</li>
+          <li><strong>Strefa saturacji (nasycenia)</strong> – wszystkie pustki wypełnione wodą wolną</li>
+          <li><strong>Zwierciadło wody podziemnej</strong> – granica między strefami</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Podział Wód Podziemnych wg Głębokości</h4>
+        <ul>
+          <li><strong>Wody przypowierzchniowe</strong> – wody zaskórne, błotne; w strefie saturacji</li>
+          <li><strong>Wody freatyczne</strong> – oddzielone od powierzchni strefą aeracji; zwierciadło swobodne lub napięte</li>
+          <li><strong>Wody głębinowe</strong> – zasilane grawitacyjnie przez opady; pokryte warstwą nieprzepuszczalną</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Zwierciadło Wody Głębinowej</h4>
+        <ul>
+          <li><strong>Zwierciadło swobodne</strong> – brak uszczelnienia od góry</li>
+          <li><strong>Zwierciadło napięte</strong> – woda pod ciśnieniem przez stropową warstwę nieprzepuszczalną</li>
+          <li><strong>Artezyjskie</strong> – zwierciadło hydrostatyczne powyżej powierzchni terenu</li>
+          <li><strong>Subartezyjskie</strong> – zwierciadło poniżej powierzchni terenu</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Genetyczne Typy Wód Podziemnych</h4>
+        <ul>
+          <li><strong>Wody wadozowe</strong> – krążące między atmosferą a skorupą (infiltracyjne, kondensacyjne, influacyjne)</li>
+          <li><strong>Wody juwenilne</strong> – po raz pierwszy na powierzchni; magmatyczne, dehydratacyjne, syntetyczne</li>
+          <li><strong>Wody reliktowe</strong> – resztki dawnych mórz i jezior (morskie, kontynentalne)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Formy Występowania Wód Podziemnych</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Zbiornik Wody Podziemnej</h4>
+        <p>Ośrodek wodonośny o znacznym rozprzestrzenieniu i dużej miąższości. Ruch wody bardzo powolny. Zasilanie: przez opady, przez podziemny dopływ, przez infiltrację ze zbiornika wyżej leżącego lub przez okna hydrogeologiczne.</p>
+      </div>
+      <div class="info-card">
+        <h4>Strumień Wody Podziemnej</h4>
+        <p>Strop warstwy nieprzepuszczalnej posiada ogólny spadek w kierunku przepływu. Zbiornik o stosunkowo małej pojemności. Ruch wody zdecydowanie kierunkowy.</p>
+      </div>
+      <div class="info-card">
+        <h4>Soczewka Wody Podziemnej</h4>
+        <p>Izolowany zbiornik wody otoczony zewsząd utworami nieprzepuszczalnymi. Ograniczony zasięg i pojemność. Wrażliwy na eksploatację.</p>
+      </div>
+      <div class="info-card">
+        <h4>Okno Hydrogeologiczne</h4>
+        <p>Miejsce braku ciągłości utworów nieprzepuszczalnych łączące wody gruntowe z głębinowymi. Może mieć charakter erozyjny lub sedymentacyjny. Ważne dla zasilania warstw głębinowych.</p>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Formy Wody w Skorupie Ziemskiej</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Forma wody</th><th>Charakterystyka</th><th>Znaczenie hydrogeologiczne</th></tr></thead>
+        <tbody>
+          <tr><td>Para wodna</td><td>W porach i szczelinach strefy aeracji</td><td>Możliwość kondensacji</td></tr>
+          <tr><td>Woda błonkowa</td><td>Otaczająca ziarna skalne cienką warstwą</td><td>Trudno dostępna dla studni</td></tr>
+          <tr><td>Woda higroskopijna</td><td>Zaadsorbowana na powierzchni minerałów</td><td>Niedostępna dla studni</td></tr>
+          <tr><td>Woda włoskowata (kapilarna)</td><td>W małych porach ponad zwierciadłem</td><td>Strefa kapilarna nad strefą sat.</td></tr>
+          <tr><td>Woda wolna (gruntowa)</td><td>W strefie saturacji – przepływa swobodnie</td><td>Główny przedmiot ujęć</td></tr>
+          <tr><td>Woda w stanie stałym (lód)</td><td>Wieczna zmarzlina (permafrost)</td><td>Bariery przepływu</td></tr>
+          <tr><td>Woda krystalizacyjna</td><td>W sieci krystalicznej minerałów</td><td>Uwalniana przy przeobrażeniach</td></tr>
+          <tr><td>Woda chemicznie związana</td><td>W związkach chemicznych skał</td><td>Niedostępna bez procesów chemicznych</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: METODY WIERCENIA -->
+  <div id="hg-metody" class="tab-content">
+    <div class="section-title"><h2>Metody Wiercenia Otworów Hydrogeologicznych</h2><div class="line"></div></div>
+
+    <div class="section-title" style="margin-top:8px"><h2>1. Okrętne Wiercenie Otworów</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Charakterystyka Metody</h4>
+        <ul>
+          <li>Najstarsza metoda wiercenia</li>
+          <li>Siłą napędową jest siła ludzka</li>
+          <li>Tylko skały bardzo miękkie i miękkie</li>
+          <li>Niskie wskaźniki techniczno-ekonomiczne</li>
+          <li>Zastosowanie: płytkie otwory do eksploatacji wody lub badania gruntu</li>
+          <li>Wypierana przez wiercenia o napędzie mechanicznym</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Typy Świdrów Okrętnych</h4>
+        <ul>
+          <li><strong>Rurowe</strong> – jedno- i dwuostrzowe; gliny, łupki, iły</li>
+          <li><strong>Spiralne</strong> – ostrze łatwo wnika w dno; gliny, iły, miękkie łupki</li>
+          <li><strong>Spiralno-rurowe</strong> – kombinacja zalet obu; skały miękkie, plastyczne</li>
+          <li><strong>Talerzowe</strong> – płytkie otwory pod słupy</li>
+          <li><strong>Skrzynkowe</strong> – luźne piaski</li>
+          <li><strong>Ślimakowe</strong> – torfy i skały miękkie</li>
+          <li><strong>Czółenkowe</strong> – torfy, skały miękkie</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Warianty Wykonania</h4>
+        <ul>
+          <li><strong>Bez trójnoga</strong> – bardzo płytkie otwory, mały ciężar zestawu</li>
+          <li><strong>Z trójnogiem</strong> – nieco głębsze otwory, ułatwia operacje spuszczania i wyciągania; wyposażenie: wciągarka ręczna + okrętka + hak</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>2. Udarowe Wiercenie Otworów</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Zasada Działania</h4>
+        <p>Kruszenie i miażdżenie skały na dnie otworu pod wpływem uderzeń świdra. Po każdym uderzeniu obrót świdra o pewien kąt – wiercenie okrągłego otworu. Kąt obrotu: mniejszy = twardsza skała, większa średnica, mniejsza siła udaru.</p>
+      </div>
+      <div class="info-card">
+        <h4>Typy Wierceń Udarowych</h4>
+        <ul>
+          <li><strong>Na przewodzie linowym (pensylwański)</strong> – stosowany współcześnie; szybkie zapuszczanie i wyciąganie; do ~400 m</li>
+          <li><strong>Na przewodzie żerdziowym (bitkowski/kanadyjski)</strong> – rzadziej stosowany; może być na sucho lub z płuczką</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Skład Przyrządu Wiertniczego</h4>
+        <ul>
+          <li><strong>Świder</strong> – płaski, szczękowy, krzyżowy, zetowy, piramidalny; symetryczne i mimośrodowe</li>
+          <li><strong>Obciążnik</strong> – grubościenna rura stalowa; zwiększa udar świdra</li>
+          <li><strong>Nożyce wolnospadowe</strong> – zabezpieczają przy wcinaniu się świdra; amortyzacja</li>
+          <li><strong>Pasterka</strong> – łączy nożyce z liną; umożliwia obrót świdra</li>
+          <li><strong>Łyżka</strong> – oczyszczanie dna otworu ze zwiercin</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Wiertnica Udarowa UP-200-2 (Glinik)</h4>
+        <ul>
+          <li>Głębokość do 300 m; śr. rur: 508→305 mm</li>
+          <li>Silnik 44 kW z sprzęgłem powietrznym</li>
+          <li>Trzy wały: świdrowy, łyżkowy, ciężarowy</li>
+          <li>Skok przyrządu wiertniczego: 0,6÷1,06 m</li>
+          <li>Umieszczona na dwuosiowej platformie (transport)</li>
+          <li>Maszt składany; szybki montaż i demontaż</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>3. Obrotowe Wiercenie Otworów Normalnoś­rednicowych</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Zalety i Wady Metody Obrotowej z Płuczką</h4>
+        <ul>
+          <li>✅ Duże prędkości wiercenia przy małych nakładach pracy</li>
+          <li>✅ Otwory do znacznych głębokości</li>
+          <li>❌ Ryzyko zanieczyszczenia strefy przyotworowej przez płuczkę</li>
+          <li>❌ Sedymentacja cząstek stałych z płuczki w porach skały</li>
+          <li>❌ Procesy fizyczno-chemiczne na granicy faz mogą zatykać pory</li>
+          <li>❌ Zmienna wartość ciśnienia płuczki na dno otworu</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Świdry Gryzowe – Klasyfikacja (PL)</h4>
+        <ul>
+          <li><strong>BM</strong> – skały bardzo miękkie</li>
+          <li><strong>M</strong> – skały miękkie</li>
+          <li><strong>S</strong> – skały średnio twarde</li>
+          <li><strong>T</strong> – skały twarde</li>
+          <li><strong>BT</strong> – skały bardzo twarde</li>
+          <li>Uzębienie: frezowane lub słupki (węglikowe)</li>
+          <li>Łożyska: standardowe lub uszczelnione z ciągłym smarowaniem</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>4. Obrotowe Wiercenie Wielkoś­rednicowych Otworów</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Metody Obiegu Płuczki</h4>
+        <ul>
+          <li><strong>Prawy obieg</strong> – płuczka wpompowywana przez przewód wiertniczy, wypływa przestrzenią anularną; standardowa</li>
+          <li><strong>Odwrotny obieg + pompa odśrodkowa ssąca</strong> – płuczka zassana z przestrzeni anularnej przez przewód</li>
+          <li><strong>Odwrotny + pompa strumieniowa (ejektor)</strong> – zastosowanie efektu Venturiego</li>
+          <li><strong>Odwrotny + podnośnik powietrzny</strong> – wdmuchiwanie sprężonego powietrza do przewodu wiertniczego; unoszenie cieczy</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Podnośnik Powietrzny (Air Lift)</h4>
+        <ul>
+          <li>Sprężone powietrze wdmuchiwane przez mieszacz powietrzny</li>
+          <li>Napowietrzenie zmniejsza gęstość mieszaniny w przewodzie</li>
+          <li>Różnica ciśnień hydrostatycznych → unoszenie cieczy ze zwiercinami</li>
+          <li>Kluczowy parametr: głębokość zanurzenia mieszacza H_E</li>
+          <li>Optymalne: H_E / H_O ≈ 0,6÷0,75 (zanurzenie/wysokość podnoszenia)</li>
+          <li>Wydajność sprężarki z nadwyżką 20%: Q_k = 1,2 · Q</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Świdry do Otworów Wielkoś­rednicowych</h4>
+        <ul>
+          <li>Świdry talerzowe – duże średnice</li>
+          <li>Świdry rurowe skrawające (drag bits)</li>
+          <li>Świdry gryzowe wielostożkowe o dużej średnicy</li>
+          <li>Głowice wiertnicze do metod mechanicznych</li>
+          <li>Świdry diamentowe (skały twarde, rdzeniowanie)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>5. Obrotowo-Udarowe Wiercenie</h4>
+        <ul>
+          <li>Połączenie zalet obu metod: obrotowej i udarowej</li>
+          <li>Ruch obrotowy + udary pneumatyczne (DTH – Down-The-Hole)</li>
+          <li>Zastosowanie: skały twarde i bardzo twarde</li>
+          <li>Wyższa prędkość od samego udarowego w twardych skałach</li>
+          <li>Możliwa praca ze sprężonym powietrzem lub pianą</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>Prędkość Wiercenia Udarowego</h2><div class="line"></div></div>
+    <div class="formula-box">
+      <span class="formula-label">Prędkość Wiercenia Udarowego (Gonet & Macuda, wzór 3.7)</span>
+      v_sr = (h₀ · u) / m₀ &nbsp;&nbsp;[m/s]
+    </div>
+    <div class="formula-box" style="margin-top:10px">
+      <span class="formula-label">Siła Udaru Świdra o Dno Otworu (wzór 3.8)</span>
+      P = 2 · h₀ · D · Rc · (tg(αs/2) + f) &nbsp;&nbsp;[N]
+    </div>
+    <div class="formula-box" style="margin-top:10px">
+      <span class="formula-label">Maksymalna Wysokość Podnoszenia Świdra (wzór 3.6)</span>
+      S = Rc² · g / (2 · a · E · γs) &nbsp;&nbsp;[m]
+    </div>
+    <div class="two-col" style="margin-top:16px">
+      <div class="info-card">
+        <h4>Kąty Zaostrzenia Świdrów (Tabela 3.1)</h4>
+        <div class="table-wrap" style="border:none;border-radius:0;margin:0">
+          <table style="font-size:0.82rem">
+            <thead><tr><th>Typ skały</th><th>αs [°]</th></tr></thead>
+            <tbody>
+              <tr><td>Miękkie</td><td class="td-mono">75÷85</td></tr>
+              <tr><td>Średnie</td><td class="td-mono">90÷105</td></tr>
+              <tr><td>Twarde</td><td class="td-mono">90÷105</td></tr>
+              <tr><td>Bardzo twarde</td><td class="td-mono">110÷120</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="info-card">
+        <h4>Ciężar Przyrządu Wiertniczego (Tabela 3.2)</h4>
+        <div class="table-wrap" style="border:none;border-radius:0;margin:0">
+          <table style="font-size:0.82rem">
+            <thead><tr><th>Typ skały</th><th>q [kN/m]</th></tr></thead>
+            <tbody>
+              <tr><td>Miękkie</td><td class="td-mono">15÷25</td></tr>
+              <tr><td>Średnie</td><td class="td-mono">30÷40</td></tr>
+              <tr><td>Twarde</td><td class="td-mono">40÷50</td></tr>
+              <tr><td>Bardzo twarde</td><td class="td-mono">50÷70</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: KONSTRUKCJE OTWORÓW -->
+  <div id="hg-konstr" class="tab-content">
+    <div class="section-title"><h2>Konstrukcje Otworów Hydrogeologicznych</h2><div class="line"></div></div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Elementy Kolumny Rur Okładzinowych</h4>
+        <ul>
+          <li><strong>Kolumna wstępna</strong> – pierwsza, największa; ochrona przy powierzchni</li>
+          <li><strong>Kolumna prowadnikowa</strong> – stabilizacja górnej części otworu</li>
+          <li><strong>Kolumna techniczna</strong> – izolacja stref problemowych; często wyciągana po instalacji filtra</li>
+          <li><strong>Kolumna eksploatacyjna</strong> – docelowa rura studzienna</li>
+          <li><strong>Kolumna filtrowa</strong> – rura nadfiltrowa + filtr + rura podfiltrowa</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Typy Konstrukcji Otworów</h4>
+        <ul>
+          <li><strong>Jednokolumnowa</strong> – prosta, tania; krótki okres eksploatacji, mała głębokość</li>
+          <li><strong>Dwukolumnowa</strong> – najczęściej stosowana przy metodzie obrotowej z płuczką</li>
+          <li><strong>Teleskopowa</strong> – przy komplikacjach wiertniczych; zmniejsza się średnica z głębokością</li>
+          <li><strong>Bezfiltrowa w skałach zwiężłych</strong> – stabilna ściana otworu; brak konieczności orurowania w strefie wodonośnej</li>
+          <li><strong>Bezfiltrowa – lej czerpalny</strong> – w skałach sypkich ze stabilnym podłożem; tworzenie leja przez pompowanie</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Zamykanie Warstw Wodonośnych</h4>
+        <ul>
+          <li>Cel: izolacja nawierconej warstwy wodonośnej; zapobieganie migracji wód</li>
+          <li><strong>Wciskanie rur w skały plastyczne</strong> – rury z długimi butami</li>
+          <li><strong>Korek iłowy</strong> – kule iłowe ubijane w otworze (5÷10 m); przed zakorkowaniem lekko suszone</li>
+          <li><strong>Cementowanie</strong> – główna metoda przy wierceniu obrotowym; jedno- lub dwustopniowe</li>
+          <li>Szczelność sprawdzana przez sczerpywanie płynu w otworze</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Cementowanie w Otworach Hydrogeologicznych</h4>
+        <ul>
+          <li>Przez kolumnę rur okładzinowych (jednostopniowe z dwoma klockami)</li>
+          <li>Dwustopniowe – długie kolumny; mufa cementacyjna w zaplanowanym miejscu</li>
+          <li>Przy otworach wielkoś­rednicowych – rurki cementacyjne w przestrzeni anularnej + pierścień cementacyjny na zewnątrz buta</li>
+          <li>Schemat: dolny klocek → zaczyn cementowy → górny klocek → przybitka → lądowanie</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Typowe Konstrukcje Wielkoś­rednicowych Otworów Hydrogeologicznych (Tabela 7.15)</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Wariant</th><th>Śr. świdra [m]</th><th>OD rur okładzin. [m]</th><th>Prześwit [m]</th><th>Zastosowanie</th></tr>
+        </thead>
+        <tbody>
+          <tr><td rowspan="3" class="td-mono">A-I</td><td class="td-mono">1,36</td><td class="td-mono">1,220</td><td class="td-mono">0,07</td><td rowspan="3">Głębokości do ~150 m; skały zwiężłe przy powierzchni</td></tr>
+          <tr><td class="td-mono">1,16</td><td class="td-mono">0,920</td><td class="td-mono">0,12</td></tr>
+          <tr><td class="td-mono">0,86</td><td class="td-mono">0,508</td><td class="td-mono">0,17</td></tr>
+          <tr><td rowspan="3" class="td-mono">A-II</td><td class="td-mono">1,16</td><td class="td-mono">1,016</td><td class="td-mono">0,07</td><td rowspan="3">Głębokości do ~150 m; wariant alternatywny</td></tr>
+          <tr><td class="td-mono">0,96</td><td class="td-mono">0,820</td><td class="td-mono">0,07</td></tr>
+          <tr><td class="td-mono">0,76</td><td class="td-mono">0,508</td><td class="td-mono">0,12</td></tr>
+          <tr><td rowspan="4" class="td-mono">C-I</td><td class="td-mono">1,50</td><td class="td-mono">1,420</td><td class="td-mono">0,04</td><td rowspan="4">Głębokości do ~400 m; brak prognozowanych komplikacji</td></tr>
+          <tr><td class="td-mono">1,36</td><td class="td-mono">1,220</td><td class="td-mono">0,07</td></tr>
+          <tr><td class="td-mono">1,16</td><td class="td-mono">0,711</td><td class="td-mono">0,22</td></tr>
+          <tr><td class="td-mono">0,67</td><td class="td-mono">0,508</td><td class="td-mono">0,08</td></tr>
+          <tr><td rowspan="5" class="td-mono">E</td><td class="td-mono">1,50</td><td class="td-mono">1,420</td><td class="td-mono">0,04</td><td rowspan="5">Głębokości do ~400 m; komplikacje wiertnicze</td></tr>
+          <tr><td class="td-mono">1,36</td><td class="td-mono">1,220</td><td class="td-mono">0,07</td></tr>
+          <tr><td class="td-mono">1,16</td><td class="td-mono">0,711</td><td class="td-mono">0,22</td></tr>
+          <tr><td class="td-mono">0,67</td><td class="td-mono">0,508</td><td class="td-mono">0,08</td></tr>
+          <tr><td class="td-mono">0,47</td><td class="td-mono">0,356</td><td class="td-mono">0,06</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title"><h2>Wytrzymałość Rur Okładzinowych – Wzory API (wg rozdziału 7)</h2><div class="line"></div></div>
+    <div class="two-col">
+      <div>
+        <div class="formula-box">
+          <span class="formula-label">Graniczny Iloraz Grubości/Średnicy (wzór 7.16)</span>
+          K_gr = σ_dop · (1 − μ) / E
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Ciśnienie Zgniatające – Wg API Obszar Plastyczny (wzór 7.41)</span>
+          P_zg = 2 · Re · (D/t − 1) / (D/t)²
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Ciśnienie Zgniatające – Obszar Sprężysty (wzór 7.44)</span>
+          P_zg = 323 619,45 · 10⁶ / [(D/t) · (D/t − 1)]
+        </div>
+      </div>
+      <div>
+        <div class="formula-box">
+          <span class="formula-label">Wytrzymałość na Rozciąganie w Caliźnie (wzór 7.52)</span>
+          P_r = π/4 · (D² − D_w²) · Re
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Krytyczna Długość Kolumny na Wyboczenie (wzór 7.71)</span>
+          L_kr = ∛(2π² · E · I / q)
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Ciśnienie Wewnętrzne (Burst) wg API (wzór 7.67)</span>
+          P_w = 1,75 · Re · t / D
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Własności Mechaniczne Stali Rur (Tabela 7.1 wg API)</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Gatunek API</th><th>Re min [MPa]</th><th>Rm min [MPa]</th><th>Uwagi</th></tr></thead>
+        <tbody>
+          <tr><td class="td-mono">H-40</td><td class="td-mono">275,6</td><td class="td-mono">413,8</td><td>Płytkie studnie</td></tr>
+          <tr><td class="td-mono">J-55</td><td class="td-mono">379,5</td><td class="td-mono">516,8</td><td>Standard hydrogeologia</td></tr>
+          <tr><td class="td-mono">K-55</td><td class="td-mono">379,5</td><td class="td-mono">655,1</td><td>Wyższa wytrzymałość UTS</td></tr>
+          <tr><td class="td-mono">L-80</td><td class="td-mono">550,0</td><td class="td-mono">660,0</td><td>Sour service, HRC≤23</td></tr>
+          <tr><td class="td-mono">N-80</td><td class="td-mono">551,1</td><td class="td-mono">689,4</td><td>Głębsze otwory</td></tr>
+          <tr><td class="td-mono">C-95</td><td class="td-mono">655,1</td><td class="td-mono">723,7</td><td>Głęboka hydrogeologia</td></tr>
+          <tr><td class="td-mono">P-110</td><td class="td-mono">758,1</td><td class="td-mono">862,0</td><td>Otwory głębokie HPHT</td></tr>
+          <tr><td class="td-mono">V-150</td><td class="td-mono">1034,6</td><td class="td-mono">1103,3</td><td>Ultra-głębokie</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TAB: FILTRY -->
+  <div id="hg-filtry" class="tab-content">
+    <div class="section-title"><h2>Filtry Studzienne – Rodzaje i Projektowanie</h2><div class="line"></div></div>
+
+    <div class="alert-box">
+      <strong>Funkcja filtra studziennego:</strong> Zapewnienie długoletniej i bezawaryjnej pracy studni. Sprawność hydrauliczna otworu studziennego zależy od prawidłowego dobrania typu i konstrukcji filtra oraz obliczenia wszystkich jego wymiarów.
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Warunki Jakościowe Filtra (wg Gonet & Macuda)</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Wymagania Techniczne</h4>
+        <ul>
+          <li>Odpowiednia wytrzymałość mechaniczna – stateczność ściany otworu</li>
+          <li>Umożliwienie „odpiaszczenia" strefy przyfiltrowej (wypłukanie drobnych frakcji)</li>
+          <li>Małe straty hydrauliczne przy przepływie wody przez ściany filtra</li>
+          <li>Minimalizacja zapiaszczenia studni podczas eksploatacji</li>
+          <li>Utrudnianie tworzenia osadów chemicznych i biochemicznych</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Wymagania Eksploatacyjne</h4>
+        <ul>
+          <li>Odporność na korodujące działanie wód agresywnych</li>
+          <li>Możliwość zabiegów uaktywniających i renowacyjnych</li>
+          <li>Możliwość rekonstrukcji otworu</li>
+          <li>Umożliwienie instalacji urządzenia pompowego o wymaganej charakterystyce</li>
+          <li>Brak galwanizacji między materiałami filtra a wodą</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Typy Filtrów Stosowanych w Polsce</h2><div class="line"></div></div>
+
+    <!-- Filtry rurowe -->
+    <div class="accordion-item">
+      <div class="accordion-head" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span>8.1.1 Filtry Rurowe Perforowane</span><span class="chevron">▾</span>
+      </div>
+      <div class="accordion-body">
+        <p>Wykonywane z rur stalowych lub PCV. Stosowane w spękanych skałach zwiężłych lub luźnych ze żwirami gruboziarnistymi. Perforacja musi być dostosowana do uziarnienia warstwy wodonośnej.</p>
+        <p style="margin-top:10px"><strong>Perforacja okrągła:</strong> Otwory w szachownicę. Odstęp osiowy l = (2,3÷2,8) · d₀ (d₀ – średnica otworu). Powierzchnia czynna maks. 30%.</p>
+        <div class="table-wrap" style="margin-top:10px">
+          <table style="font-size:0.82rem">
+            <thead><tr><th>l/d₀</th><th>2,0</th><th>2,3</th><th>2,5</th><th>2,8</th><th>3,0</th></tr></thead>
+            <tbody><tr><td>p [%]</td><td class="td-mono">39</td><td class="td-mono">30</td><td class="td-mono">25</td><td class="td-mono">20</td><td class="td-mono">17,5</td></tr></tbody>
+          </table>
+        </div>
+        <p style="margin-top:10px"><strong>Perforacja szczelinowa:</strong> Układy: pasowy prosty, pasowy w szachownicę, w szachownicę. Powierzchnia czynna ≤ 20%. Długość szczelin = 8÷10 · szerokość.</p>
+        <div class="table-wrap" style="margin-top:6px">
+          <table style="font-size:0.82rem">
+            <thead><tr><th>Warstwa wodonośna</th><th>Szerokość [mm]</th><th>Długość [mm]</th></tr></thead>
+            <tbody>
+              <tr><td>Piaszczysta i żwirowa</td><td class="td-mono">2,5÷4,0</td><td class="td-mono">20,0÷40,0</td></tr>
+              <tr><td>Zwiężła</td><td class="td-mono">do 10,0</td><td class="td-mono">do 100,0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span>8.1.2 Filtry Siatkowe</span><span class="chevron">▾</span>
+      </div>
+      <div class="accordion-body">
+        <p>Stosowane do ujmowania wód z luźnych warstw wodonośnych (piaski i żwiry). Budowa: rura perforowana (szkielet) + podkład z drutu/żyłki nylonowej + siatka filtracyjna.</p>
+        <p style="margin-top:8px">Wymiary oczek siatki dostosowane do uziarnienia warstwy wodonośnej. Materiały: nierdzewna siatka z drutu stalowego, materiały sztuczne. Wymagania materiałowe: brak ogniw galwanicznych, mały opór hydrauliczny, nie sprzyjają wytrącaniu Fe i Mn.</p>
+        <p style="margin-top:8px">Coraz częściej zastępowane przez filtry szczelinowe z tworzyw sztucznych.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span>8.1.3 Filtry Żwirowe</span><span class="chevron">▾</span>
+      </div>
+      <div class="accordion-body">
+        <p>Rura szkieletowa perforowana obsypana/obłożona jedną lub kilkoma warstwami obsypki żwirowej. Warunki prawidłowej obsypki: przepuszczanie wody i drobnych frakcji piasku przy zatrzymywaniu ziaren o większej średnicy (ochrona przed sufozją).</p>
+        <p style="margin-top:8px"><strong>Obsypka:</strong> Żwiry kwarcowe, czystość kwarcu &gt;95%, jedna lub dwie warstwy. Zewnętrzna warstwa – ziarna drobniejsze dostosowane do uziarnienia warstwy wodonośnej.</p>
+        <p style="margin-top:8px"><strong>Zastosowanie:</strong> Do ujmowania wody z warstw drobnoziarnistych. W otworach normalnoś­rednicowych do 100 m głębokości, w wielkoś­rednicowych do 300 m.</p>
+        <p style="margin-top:8px"><strong>Filtry żwirowe okładzinowe</strong> – gotowe elementy (1÷kilka m): rura szkieletowa + granulowane żwirki klejone żywicami. Instalowane w otworze i dodatkowo obsypane.</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Projektowanie Filtrów Studni Wierconych (rozdz. 8.2)</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>8.2.1 Długość Filtra</h4>
+        <p>Dobierać jak największą – od długości głównie zależy wydajność studni. Dostosowywana do miąższości warstwy wodonośnej z uwzględnieniem depresji.</p>
+        <div class="formula-box" style="font-size:0.8rem;padding:10px;margin-top:8px">
+          <span class="formula-label">Długość filtra – mała miąższość (&lt;15 m)</span>
+          l_f = (0,4÷0,8)·M &nbsp; lub &nbsp; l = (0,4÷0,6)·H
+        </div>
+        <p style="font-size:0.82rem;margin-top:6px;color:var(--text-dim)">M – miąższość przy napiętym zwierciadle; H – przy swobodnym</p>
+      </div>
+      <div class="info-card">
+        <h4>8.2.2 Obliczanie Średnicy Filtra</h4>
+        <p>Dobierana tak, aby nie przekraczać dopuszczalnych prędkości filtracji v_dop na granicy filtr–warstwa wodonośna.</p>
+        <div class="formula-box" style="font-size:0.8rem;padding:10px;margin-top:8px">
+          <span class="formula-label">Powierzchnia robocza filtra (wzór 8.1)</span>
+          F_f = π · D_z · l_f &nbsp;&nbsp;[m²]
+        </div>
+        <p style="font-size:0.82rem;margin-top:6px;color:var(--text-dim)">D_z – zewnętrzna średnica filtra; l_f – długość filtra</p>
+      </div>
+      <div class="info-card">
+        <h4>8.2.6 Przepustowość Filtra</h4>
+        <p>Wydajność studni Q musi być zapewniona przy dopuszczalnej prędkości filtracji v_dop. Im większa powierzchnia czynna filtra, tym mniejszy opór hydrauliczny przy tym samym wydatku.</p>
+        <div class="formula-box" style="font-size:0.8rem;padding:10px;margin-top:8px">
+          Q = F_f · v_dop = π · D_z · l_f · v_dop &nbsp;[m³/s]
+        </div>
+      </div>
+      <div class="info-card">
+        <h4>Obsypka Żwirowa – Warunek Wytrzymałości (wzór 7.73)</h4>
+        <p>Ciśnienie zgniatające od opadającego żwiru nie może przekroczyć obliczonego ciśnienia zgniatającego kolumnę filtrową.</p>
+        <div class="formula-box" style="font-size:0.8rem;padding:10px;margin-top:8px">
+          <span class="formula-label">Warunek ogólny</span>
+          p_z · κ ≤ p_zg &nbsp;&nbsp; (κ ≥ 1,1)
+        </div>
+        <p style="font-size:0.82rem;margin-top:6px;color:var(--text-dim)">κ – współczynnik bezpieczeństwa; p_zg – ciśnienie zgniatające filtr</p>
+      </div>
+    </div>
+
+    <div class="section-title"><h2>Dopuszczalny Strumień Objętości Żwiru (wzór 7.78)</h2><div class="line"></div></div>
+    <div class="formula-box">
+      Q_d = [π · p_zg · ρ_z · V · (D₀² − D²)] / [4 · κ · H_ot · g · (ρ_z − ρ_w) · ρ_n]
+    </div>
+    <div class="info-card" style="margin-top:12px">
+      <h4>Parametry Wzoru 7.78</h4>
+      <ul>
+        <li>Q_d – dopuszczalny strumień objętości żwiru do przestrzeni pierścieniowej [m³/s]</li>
+        <li>ρ_z = 2650 kg/m³ – gęstość żwiru; ρ_n = 1800 kg/m³ – gęstość nasypowa żwiru</li>
+        <li>V = w · d₀ – prędkość opadania żwiru (w=3,2 dla d=2÷3 mm; 3,4 dla d=4 mm; 3,6 dla d=5 mm)</li>
+        <li>D₀ – średnica otworu; D – zewnętrzna średnica rur okładzinowych</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TAB: WZORY -->
+  <div id="hg-wzory" class="tab-content">
+    <div class="section-title"><h2>Kluczowe Wzory Obliczeniowe – Wiertnictwo Hydrogeologiczne</h2><div class="line"></div></div>
+
+    <div class="two-col">
+      <div>
+        <div class="section-title"><h2>Hydraulika Odwrotnego Obiegu z Podnośnikiem Powietrznym</h2><div class="line"></div></div>
+        <div class="formula-box">
+          <span class="formula-label">Jednostkowe zapotrzebowanie powietrza – met. Allena (wzór 5.19)</span>
+          Q_j = c · log[(H_O · g · ρ_w) / (p₀ + g · ρ_p · H_E)] / Q_ps
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Strumień objętości płuczki (wzór 5.32)</span>
+          v_p = e + u &nbsp;&nbsp;[m/s]
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Prędkość opadania zwiercin kulistych – Rittinger (wzór 5.33)</span>
+          u = 4,9693 · √[d₀(ρ_s − ρ_p) / ρ_p]
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Prędkość opadania zwiercin płaskich – Pigott (wzór 5.34)</span>
+          u = 1,9316 · √[d₀(ρ_s − ρ_p) / ρ_p]
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Prędkość opadania (laminar) – Stokes (wzór 5.35)</span>
+          u = 0,6558 · d₀² · (ρ_s − ρ_p) / η_p
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Masa zwiercanej skały w jedn. czasu (wzór 5.37)</span>
+          m_z = π/4 · D₀² · v_m · ρ_s &nbsp;&nbsp;[kg/s]
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Wymagana prędkość wynoszenia zwiercin (wzór 5.39)</span>
+          e = D₀² · v_m · (ρ_s − ρ_p) / [d_w² · (ρ_w − ρ_p)]
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Strumień objętości płuczki (wzór 5.40)</span>
+          Q_p = π · d_w² / 4 · v_p &nbsp;&nbsp;[m³/s]
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Wydajność sprężarki (wzór 5.27)</span>
+          Q_k = 1,2 · Q
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Moc na wale sprężarki (wzór 5.28)</span>
+          N_k = N₀ · Q_k · p_psp &nbsp;&nbsp;[kW]
+        </div>
+      </div>
+      <div>
+        <div class="section-title"><h2>Wzory na Ciśnienie Rur Okładzinowych</h2><div class="line"></div></div>
+        <div class="formula-box">
+          <span class="formula-label">Ciśnienie poziome w górotworze (wzór 7.2)</span>
+          P_x = Σ(g·ρᵢ·hᵢ) · cos(ψᵢ)·(1−sin(ψᵢ))/(1+sin(ψᵢ))
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Ciśnienie na styku żwiru z rurą (wzór 7.13)</span>
+          σ_a = p_x · (a/R)^(c−1) &nbsp;&nbsp; gdzie c = (1+sin ψ)/(1−sin ψ)
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Zgniatanie – rury okrągłe – Lamé uproszczone (wzór 7.18)</span>
+          P_zg = 2·K·Re·(1−K) &nbsp;&nbsp;gdzie K = t/D
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Zgniatanie – rury cienkościenne – stateczność (wzór 7.20)</span>
+          P_zg = 2·E·K³ / (1−μ²)
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Wytrzymałość na rozciąganie – rura i złączka (wzór 7.51)</span>
+          Q₀' = L · q · (1 − ρ_p/ρ_st) &nbsp;&nbsp;[N]
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Wypadkowy wsp. bezpieczeństwa (wzór 7.72)</span>
+          κ_w = κ₁ · κ₂ · κ₃ · κ₄ &nbsp;&nbsp;∈ (1,4÷3,1)
+        </div>
+        <div class="formula-box" style="margin-top:10px">
+          <span class="formula-label">Osadzanie kolumny – moment bezwładności (wzór 7.69)</span>
+          I = π/64 · (D⁴ − D_w⁴) &nbsp;&nbsp;[m⁴]
+        </div>
+
+        <div class="section-title" style="margin-top:20px"><h2>Wydajność Sprężarki – Tabela N₀ [kW] (Tabela 5.4)</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table style="font-size:0.82rem">
+            <thead><tr><th>P [MPa]</th><th>Sprężarka jednostopniowa N₀</th><th>Sprężarka dwustopniowa N₀</th></tr></thead>
+            <tbody>
+              <tr><td class="td-mono">0,8</td><td class="td-mono">–</td><td class="td-mono">0,74÷0,78</td></tr>
+              <tr><td class="td-mono">0,7</td><td class="td-mono">–</td><td class="td-mono">0,80÷0,83</td></tr>
+              <tr><td class="td-mono">0,6</td><td class="td-mono">0,95÷1,05</td><td class="td-mono">0,83÷0,90</td></tr>
+              <tr><td class="td-mono">0,5</td><td class="td-mono">1,05÷1,10</td><td class="td-mono">0,92÷0,96</td></tr>
+              <tr><td class="td-mono">0,4</td><td class="td-mono">1,10÷1,18</td><td class="td-mono">1,05÷1,12</td></tr>
+              <tr><td class="td-mono">0,3</td><td class="td-mono">1,12÷1,28</td><td class="td-mono">1,03÷1,35</td></tr>
+              <tr><td class="td-mono">0,2</td><td class="td-mono">1,26÷1,40</td><td class="td-mono">–</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Współczynniki Bezpieczeństwa Kolumn Rur (wg rozdz. 7.10)</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Współczynnik</th><th>Opis</th><th>Zakres wartości</th></tr></thead>
+        <tbody>
+          <tr><td class="td-mono">κ₁</td><td>Pewność założeń projektowych</td><td class="td-mono">1,1 ÷ 1,4</td></tr>
+          <tr><td class="td-mono">κ₂</td><td>Ważność konstrukcji (klasa obiektu)</td><td class="td-mono">1,3 ÷ 1,5</td></tr>
+          <tr><td class="td-mono">κ₃</td><td>Jednorodność materiału rur</td><td class="td-mono">1,0 ÷ 1,3</td></tr>
+          <tr><td class="td-mono">κ₄</td><td>Jednorodność parametrów geometrycznych rur</td><td class="td-mono">1,0 ÷ 1,15</td></tr>
+          <tr><td class="td-mono"><strong>κ_w</strong></td><td><strong>Wypadkowy współczynnik bezpieczeństwa</strong></td><td class="td-mono"><strong>1,4 ÷ 3,1</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert-box" style="margin-top:16px">
+      <strong>Źródło danych:</strong> Gonet A., Macuda J. – <em>Wiertnictwo Hydrogeologiczne</em>, Uczelniane Wydawnictwa Naukowo-Dydaktyczne AGH, Kraków 2004, wyd. III poprawione i uzupełnione. ISBN 83-89388-11-1. Recenzent: prof. dr hab. inż. Józef Raczkowski.
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <p>Drilling App · Kompendium Wiedzy Wiertniczej · Inżynieria Naftowa i Gazownicza · Hydrogeologia wg Gonet &amp; Macuda, AGH 2004</p>
+  <div class="version">v3.0.0 · 2025</div>
+</footer>
+
+<script>
+// ===================== MOBILE MENU =====================
+(function() {
+  var nav, hamburger, overlay, isOpen = false;
+
+  function init() {
+    nav       = document.getElementById('main-nav');
+    hamburger = document.getElementById('hamburger');
+    overlay   = document.getElementById('nav-overlay');
+    var closeBtn = document.getElementById('nav-close-btn');
+
+    if (!nav || !hamburger || !overlay) return;
+
+    hamburger.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', closeMenu);
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && isOpen) closeMenu();
+    });
+  }
+
+  function toggleMenu() {
+    isOpen ? closeMenu() : openMenu();
+  }
+
+  function openMenu() {
+    isOpen = true;
+    nav.classList.add('is-open');
+    hamburger.classList.add('is-open');
+    overlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.closeMenu = function() {
+    isOpen = false;
+    nav.classList.remove('is-open');
+    hamburger.classList.remove('is-open');
+    overlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+
+// ===================== NAVIGATION =====================
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('#main-nav button').forEach(function(b) { b.classList.remove('active'); });
+  var pg = document.getElementById('page-' + pageId);
+  if (pg) pg.classList.add('active');
+  // nav buttons: index 0 = close-btn, 1=home, 2=geology ...
+  var map = { home:1, geology:2, drilling:3, fluids:4, cement:5, calculator:6, glossary:7, safety:8, pipes:9, hydro:10, hydrogeo:11 };
+  var navBtns = document.querySelectorAll('#main-nav button');
+  if (map[pageId] !== undefined && navBtns[map[pageId]]) navBtns[map[pageId]].classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (typeof closeMenu === 'function') closeMenu();
+  if (pageId === 'glossary') renderGlossary();
+}
+
+// ===================== TABS =====================
+function switchTab(btn, tabId) {
+  const parent = btn.closest('.page') || document.body;
+  parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+// ===================== ACCORDION =====================
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.accordion-head')) {
+    const head = e.target.closest('.accordion-head');
+    const body = head.nextElementSibling;
+    head.classList.toggle('open');
+    body.classList.toggle('open');
+  }
+});
+
+// ===================== CALCULATOR =====================
+function calculateCement() {
+  const mm2m = 0.001;
+
+  const bitSizeMM = parseFloat(document.getElementById('bitSize').value);
+  const casingODMM = parseFloat(document.getElementById('casingOD').value);
+  const casingWTMM = parseFloat(document.getElementById('casingWT').value);
+  const casingDepth = parseFloat(document.getElementById('casingDepth').value);
+  const topCement = parseFloat(document.getElementById('topCement').value);
+  const excess = parseFloat(document.getElementById('excess').value);
+  const slurryDensity = parseFloat(document.getElementById('slurryDensity').value);
+  const wcRatio = parseFloat(document.getElementById('wcRatio').value);
+  const slurryYield = parseFloat(document.getElementById('slurryYield').value);
+  const pumpRate = parseFloat(document.getElementById('pumpRate').value);
+
+  if ([bitSizeMM, casingODMM, casingWTMM, casingDepth, topCement, excess, slurryDensity, wcRatio, slurryYield, pumpRate].some(isNaN)) {
+    alert('Proszę wypełnić wszystkie pola danych.'); return;
+  }
+
+  if (topCement >= casingDepth) {
+    alert('Szczyt cementu (TOC) musi być płytszy niż głębokość zapuszczenia kolumny.'); return;
+  }
+
+  if (bitSizeMM <= casingODMM) {
+    alert('Średnica otworu musi być większa niż OD rur!'); return;
+  }
+
+  // Convert mm to m
+  const bitSizeM = bitSizeMM * mm2m;
+  const casingODM = casingODMM * mm2m;
+  const casingIDMM = casingODMM - 2 * casingWTMM;
+  const casingIDM = casingIDMM * mm2m;
+
+  const cementLength = casingDepth - topCement; // m
+
+  // Annular volume
+  const V_ann = (Math.PI / 4) * (bitSizeM ** 2 - casingODM ** 2) * cementLength * excess;
+
+  // Internal casing volume (displacement)
+  const V_int = (Math.PI / 4) * casingIDM ** 2 * casingDepth;
+
+  // Total slurry volume
+  const V_total_slurry = V_ann;
+
+  // Cement mass
+  const mass_cement = V_total_slurry / slurryYield; // tonnes
+
+  // Water volume
+  const V_water = wcRatio * mass_cement; // m³
+
+  // Displacement volume
+  const V_displacement = V_int;
+
+  // Total pumped volume
+  const V_total_pump = V_total_slurry + V_displacement;
+
+  // Pump time
+  const pumpRateM3min = pumpRate / 1000; // l/min -> m³/min
+  const t_total = V_total_pump / pumpRateM3min; // minutes
+  const t_slurry = V_total_slurry / pumpRateM3min;
+  const t_displ = V_displacement / pumpRateM3min;
+
+  // Hydrostatic pressure at bottom
+  const g = 9.81;
+  const P_slurry_hydrostatic = slurryDensity * 1000 * g * casingDepth / 1e5; // bar
+
+  // Sacks (42.6 kg API standard)
+  const sacks = (mass_cement * 1000) / 42.6;
+
+  // Big bags 25 kg
+  const bags25 = Math.ceil((mass_cement * 1000) / 25);
+
+  const fmt = (v, d=2) => v.toFixed(d);
+
+  document.getElementById('resultsContent').innerHTML = `
+    <div class="result-item">
+      <span class="result-label">Długość cementowania (L_cem)</span>
+      <span><span class="result-value">${fmt(cementLength, 0)}</span><span class="result-unit">m</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Średnica wewnętrzna rur (ID)</span>
+      <span><span class="result-value">${fmt(casingIDMM, 2)}</span><span class="result-unit">mm</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Objętość przestrzeni anularnej</span>
+      <span><span class="result-value">${fmt(V_ann, 3)}</span><span class="result-unit">m³</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Objętość zaczynu (łącznie)</span>
+      <span><span class="result-value">${fmt(V_total_slurry, 3)}</span><span class="result-unit">m³ = ${fmt(V_total_slurry*1000, 0)} l</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Objętość przemywu (displacement)</span>
+      <span><span class="result-value">${fmt(V_displacement, 3)}</span><span class="result-unit">m³ = ${fmt(V_displacement*1000, 0)} l</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Ilość cementu</span>
+      <span><span class="result-value">${fmt(mass_cement, 2)}</span><span class="result-unit">t = ${fmt(mass_cement*1000, 0)} kg</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Worki 42,6 kg (API sacks)</span>
+      <span><span class="result-value">${Math.ceil(sacks)}</span><span class="result-unit">szt.</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Worki 25 kg</span>
+      <span><span class="result-value">${bags25}</span><span class="result-unit">szt.</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Objętość wody zarobowej</span>
+      <span><span class="result-value">${fmt(V_water, 3)}</span><span class="result-unit">m³ = ${fmt(V_water*1000, 0)} l</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Czas pompowania zaczynu</span>
+      <span><span class="result-value">${fmt(t_slurry, 1)}</span><span class="result-unit">min</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Czas przemywu (displacement)</span>
+      <span><span class="result-value">${fmt(t_displ, 1)}</span><span class="result-unit">min</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Ciśnienie hydrostatyczne (dno)</span>
+      <span><span class="result-value">${fmt(P_slurry_hydrostatic, 1)}</span><span class="result-unit">bar</span></span>
+    </div>
+
+    <div class="result-highlight">
+      <span class="label">⏱ Łączny czas pompowania</span>
+      <span class="value">${fmt(t_total, 1)} <small style="font-size:0.9rem;font-weight:400">min</small></span>
+    </div>
+
+    <div class="program-box" style="margin-top:16px">
+      <h4>📋 Program Zatłaczania</h4>
+      <div class="program-line"><span class="pl-key">Wydajność pomp</span><span class="pl-val">${pumpRate} l/min</span></div>
+      <div class="program-line"><span class="pl-key">Zaczyn: ${fmt(V_total_slurry*1000, 0)} l przez</span><span class="pl-val">${fmt(t_slurry, 1)} min</span></div>
+      <div class="program-line"><span class="pl-key">Przemyw: ${fmt(V_displacement*1000, 0)} l przez</span><span class="pl-val">${fmt(t_displ, 1)} min</span></div>
+      <div class="program-line"><span class="pl-key">Łączna objętość zatłoczona</span><span class="pl-val">${fmt(V_total_pump*1000, 0)} l</span></div>
+      <div class="program-line"><span class="pl-key">Gęstość zaczynu</span><span class="pl-val">${slurryDensity} g/cm³</span></div>
+      <div class="program-line"><span class="pl-key">Średnica otworu</span><span class="pl-val">${bitSizeMM} mm</span></div>
+      <div class="program-line"><span class="pl-key">OD rur okładzinowych</span><span class="pl-val">${casingODMM} mm</span></div>
+      <div class="program-line"><span class="pl-key">Cementowany interwał</span><span class="pl-val">${topCement} – ${casingDepth} m</span></div>
+    </div>
+
+    <div class="alert-box" style="margin-top:16px">
+      <strong>⚠ Uwaga:</strong> Obliczenia wykonane dla cementowania pierwotnego (primary cementing). Podane wartości są szacunkowe – projekt pola powinien uwzględniać caliper log, dokładną krzywą kalibru oraz wyniki testów laboratoryjnych zaczynu.
+    </div>
+  `;
+}
+
+function resetCalc() {
+  document.getElementById('resultsContent').innerHTML = `
+    <div class="placeholder-text">
+      Wprowadź dane i naciśnij<br><strong>OBLICZ CEMENTOWANIE</strong>
+    </div>`;
+}
+
+// ===================== GLOSSARY DATA =====================
+const glossaryData = [
+  { term: "BHA – Bottom Hole Assembly", def: "Zespół narzędzi wiertniczych na dole przewodu wiertniczego: świder, motor, MWD, DC." },
+  { term: "BOP – Blow-Out Preventer", def: "Prewenter wyrzutu – urządzenie bezpieczeństwa zapobiegające niekontrolowanemu wypływowi złożowych płynów." },
+  { term: "Casing – Rury Okładzinowe", def: "Stalowa kolumna rur spuszczana do otworu i cementowana w celu jego umocnienia i izolacji." },
+  { term: "CBL – Cement Bond Log", def: "Akustyczny dziennik wiertniczy oceniający jakość połączenia cementu z rurami i formacją." },
+  { term: "Centralizator", def: "Urządzenie zakładane na rurę okładzinową centrujące ją w otworze, zapewniające równomierną przestrzeń anularną." },
+  { term: "Conductor Pipe", def: "Rury kierunkowe – pierwsza i największa kolumna rur, spuszczana tuż przy powierzchni." },
+  { term: "Core – Rdzeń Wiertniczy", def: "Cylindryczny próbek skały pobierany z otworu za pomocą rdzennicy dla celów analizy geologicznej." },
+  { term: "DC – Drill Collar", def: "Grubościenne, ciężkie rury wiertnicze służące do obciążenia świdera (WOB)." },
+  { term: "DLS – Dog-Leg Severity", def: "Intensywność zakrzywienia toru otworu, wyrażona w stopniach na 30 metrów [°/30m]." },
+  { term: "DP – Drill Pipe", def: "Rury wiertnicze tworzące górną część kolumny wiertniczej, przenoszące moment skręcający i płuczkę." },
+  { term: "DST – Drill Stem Test", def: "Test otworu wykonywany przez przewód wiertniczy w celu oceny złoża i pobrania próbek płynów." },
+  { term: "ECD – Equiv. Circulating Density", def: "Równoważna gęstość cyrkulacyjna – suma gęstości płuczki i oporu przepływu w przestrzeni anularnej." },
+  { term: "Float Collar", def: "Kołnierz pławikowy – element w dolnej części kolumny rur z zaworem zwrotnym zatrzymującym zaczyn po cementowaniu." },
+  { term: "Float Shoe", def: "Butka pławikowa – dolny element kolumny rur z zaworem zwrotnym, wchodzi jako ostatni podczas spuszczania." },
+  { term: "Geosteering", def: "Nawigowanie otworu kierunkowego w oparciu o dane MWD/LWD w czasie rzeczywistym, utrzymując świder w strefie złożowej." },
+  { term: "HWDP – Heavy Weight DP", def: "Ciężkie rury wiertnicze pośrednie między DC a DP, zmniejszające zmęczenie materiału." },
+  { term: "KOP – Kick-Off Point", def: "Punkt rozpoczęcia odchylenia otworu od pionu w wierceniu kierunkowym." },
+  { term: "Liner – Liner Cementowany", def: "Kolumna rur okładzinowych nie sięgająca do powierzchni, zawieszona wewnątrz poprzedniej kolumny rur." },
+  { term: "LWD – Logging While Drilling", def: "Pomiary geofizyczne wykonywane w trakcie wiercenia przy użyciu narzędzi wbudowanych w BHA." },
+  { term: "MD – Measured Depth", def: "Głębokość mierzona wzdłuż toru otworu, różni się od TVD w otworach kierunkowych." },
+  { term: "MWD – Measurement While Drilling", def: "Pomiar parametrów kierunkowych (inklinacja, azymut) i innych podczas wiercenia, transmit przez mud pulse." },
+  { term: "OBM – Oil Based Mud", def: "Płuczka na bazie olejowej – doskonałe właściwości inhibicji łupków, wysoki koszt i wymagania utylizacji." },
+  { term: "PDC – Polycrystalline Diamond Compact", def: "Typ świdra z wkładkami z polikrystalicznego diamentu. Brak ruchomych części, wysoka ROP w jednorodnych skałach." },
+  { term: "Perforacja", def: "Wykonywanie otworów przez ścianę rur okładzinowych i cement do formacji złożowej, umożliwiając przepływ płynów." },
+  { term: "Porowatość (φ)", def: "Stosunek objętości przestrzeni porowej do całkowitej objętości skały [%]." },
+  { term: "Przepuszczalność (k)", def: "Zdolność skały do przewodzenia płynów, mierzona w milidarcy [mD]. Opisana prawem Darcy'ego." },
+  { term: "ROP – Rate of Penetration", def: "Prędkość postępu wiercenia, wyrażona w metrach na godzinę [m/h]." },
+  { term: "RPM – Revolutions Per Minute", def: "Prędkość obrotowa świdra lub kolumny wiertniczej na minutę." },
+  { term: "RSS – Rotary Steerable System", def: "System kierunkowy sterujący trajektorią otworu podczas obrotu całej kolumny, bez silnika wgłębnego." },
+  { term: "Skrawki wiertnicze (Cuttings)", def: "Okruchy skały pokruszone przez świder, wynoszone na powierzchnię przez płuczkę wiertniczą." },
+  { term: "Spacer – Odstępnik", def: "Ciecz buforowa pompowana między płuczką a zaczynem cementowym, zapobiegająca ich mieszaniu." },
+  { term: "SCP – Sustained Casing Pressure", def: "Trwałe ciśnienie w przestrzeni anularnej kolumny rur – sygnał braku szczelności cementu lub rur." },
+  { term: "TBT – Thickening Time", def: "Czas wiązania zaczynu cementowego – czas od zmieszania do osiągnięcia konsystencji 100 Bc (Bearden units)." },
+  { term: "TDS – Top Drive System", def: "Napęd górny zastępujący kelly – silnik elektryczny lub hydrauliczny napędzający kolumnę wiertniczą." },
+  { term: "TOC – Top Of Cement", def: "Górna granica zaczynu cementowego w przestrzeni anularnej po wykonaniu cementowania." },
+  { term: "TVD – True Vertical Depth", def: "Prawdziwa głębokość pionowa – pionowa składowa głębokości zmierzonej MD." },
+  { term: "UCS – Uniaxial Compressive Strength", def: "Wytrzymałość na ściskanie jednoosiowe stwardniałego cementu lub skały [MPa]." },
+  { term: "Wiper Dart – Korek Gumowy", def: "Elastyczny korek pompowany za zaczynem, czyszczący wnętrze rur i lądujący w float collar (bump pressure)." },
+  { term: "WBM – Water Based Mud", def: "Płuczka na bazie wodnej – najpopularniejszy i najtańszy typ, liczne systemy: bentonitowy, KCl, PHPA." },
+  { term: "WOB – Weight On Bit", def: "Obciążenie osiowe przyłożone do świdra, przenoszone przez DC. Mierzone w kiloniutonach lub tonach." },
+  { term: "WOC – Wait On Cement", def: "Czas oczekiwania po zacementowaniu na osiągnięcie przez cement wymaganej wytrzymałości." },
+  { term: "Yield – Wydajność Zaczynu", def: "Objętość zaczynu uzyskana z jednej tony cementu [m³/t] przy danym wskaźniku W/C." },
+  { term: "Zaczyn Cementowy (Slurry)", def: "Mieszanina cementu, wody i domieszek, zatłaczana do przestrzeni anularnej w celu izolacji." },
+  { term: "Geofizyka Otworowa", def: "Pomiary fizyczne wykonywane w otworze wiertniczym (gamma-ray, oporność, gęstość, neutronowy) do oceny formacji." },
+  { term: "Inhibicja Łupków", def: "Zdolność płuczki do zapobiegania pęcznieniu i rozpadowi łupków ilastych przez kontakt z wodą." },
+  { term: "Karotaż Gamma-Ray", def: "Pomiar naturalnej promieniotwórczości skał (K, U, Th) – wskaźnik zawartości iłów/łupków w formacji." },
+  { term: "Nadciśnienie (Overpressure)", def: "Ciśnienie złożowe wyższe od hydrostatycznego dla danej głębokości. Wymaga cięższej płuczki i specjalnego BOP." },
+  { term: "Szczelina Hydrauliczna", def: "Sztuczne spękanie skały złożowej przez wtłaczanie cieczy pod ciśnieniem (fracking) dla poprawy wydobycia." },
+  { term: "Solanka Złożowa", def: "Woda zasolona towarzysząca złożom węglowodorów. Gęstość 1,01–1,25 g/cm³." },
+  { term: "BUR – Build-Up Rate", def: "Tempo narastania inklinacji otworu kierunkowego [°/30m]. Typowo 2–6°/30m dla otworów normalnych." },
+  { term: "Air Lift – Podnośnik Powietrzny", def: "Metoda wynoszenia płuczki ze zwiercin w wierceniach wielkoś­rednicowych. Sprężone powietrze wdmuchiwane przez mieszacz powietrzny zmniejsza gęstość cieczy w przewodzie wiertniczym, powodując jej unoszenie na powierzchnię." },
+  { term: "Artezyjski – Otwór Artezyjski", def: "Otwór, w którym ciśnienie złożowe powoduje samoczynny wypływ wody powyżej powierzchni terenu. Zwierciadło hydrostatyczne wody sięga ponad powierzchnię terenu." },
+  { term: "Depresja Studni", def: "Obniżenie zwierciadła wody w studni w stosunku do stanu statycznego (przed pompowaniem). Różnica między stanem statycznym a dynamicznym zwierciadła wody [m]." },
+  { term: "Freatyczny – Poziom Freatyczny", def: "Poziom wód podziemnych oddzielony od powierzchni strefą aeracji. Może mieć zwierciadło swobodne lub napięte." },
+  { term: "Hydrogeologia", def: "Nauka o wodach podziemnych – ich genezie, rozmieszczeniu, właściwościach, dynamice i związkach z wodami powierzchniowymi. Podstawa projektowania ujęć wód podziemnych." },
+  { term: "Infiltracja", def: "Wnikanie wody opadowej do gruntu i przemieszczanie się w dół przez strefę aeracji aż do strefy saturacji. Główne źródło zasilania warstw wodonośnych." },
+  { term: "Izolacja Warstw Wodonośnych", def: "Uszczelnienie otworu wiertniczego mające na celu odizolowanie różnych warstw wodonośnych od siebie. Wykonywana cementem lub korkami iłowymi przez kolumnę rur okładzinowych." },
+  { term: "Kolumna Filtrowa", def: "Zestaw elementów studni: rura nadfiltrowa + filtr właściwy + rura podfiltrowa. Umożliwia dopływ wody podziemnej do wnętrza studni przy zatrzymaniu ziarn skalnych." },
+  { term: "Łyżka Wiertnicza", def: "Narzędzie do oczyszczania dna otworu ze zwiercin przy wierceniu udarowym. Zapuszczana na linie po wyciągnięciu świdra. Rodzaje: z zaworem klapowym, kulowym, grzybkowym, ssące." },
+  { term: "Mieszacz Powietrzny", def: "Element układu podnośnika powietrznego (air lift) – dysa wprowadzająca sprężone powietrze do wnętrza przewodu wiertniczego. Głębokość zanurzenia mieszacza (H_E) jest kluczowym parametrem projektowym." },
+  { term: "Miąższość Warstwy Wodonośnej", def: "Grubość (pionowa) warstwy skalnej wypełnionej wodą podziemną [m]. Jeden z podstawowych parametrów hydrogeologicznych przy projektowaniu studni." },
+  { term: "Nożyce Wolnospadowe", def: "Element przyrządu wiertniczego w wierceniu udarowym. Dwa ogniwa połączone ze sobą. Funkcja: podbijanie świdra przy wcinaniu w dno otworu oraz amortyzacja udaru przy wierceniu na przewodzie rurowym." },
+  { term: "Obsypka Żwirowa", def: "Warstwa żwiru kwarcowego (czystość >95%) zasypywana w przestrzeń pierścieniową między filtrem a ścianą otworu. Funkcja: filtracja mechaniczna, zwiększenie przepuszczalności strefy przyfiltrowej, ochrona przed sufozją." },
+  { term: "Odpiaszczenie Studni", def: "Zabieg usuwania drobnych frakcji piaszczystych i pyłowych ze strefy przyfiltrowej warstwy wodonośnej. Zwiększa przepuszczalność warstwy wokół filtru i poprawia wydajność studni." },
+  { term: "Otwór Subartezyjski", def: "Otwór wiertniczy, w którym zwierciadło hydrostatyczne wody napiętej znajduje się poniżej powierzchni terenu. Wymaga pompy do eksploatacji, lecz istnieje nadciśnienie złożowe." },
+  { term: "Pasterka", def: "Element przyrządu wiertniczego w wierceniu linowo-udarowym. Łączy nożyce wolnospadowe z liną. Umożliwia swobodny obrót świdra w procesie wiercenia otworu przy jednoczesnym zawieszeniu na linie." },
+  { term: "Perforacja Filtra", def: "System otworów (okrągłych lub szczelinowych) w ścianie rury filtrowej umożliwiających przepływ wody. Powierzchnia czynna: maks. 30% (okrągłe) lub maks. 20% (szczelinowe)." },
+  { term: "Pompa Strumieniowa (Ejektor)", def: "Urządzenie do transportu płuczki w metodzie odwrotnego obiegu. Wykorzystuje efekt Venturiego – strumień napędowy tworzy podciśnienie zasysające płuczkę z otworu przez przewód wiertniczy." },
+  { term: "Reologia Płuczki Wiertniczej", def: "Nauka o właściwościach przepływu płuczki wiertniczej. Kluczowe parametry: lepkość plastyczna (PV), granica płynięcia (YP), tiksotropia (gel strength), decydujące o hydraulice otworu." },
+  { term: "Studnia Wiercona", def: "Otwór wiertniczy służący do ujmowania wód podziemnych. Składa się z kolumny rur okładzinowych, kolumny filtrowej i obudowy. Podstawowe ujęcie wód podziemnych w Polsce." },
+  { term: "Strefa Saturacji", def: "Strefa w skorupie ziemskiej, w której wszystkie pustki skalne (pory, szczeliny) są całkowicie wypełnione wodą wolną. Górna granica tej strefy to zwierciadło wody podziemnej." },
+  { term: "Sufozja", def: "Mechaniczne wypłukiwanie drobnych cząstek skalnych przez przepływającą wodę. Zjawisko niekorzystne w warstwach wodonośnych – niszczy strukturę skały i może powodować zasklepienie filtra. Zapobiega mu prawidłowo dobrana obsypka żwirowa." },
+  { term: "Świder Mimośrodowy (Ekscentryczny)", def: "Świder udarowy z łopatą i ostrzem niesymetrycznie położonymi względem osi. Umożliwia wiercenie otworu o większej średnicy niż średnica łopaty – pozwala na jednoczesne orurowanie otworu." },
+  { term: "Świdor Okrętny", def: "Narzędzie wiertnicze stosowane w okrętnym wierceniu ręcznym. Typy: rurowy, spiralny, spiralno-rurowy, talerzowy, skrzynkowy, ślimakowy, czółenkowy. Dobór zależy od rodzaju skały." },
+  { term: "Warstwa Wodonośna", def: "Ośrodek skalny o dużym rozprzestrzenieniu bez warstwowej niejednorodności właściwości filtracyjnych, wypełniony wodą wolną do pełnej pojemności lub częściowo." },
+  { term: "Wiertnica UP-200-2", def: "Polska linowo-udarowa wiertnica przewoźna (Fabryka Glinik, Gorlice). Głębokość do 300 m, śr. rur 508→305 mm, silnik 44 kW. Trzy bębny: świdrowy, łyżkowy, ciężarowy. Na platformie dwuosiowej." },
+  { term: "Wiercenie Udarowe Linowe", def: "Metoda wiercenia otworów hydrogeologicznych – typ pensylwański. Świder zapuszczany na linie stalowej, podnoszony i opuszczany wahaczem z korbą. Zastosowanie: do ~400 m. Wypierana przez metody obrotowe." },
+  { term: "Wiercenie Wielkoś­rednicowe", def: "Wiercenie otworów hydrogeologicznych o dużych średnicach (0,5÷1,5 m) metodą obrotową z odwrotnym obiegiem płuczki lub z użyciem podnośnika powietrznego (air lift)." },
+  { term: "Wydajność Studni", def: "Strumień objętości wody pompowanej ze studni [m³/h lub l/s] przy określonej depresji. Zależy od właściwości warstwy wodonośnej, konstrukcji i wymiarów filtra oraz sprawności hydraulicznej studni." },
+  { term: "Zwierciadło Wody Podziemnej", def: "Granica między strefą aeracji a strefą saturacji. Może być swobodne (pod ciśnieniem atmosferycznym) lub napięte (pod ciśnieniem wyższym od atmosferycznego przez strop warstwy nieprzepuszczalnej)." },
+  { term: "Open Hole Completion", def: "Zakończenie otworu bez rur okładzinowych w strefie produkcyjnej. Stosowane w twardych formacjach." },
+];
+
+function renderGlossary(filter = '') {
+  const container = document.getElementById('glossaryContainer');
+  const filtered = filter
+    ? glossaryData.filter(g => g.term.toLowerCase().includes(filter.toLowerCase()) || g.def.toLowerCase().includes(filter.toLowerCase()))
+    : glossaryData;
+
+  const sorted = [...filtered].sort((a, b) => a.term.localeCompare(b.term, 'pl'));
+  container.innerHTML = sorted.map(g => `
+    <div class="glossary-item">
+      <div class="glossary-term">${g.term}</div>
+      <div class="glossary-def">${g.def}</div>
+    </div>
+  `).join('');
+}
+
+function filterGlossary() {
+  const val = document.getElementById('glossarySearch').value;
+  renderGlossary(val);
+}
+
+// ===================== HYDRAULICS CALCULATOR =====================
+function calculateHydraulics() {
+  const mm2m = 0.001;
+  const rho = parseFloat(document.getElementById('h_density').value) * 1000; // kg/m³
+  const PV = parseFloat(document.getElementById('h_pv').value) * 0.001; // Pa·s
+  const YP_lbft = parseFloat(document.getElementById('h_yp').value);
+  const YP = YP_lbft * 0.4788; // Pa
+  const Q_lpm = parseFloat(document.getElementById('h_flow').value);
+  const Q = Q_lpm / 60000; // m³/s
+  const D_hole = parseFloat(document.getElementById('h_dhole').value) * mm2m;
+  const D_dp_od = parseFloat(document.getElementById('h_dpod').value) * mm2m;
+  const D_dp_id = parseFloat(document.getElementById('h_dpid').value) * mm2m;
+  const depth = parseFloat(document.getElementById('h_depth').value);
+  const A_nozzle = parseFloat(document.getElementById('h_nozzle').value) / 10000; // cm² -> m²
+
+  if ([rho,PV,YP,Q,D_hole,D_dp_od,D_dp_id,depth,A_nozzle].some(isNaN)) {
+    alert('Uzupełnij wszystkie pola!'); return;
+  }
+
+  if (D_hole <= D_dp_od) {
+    alert('Średnica otworu musi być większa niż OD rur wiertniczych!'); return;
+  }
+  if (D_dp_id >= D_dp_od) {
+    alert('ID rur musi być mniejsze niż OD rur!'); return;
+  }
+
+  // Cross sectional areas
+  const A_ann = Math.PI/4 * (D_hole**2 - D_dp_od**2);
+  const A_pipe = Math.PI/4 * D_dp_id**2;
+
+  // Velocities
+  const v_ann = Q / A_ann;
+  const v_pipe = Q / A_pipe;
+
+  // Hydraulic diameter annular
+  const D_h_ann = D_hole - D_dp_od;
+
+  // Effective viscosity (Bingham Plastic) - annular
+  const mu_eff_ann = PV + (YP * D_h_ann) / (0.0208 * v_ann) * 0.001;
+
+  // Reynolds numbers
+  const Re_ann = rho * v_ann * D_h_ann / (PV + YP * D_h_ann / (6 * v_ann));
+  const Re_pipe = rho * v_pipe * D_dp_id / PV;
+
+  // Flow regime
+  const regime_ann = Re_ann < 2100 ? 'Laminarny' : Re_ann < 3000 ? 'Przejściowy' : 'Turbulentny';
+  const regime_pipe = Re_pipe < 2100 ? 'Laminarny' : Re_pipe < 3000 ? 'Przejściowy' : 'Turbulentny';
+
+  // Pressure losses (simplified Bingham Plastic)
+  // Annular: dP/dL (Pa/m)
+  let dP_ann_m;
+  if (Re_ann < 2100) {
+    // Laminar Bingham
+    dP_ann_m = (PV * v_ann / (D_h_ann**2) * 48 + YP * 6 / D_h_ann);
+  } else {
+    // Turbulent approximation (Newtonian-like with effective mu)
+    const f_ann = 0.046 * Math.pow(Re_ann, -0.2);
+    dP_ann_m = f_ann * rho * v_ann**2 / (2 * D_h_ann);
+  }
+
+  let dP_pipe_m;
+  if (Re_pipe < 2100) {
+    dP_pipe_m = 128 * PV * Q / (Math.PI * D_dp_id**4) + YP * 4 / (3 * D_dp_id);
+  } else {
+    const f_pipe = 0.046 * Math.pow(Re_pipe, -0.2);
+    dP_pipe_m = f_pipe * rho * v_pipe**2 / (2 * D_dp_id);
+  }
+
+  const dP_ann_total = dP_ann_m * depth; // Pa
+  const dP_pipe_total = dP_pipe_m * depth; // Pa
+
+  // Bit pressure drop
+  const Cd = 0.95; // discharge coefficient
+  const dP_bit = rho * Q**2 / (2 * Cd**2 * A_nozzle**2);
+
+  // Total surface pressure
+  const dP_total = dP_ann_total + dP_pipe_total + dP_bit;
+
+  // ECD
+  const g = 9.81;
+  const ECD = rho/1000 + dP_ann_total / (g * depth * 1000);
+
+  // Hydraulic Horsepower at bit
+  const HHP_bit = dP_bit * Q / 1000; // kW
+  const HHP_total = dP_total * Q / 1000;
+
+  // HHP per cm2 of bit area
+  const D_bit_mm = parseFloat(document.getElementById('h_dhole').value);
+  const A_bit_cm2 = Math.PI/4 * (D_bit_mm / 10)**2; // mm -> cm
+  const HHP_per_cm2 = HHP_bit / A_bit_cm2;
+
+  // Bit velocity (impact velocity at nozzle exit)
+  const v_nozzle = Q / A_nozzle;
+
+  // Transport ratio
+  const v_slip = 0.3; // assumed slip velocity m/s for 2cm cutting
+  const transport_ratio = (v_ann - v_slip) / v_ann;
+
+  const fmt = (v, d=2) => isFinite(v) ? v.toFixed(d) : '–';
+  const bar = v => (v/100000).toFixed(2);
+
+  document.getElementById('hydro-results').innerHTML = `
+    <div class="result-item">
+      <span class="result-label">Prędkość anularna (v_ann)</span>
+      <span><span class="result-value">${fmt(v_ann,3)}</span><span class="result-unit">m/s</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Reżim przepływu – annulus</span>
+      <span><span class="result-value" style="font-size:0.95rem">${regime_ann}</span><span class="result-unit">Re=${fmt(Re_ann,0)}</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Prędkość w rurach DP (v_pipe)</span>
+      <span><span class="result-value">${fmt(v_pipe,3)}</span><span class="result-unit">m/s</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Reżim przepływu – rury DP</span>
+      <span><span class="result-value" style="font-size:0.95rem">${regime_pipe}</span><span class="result-unit">Re=${fmt(Re_pipe,0)}</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Strata ciśnienia – annulus</span>
+      <span><span class="result-value">${bar(dP_ann_total)}</span><span class="result-unit">bar</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Strata ciśnienia – rury DP</span>
+      <span><span class="result-value">${bar(dP_pipe_total)}</span><span class="result-unit">bar</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Spadek ciśnienia na dyszkach</span>
+      <span><span class="result-value">${bar(dP_bit)}</span><span class="result-unit">bar</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Łączne ciśnienie powierzchniowe</span>
+      <span><span class="result-value">${bar(dP_total)}</span><span class="result-unit">bar = ${fmt(dP_total/6894.76,0)} psi</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">ECD (w przestrzeni anularnej)</span>
+      <span><span class="result-value">${fmt(ECD,3)}</span><span class="result-unit">g/cm³</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Moc hydrauliczna na świdzie (HHP_bit)</span>
+      <span><span class="result-value">${fmt(HHP_bit,1)}</span><span class="result-unit">kW = ${fmt(HHP_bit*1.341,1)} HP</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">HHP na cm² powierzchni świdra</span>
+      <span><span class="result-value">${fmt(HHP_per_cm2,2)}</span><span class="result-unit">kW/cm²</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Prędkość wylotu z dysz</span>
+      <span><span class="result-value">${fmt(v_nozzle,1)}</span><span class="result-unit">m/s</span></span>
+    </div>
+    <div class="result-item">
+      <span class="result-label">Wskaźnik transportu urobku</span>
+      <span><span class="result-value">${fmt(transport_ratio*100,1)}</span><span class="result-unit">% (min. zalecane 50%)</span></span>
+    </div>
+    <div class="result-highlight">
+      <span class="label">⚡ Łączna moc hydrauliczna</span>
+      <span class="value">${fmt(HHP_total,1)} <small style="font-size:0.9rem;font-weight:400">kW</small></span>
+    </div>
+    <div class="alert-box" style="margin-top:14px">
+      <strong>Zalecenia:</strong>
+      ${v_ann < 0.5 ? '⚠ Prędkość anularna poniżej 0,5 m/s – ryzyko osadzania urobku! Zwiększ wydajność pompy.' : '✅ Prędkość anularna wystarczająca do transportu urobku.'}
+      ${ECD > parseFloat(document.getElementById('h_density').value)*1.05 ? '<br>⚠ ECD znacznie wyższy od gęstości statycznej – sprawdź gradient pękania.' : ''}
+    </div>
+  `;
+}
+
+// ===================== INIT =====================
+showPage('home');
+</script>
+
+<script>
+// PWA Service Worker registration
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js')
+      .then(function(reg) {
+        console.log('[PWA] Service Worker registered, scope:', reg.scope);
+        reg.addEventListener('updatefound', function() {
+          var newSW = reg.installing;
+          newSW.addEventListener('statechange', function() {
+            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('[PWA] New version available');
+            }
+          });
+        });
+      })
+      .catch(function(err) {
+        console.warn('[PWA] SW registration failed:', err);
+      });
+  });
+}
+
+// PWA Install prompt
+var deferredPrompt;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  var btn = document.getElementById('pwa-install-btn');
+  if (btn) { btn.style.display = 'flex'; }
+});
+
+window.addEventListener('appinstalled', function() {
+  var btn = document.getElementById('pwa-install-btn');
+  if (btn) btn.style.display = 'none';
+  deferredPrompt = null;
+  console.log('[PWA] App installed!');
+});
+
+window.installPWA = function() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(result) {
+      console.log('[PWA] User choice:', result.outcome);
+      deferredPrompt = null;
+      var btn = document.getElementById('pwa-install-btn');
+      if (btn) btn.style.display = 'none';
+    });
+  }
+};
+</script>
+</body>
+</html>
