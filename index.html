@@ -78,6 +78,11 @@
     z-index: 0;
   }
 
+  /* PAGES – hide all, show only active */
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
   /* HEADER */
   header {
     position: sticky;
@@ -299,11 +304,20 @@
     .hero h1 { font-size: 1.9rem; }
     .hero-sub { font-size: 0.8rem; }
     .hero-tag { font-size: 0.6rem; }
+    .stats-row { display: none; }
+    .hero { display: none; }
+    #page-home .section-title { display: none; }
+    #page-home { padding-top: 8px; }
     .stats-row { flex-wrap: wrap; gap: 6px; justify-content: center; }
     .stat-box { padding: 12px 14px; min-width: 70px; flex: 1; }
     .stat-num { font-size: 1.3rem; }
     .stat-label { font-size: 0.58rem; }
-    .cards-grid { grid-template-columns: 1fr; gap: 10px; }
+    .cards-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+    .card { padding: 14px 12px; min-height: unset; }
+    .card-icon { font-size: 1.4rem; margin-bottom: 6px; }
+    .card h3 { font-size: 0.7rem; margin-bottom: 4px; letter-spacing: 0.04em; }
+    .card p { font-size: 0.72rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .card-arrow { display: none; }
     .info-grid { grid-template-columns: 1fr; }
     .two-col { grid-template-columns: 1fr; }
     .calc-wrapper { grid-template-columns: 1fr; }
@@ -3193,7 +3207,7 @@ showPage('home');
 
 <script>
 // PWA Service Worker registration
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('./sw.js')
       .then(function(reg) {
