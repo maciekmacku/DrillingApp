@@ -19,26 +19,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-deep: #080c12;
-    --bg-panel: #0d1520;
-    --bg-card: #111d2e;
-    --bg-card2: #0f1a28;
-    --accent-gold: #e8a020;
-    --accent-amber: #f5c842;
-    --accent-orange: #d4611a;
-    --accent-rust: #8b3a0f;
-    --teal: #1ec8c8;
-    --teal-dim: #0e8080;
+    --bg-deep: #f0f2f5;
+    --bg-panel: #e8eaed;
+    --bg-card: #ffffff;
+    --bg-card2: #f5f6f8;
+    --accent-gold: #c0392b;
+    --accent-amber: #c0392b;
+    --accent-orange: #e67e22;
+    --accent-rust: #922b21;
+    --teal: #1a7a9a;
+    --teal-dim: #2980b9;
     --blue: #2a6fd4;
-    --text-bright: #f0e8d8;
-    --text-main: #c8baa8;
-    --text-dim: #7a6e5e;
-    --text-muted: #4a4030;
-    --border: #1e3048;
-    --border-glow: rgba(232,160,32,0.3);
-    --grid-line: rgba(30,192,200,0.07);
-    --shadow-gold: 0 0 30px rgba(232,160,32,0.15);
-    --shadow-teal: 0 0 20px rgba(30,200,200,0.15);
+    --text-bright: #1a1a1a;
+    --text-main: #2c2c2c;
+    --text-dim: #555555;
+    --text-muted: #999999;
+    --border: #d0d4da;
+    --border-glow: rgba(192,57,43,0.2);
+    --grid-line: rgba(0,0,0,0.04);
+    --shadow-gold: 0 4px 20px rgba(0,0,0,0.1);
+    --shadow-teal: 0 4px 16px rgba(26,122,154,0.1);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -46,7 +46,7 @@
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg-deep);
+    background: #f8f9fa;
     color: var(--text-main);
     font-family: 'Rajdhani', sans-serif;
     font-size: 15px;
@@ -72,8 +72,8 @@
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,160,32,0.04) 0%, transparent 70%),
-                radial-gradient(ellipse 50% 50% at 0% 50%, rgba(30,200,200,0.03) 0%, transparent 60%);
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(192,57,43,0.03) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 0% 50%, rgba(26,122,154,0.02) 0%, transparent 60%);
     pointer-events: none;
     z-index: 0;
   }
@@ -88,7 +88,7 @@
     position: sticky;
     top: 0;
     z-index: 900;
-    background: rgba(8,12,18,0.97);
+    background: rgba(240,242,245,0.97);
     border-bottom: 1px solid var(--border);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -120,14 +120,14 @@
     font-size: 1.4rem;
     letter-spacing: 0.06em;
     color: #e74c3c;
-    text-shadow: 0 0 20px rgba(231,76,60,0.5);
+    text-shadow: none;
   }
 
   .logo-sub {
     font-family: 'Rajdhani', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.22em;
-    color: var(--teal);
+    color: #1a7a9a;
     text-transform: uppercase;
     margin-top: -4px;
   }
@@ -225,8 +225,8 @@
     width: min(300px, 85vw);
     height: 100%;
     height: 100dvh;
-    background: #0a0f1a;
-    border-right: 1px solid rgba(231,76,60,0.2);
+    background: #ffffff;
+    border-right: 1px solid rgba(192,57,43,0.2);
     flex-direction: column;
     align-items: stretch;
     overflow-y: auto;
@@ -251,7 +251,7 @@
     top: 0;
     width: 100%;
     padding: 18px 20px;
-    background: rgba(231,76,60,0.07);
+    background: rgba(192,57,43,0.06);
     border: none;
     border-bottom: 1px solid rgba(231,76,60,0.15);
     color: #e74c3c;
@@ -277,15 +277,15 @@
     letter-spacing: 0.05em;
     background: none;
     border: none;
-    border-bottom: 1px solid rgba(30,48,72,0.5);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
     color: var(--text-main);
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     text-transform: uppercase;
   }
-  #main-nav-mobile button:hover { background: rgba(231,76,60,0.07); color: var(--text-bright); }
-  #main-nav-mobile button.active { color: #e74c3c; background: rgba(231,76,60,0.1); border-left: 3px solid #e74c3c; padding-left: 21px; }
+  #main-nav-mobile button:hover { background: rgba(192,57,43,0.06); color: var(--text-bright); }
+  #main-nav-mobile button.active { color: #e74c3c; background: rgba(231,76,60,0.1); border-left: 3px solid #c0392b; padding-left: 21px; }
   #main-nav-mobile button:last-child { border-bottom: none; }
 
   /* ── RESPONSIVE ───────────────────────────────── */
@@ -332,7 +332,7 @@
     .topic-icon { width: 38px; height: 38px; font-size: 1.1rem; }
     .tabs { flex-wrap: wrap; gap: 5px; border-bottom: none; margin-bottom: 16px; }
     .tab-btn { padding: 6px 12px; font-size: 0.7rem; border: 1px solid var(--border); border-radius: 20px; }
-    .tab-btn.active { border-color: var(--teal); background: rgba(30,200,200,0.1); }
+    .tab-btn.active { border-color: #1a7a9a; background: rgba(26,122,154,0.1); }
     .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table { font-size: 0.74rem; min-width: 440px; }
     th, td { padding: 7px 9px; }
@@ -389,7 +389,7 @@
 
   /* CEMENT DIAGRAM */
   .cement-diagram {
-    background: var(--bg-card2);
+    background: #f5f6f8;
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 20px;
@@ -397,8 +397,8 @@
   }
 
   .program-box {
-    background: rgba(30,200,200,0.05);
-    border: 1px solid rgba(30,200,200,0.15);
+    background: rgba(26,122,154,0.06);
+    border: 1px solid rgba(26,122,154,0.2);
     border-radius: 6px;
     padding: 16px;
     margin-top: 16px;
@@ -407,7 +407,7 @@
   .program-box h4 {
     font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
-    color: var(--teal);
+    color: #1a7a9a;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-size: 0.82rem;
@@ -418,7 +418,7 @@
     display: flex;
     justify-content: space-between;
     padding: 6px 0;
-    border-bottom: 1px solid rgba(30,48,72,0.4);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
     font-size: 0.82rem;
   }
 
@@ -438,9 +438,9 @@
     margin: 2px;
   }
 
-  .tag-gold { background: rgba(232,160,32,0.12); color: var(--accent-gold); border: 1px solid rgba(232,160,32,0.25); }
-  .tag-teal { background: rgba(30,200,200,0.08); color: var(--teal); border: 1px solid rgba(30,200,200,0.2); }
-  .tag-red { background: rgba(212,97,26,0.1); color: #e07040; border: 1px solid rgba(212,97,26,0.25); }
+  .tag-gold { background: rgba(192,57,43,0.08); color: #c0392b; border: 1px solid rgba(192,57,43,0.2); }
+  .tag-teal { background: rgba(26,122,154,0.08); color: #1a7a9a; border: 1px solid rgba(26,122,154,0.25); }
+  .tag-red { background: rgba(230,126,34,0.1); color: #e07040; border: 1px solid rgba(212,97,26,0.25); }
 
   .two-col {
     display: grid;
@@ -454,12 +454,12 @@
   /* ---- pill label for tabs ---- */
   .pill {
     display: inline-block;
-    background: rgba(232,160,32,0.1);
-    border: 1px solid rgba(232,160,32,0.25);
+    background: rgba(192,57,43,0.08);
+    border: 1px solid rgba(192,57,43,0.2);
     border-radius: 20px;
     font-size: 0.7rem;
     padding: 2px 10px;
-    color: var(--accent-gold);
+    color: #c0392b;
     letter-spacing: 0.1em;
     margin-left: 8px;
   }
@@ -474,7 +474,7 @@
 
   .accordion-head {
     padding: 14px 18px;
-    background: var(--bg-card2);
+    background: #f5f6f8;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -487,14 +487,14 @@
 
   .accordion-head:hover { background: rgba(232,160,32,0.05); }
 
-  .accordion-head.open { color: var(--accent-gold); }
+  .accordion-head.open { color: #c0392b; }
   .accordion-head .chevron { transition: transform 0.25s; color: var(--text-dim); }
-  .accordion-head.open .chevron { transform: rotate(180deg); color: var(--accent-gold); }
+  .accordion-head.open .chevron { transform: rotate(180deg); color: #c0392b; }
 
   .accordion-body {
     display: none;
     padding: 16px 18px;
-    background: var(--bg-deep);
+    background: #f8f9fa;
     font-size: 0.86rem;
     color: var(--text-dim);
     line-height: 1.6;
@@ -563,7 +563,7 @@
     <button onclick="showPage('drilling')">⚙ Wiercenie</button>
     <button onclick="showPage('fluids')">💧 Płuczka</button>
     <button onclick="showPage('cement')">🏗 Cementowanie</button>
-    <button onclick="showPage('calculator')">🧮 Cement</button>
+    <button onclick="showPage('calculator')">🧮 Cem. Otworu</button>
     <button onclick="showPage('glossary')">📖 Słownik</button>
     <button onclick="showPage('safety')">🛡 BHP</button>
     <button onclick="showPage('pipes')">🔩 Rury API</button>
@@ -582,7 +582,7 @@
   <button onclick="showPage('drilling')">⚙ Wiercenie</button>
   <button onclick="showPage('fluids')">💧 Płuczka</button>
   <button onclick="showPage('cement')">🏗 Cementowanie</button>
-  <button onclick="showPage('calculator')">🧮 Cement</button>
+  <button onclick="showPage('calculator')">🧮 Cem. Otworu</button>
   <button onclick="showPage('glossary')">📖 Słownik</button>
   <button onclick="showPage('safety')">🛡 BHP</button>
   <button onclick="showPage('pipes')">🔩 Rury API</button>
@@ -644,7 +644,7 @@
     </div>
     <div class="card" onclick="showPage('calculator')">
       <span class="card-icon">🧮</span>
-      <h3>Kalkulator Cementowania</h3>
+      <h3>Kalkulator Cementowania Otworu</h3>
       <p>Oblicz objętość zaczynu, ilość cementu i wody, czas pompowania, ciśnienie na głowicy wiertniczej.</p>
       <div class="card-arrow">→</div>
     </div>
@@ -1440,7 +1440,7 @@
   <div class="topic-header">
     <div class="topic-icon">🧮</div>
     <div>
-      <h2>Kalkulator Cementowania</h2>
+      <h2>Kalkulator Cementowania Otworu</h2>
       <p>Obliczenia ilości zaczynu cementowego do zatłaczania do otworu wiertniczego</p>
     </div>
   </div>
@@ -1769,7 +1769,7 @@
   <!-- H2S -->
   <div id="saf-h2s" class="tab-content">
     <div class="section-title"><h2>H₂S – Siarkowodór w Wiertnictwie</h2><div class="line"></div></div>
-    <div class="alert-box" style="border-left-color:#cc2222;background:rgba(180,30,30,0.1)">
+    <div class="alert-box" style="border-left-color:#cc2222;background:rgba(231,76,60,0.08)">
       <strong>⚠ ZAGROŻENIE ŻYCIA:</strong> H₂S (siarkowodór) to gaz silnie toksyczny, bezbarwny, o zapachu zgniłych jaj. Już stężenie <strong>100 ppm paraliżuje węch</strong>. Stężenie 1000 ppm powoduje natychmiastową śmierć. Cięższy od powietrza – zbiera się w zagłębieniach.
     </div>
     <div class="info-grid" style="margin-top:20px">
