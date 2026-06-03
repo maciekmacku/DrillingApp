@@ -563,12 +563,13 @@
     <button onclick="showPage('drilling')">⚙ Wiercenie</button>
     <button onclick="showPage('fluids')">💧 Płuczka</button>
     <button onclick="showPage('cement')">🏗 Cementowanie</button>
-    <button onclick="showPage('calculator')">🧮 Kalkulator</button>
+    <button onclick="showPage('calculator')">🧮 Cement</button>
     <button onclick="showPage('glossary')">📖 Słownik</button>
     <button onclick="showPage('safety')">🛡 BHP</button>
     <button onclick="showPage('pipes')">🔩 Rury API</button>
     <button onclick="showPage('hydro')">⚡ Hydraulika</button>
     <button onclick="showPage('hydrogeo')">🌊 Hydrogeologia</button>
+    <button onclick="showPage('volume')">🔵 Obj. Otworu</button>
   </nav>
 </header>
 <!-- Overlay backdrop -->
@@ -581,12 +582,13 @@
   <button onclick="showPage('drilling')">⚙ Wiercenie</button>
   <button onclick="showPage('fluids')">💧 Płuczka</button>
   <button onclick="showPage('cement')">🏗 Cementowanie</button>
-  <button onclick="showPage('calculator')">🧮 Kalkulator</button>
+  <button onclick="showPage('calculator')">🧮 Cement</button>
   <button onclick="showPage('glossary')">📖 Słownik</button>
   <button onclick="showPage('safety')">🛡 BHP</button>
   <button onclick="showPage('pipes')">🔩 Rury API</button>
   <button onclick="showPage('hydro')">⚡ Hydraulika</button>
   <button onclick="showPage('hydrogeo')">🌊 Hydrogeologia</button>
+  <button onclick="showPage('volume')">🔵 Obj. Otworu</button>
 </nav>
 
 <main>
@@ -676,6 +678,12 @@
       <span class="card-icon">🌊</span>
       <h3>Wiertnictwo Hydrogeologiczne</h3>
       <p>Wody podziemne, metody wiercenia studni, konstrukcje otworów, filtry studzienne, obsypki żwirowe. Wg Gonet &amp; Macuda (AGH 2004).</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('volume')">
+      <span class="card-icon">🔵</span>
+      <h3>Kalkulator Objętości Otworu</h3>
+      <p>Oblicz objętość otworu wiertniczego na podstawie średnicy D i głębokości h. Wzór: 0,785 × D² × h</p>
       <div class="card-arrow">→</div>
     </div>
   </div>
@@ -2876,6 +2884,57 @@
   </div>
 </div>
 
+
+<!-- ===================== VOLUME CALCULATOR PAGE ===================== -->
+<div id="page-volume" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">🔵</div>
+    <div>
+      <h2>Kalkulator Objętości Otworu Wiertniczego</h2>
+      <p>Wzór: V = 0,785 × D² × h</p>
+    </div>
+  </div>
+
+  <div class="calc-wrapper">
+    <div class="calc-panel">
+      <h3>📐 Dane Otworu</h3>
+
+      <div class="input-group">
+        <label>Średnica Otworu (D)</label>
+        <div class="input-row">
+          <input type="number" id="vol_D" placeholder="0.2159" step="0.0001" value="">
+          <span class="unit-tag">m</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Głębokość Otworu (h)</label>
+        <div class="input-row">
+          <input type="number" id="vol_h" placeholder="3000" step="1" value="">
+          <span class="unit-tag">m</span>
+        </div>
+      </div>
+
+      <div class="formula-box" style="margin-top:24px">
+        <span class="formula-label">Wzór obliczeniowy</span>
+        V = 0,785 × D² × h &nbsp;[m³]
+      </div>
+
+      <button class="calc-btn" onclick="calculateVolume()" style="margin-top:20px">⚡ OBLICZ OBJĘTOŚĆ</button>
+      <button class="calc-reset" onclick="resetVolume()">↺ Wyczyść</button>
+    </div>
+
+    <div class="results-panel">
+      <h3>📊 Wynik</h3>
+      <div id="vol-results">
+        <div class="placeholder-text">Wprowadź średnicę D i głębokość h,<br>następnie naciśnij<br><strong>OBLICZ OBJĘTOŚĆ</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <footer>
@@ -2944,7 +3003,7 @@ function showPage(pageId) {
   var pg = document.getElementById('page-' + pageId);
   if (pg) pg.classList.add('active');
   // Update active button in BOTH navs
-  var map = { home:0, geology:1, drilling:2, fluids:3, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10 };
+  var map = { home:0, geology:1, drilling:2, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10, volume:11 };
   // Desktop nav (no close button offset)
   var deskBtns = document.querySelectorAll('#main-nav-desktop button');
   deskBtns.forEach(function(b){ b.classList.remove('active'); });
@@ -3199,6 +3258,38 @@ function renderGlossary(filter) {
 function filterGlossary() {
   var val = document.getElementById('glossarySearch').value;
   renderGlossary(val);
+}
+
+// ===================== VOLUME CALCULATOR =====================
+function calculateVolume() {
+  var D = parseFloat(document.getElementById('vol_D').value);
+  var h = parseFloat(document.getElementById('vol_h').value);
+
+  if (isNaN(D) || isNaN(h) || D <= 0 || h <= 0) {
+    alert('Podaj prawidłowe wartości D i h (większe od zera).'); return;
+  }
+
+  var V = 0.785 * D * D * h;
+
+  document.getElementById('vol-results').innerHTML =
+    '<div class="result-item"><span class="result-label">Średnica otworu (D)</span>' +
+    '<span><span class="result-value">' + D.toFixed(4) + '</span><span class="result-unit"> m</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Głębokość otworu (h)</span>' +
+    '<span><span class="result-value">' + h.toFixed(1) + '</span><span class="result-unit"> m</span></span></div>' +
+    '<div class="result-item"><span class="result-label">Wzór</span>' +
+    '<span style="font-family:\'JetBrains Mono\',monospace;font-size:0.78rem;color:var(--teal)">0,785 × ' + D.toFixed(4) + '² × ' + h.toFixed(1) + '</span></div>' +
+    '<div class="result-highlight" style="margin-top:20px">' +
+    '<span class="label">🔵 Objętość otworu</span>' +
+    '<span class="value">' + V.toFixed(4) + ' <small style="font-size:0.9rem;font-weight:400">m³</small></span></div>' +
+    '<div class="result-item" style="margin-top:8px"><span class="result-label">W litrach</span>' +
+    '<span><span class="result-value">' + (V * 1000).toFixed(1) + '</span><span class="result-unit"> l</span></span></div>';
+}
+
+function resetVolume() {
+  document.getElementById('vol_D').value = '';
+  document.getElementById('vol_h').value = '';
+  document.getElementById('vol-results').innerHTML =
+    '<div class="placeholder-text">Wprowadź średnicę D i głębokość h,<br>następnie naciśnij<br><strong>OBLICZ OBJĘTOŚĆ</strong></div>';
 }
 
 // ===================== INIT =====================
