@@ -570,6 +570,7 @@
     <button onclick="showPage('hydro')">⚡ Hydraulika</button>
     <button onclick="showPage('hydrogeo')">🌊 Hydrogeologia</button>
     <button onclick="showPage('volume')">🔵 Obj. Otworu</button>
+    <button onclick="showPage('dtr')">🔧 DTR Urządzeń</button>
   </nav>
 </header>
 <!-- Overlay backdrop -->
@@ -589,6 +590,7 @@
   <button onclick="showPage('hydro')">⚡ Hydraulika</button>
   <button onclick="showPage('hydrogeo')">🌊 Hydrogeologia</button>
   <button onclick="showPage('volume')">🔵 Obj. Otworu</button>
+  <button onclick="showPage('dtr')">🔧 DTR Urządzeń</button>
 </nav>
 
 <main>
@@ -603,9 +605,9 @@
       📲 Zainstaluj Drilling App
     </button>
     <div class="stats-row">
-      <div class="stat-box"><span class="stat-num">11</span><span class="stat-label">Działów</span></div>
-      <div class="stat-box"><span class="stat-num">200+</span><span class="stat-label">Haseł</span></div>
-      <div class="stat-box"><span class="stat-num">40+</span><span class="stat-label">Wzorów</span></div>
+      <div class="stat-box"><span class="stat-num">13</span><span class="stat-label">Działów</span></div>
+      <div class="stat-box"><span class="stat-num">230+</span><span class="stat-label">Haseł</span></div>
+      <div class="stat-box"><span class="stat-num">50+</span><span class="stat-label">Wzorów</span></div>
       <div class="stat-box"><span class="stat-num">3</span><span class="stat-label">Kalkulatory</span></div>
       <div class="stat-box"><span class="stat-num">∞</span><span class="stat-label">Obliczeń</span></div>
     </div>
@@ -678,6 +680,12 @@
       <span class="card-icon">🌊</span>
       <h3>Wiertnictwo Hydrogeologiczne</h3>
       <p>Wody podziemne, metody wiercenia studni, konstrukcje otworów, filtry studzienne, obsypki żwirowe. Wg Gonet &amp; Macuda (AGH 2004).</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('dtr')">
+      <span class="card-icon">🔧</span>
+      <h3>DTR Urządzeń Wiertniczych</h3>
+      <p>Dokumentacja techniczno-rozruchowa: URB-2A2 i URB-210M. Dane techniczne, wymiary, udźwigi, układy hydrauliczne.</p>
       <div class="card-arrow">→</div>
     </div>
     <div class="card" onclick="showPage('volume')">
@@ -2935,6 +2943,600 @@
   </div>
 </div>
 
+<!-- ===================== DTR PAGE ===================== -->
+<div id="page-dtr" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">🔧</div>
+    <div>
+      <h2>DTR Urządzeń Wiertniczych</h2>
+      <p>Dokumentacja Techniczno-Rozruchowa – URB-2A2 i URB-210M</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'dtr-210')">URB-210M</button>
+    <button class="tab-btn" onclick="switchTab(this,'dtr-2a2')">URB-2A2</button>
+    <button class="tab-btn" onclick="switchTab(this,'dtr-por')">Porównanie</button>
+  </div>
+
+  <!-- ===== URB-210M ===== -->
+  <div id="dtr-210" class="tab-content active">
+
+    <div class="section-title"><h2>URB-210M – Charakterystyka Ogólna</h2><div class="line"></div></div>
+    <div class="alert-box" style="border-left-color:#1a7a9a;background:rgba(26,122,154,0.07)">
+      <strong>Przeznaczenie:</strong> Urządzenie wiertnicze URB-210 przeznaczone jest do wiercenia studni wysokowydajnych, otworów hydrologicznych oraz odwodnieniowych. Wiercenie odbywa się metodą obrotową z użyciem płuczki, z bezpośrednim odwrotnym płukaniem za pomocą obrotowego rotora. Baza transportowa: samochód KAMAZ 65111-0003020-E6.
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>2. Dane Techniczne URB-210M</h2><div class="line"></div></div>
+    <div class="two-col">
+      <div>
+        <div class="section-title"><h2>Wymiary (poz. transportowe / robocze)</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Wymiar</th><th>Transportowe [mm]</th><th>Robocze [mm]</th></tr></thead>
+            <tbody>
+              <tr><td>Długość</td><td class="td-mono">12 700</td><td class="td-mono">10 500</td></tr>
+              <tr><td>Szerokość</td><td class="td-mono">2 500</td><td class="td-mono">2 500</td></tr>
+              <tr><td>Wysokość</td><td class="td-mono">3 950</td><td class="td-mono">12 300</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:16px"><h2>Masy i Obciążenia</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Całkowita masa urządzenia (maks.)</td><td class="td-mono">≤ 21 700 kg</td></tr>
+              <tr><td>Masa zwiększona całkowita</td><td class="td-mono">≤ 25 200 kg</td></tr>
+              <tr><td>Masa uzbrojona podwozia</td><td class="td-mono">≤ 9 000 kg</td></tr>
+              <tr><td>Obciążenie przedniego mostu</td><td class="td-mono">≤ 6 200 kg</td></tr>
+              <tr><td>Obciążenie tylnego mostu</td><td class="td-mono">≤ 19 000 kg</td></tr>
+              <tr><td>Obciążenie na drodze (zbrojona)</td><td class="td-mono">≤ 9 000 kg</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:16px"><h2>Parametry Jazdy</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Max prędkość (droga asfaltowa)</td><td class="td-mono">80 km/h</td></tr>
+              <tr><td>Max kąt zwisu (transport.)</td><td class="td-mono">≥ 29°</td></tr>
+              <tr><td>Max kąt zwisu (roboczy)</td><td class="td-mono">≥ 13 300°</td></tr>
+              <tr><td>Baza transportowa</td><td class="td-mono">KAMAZ 65111-0003020-E6</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="section-title"><h2>Napęd Urządzenia</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Nominalna moc napędu</td><td class="td-mono">160 kW</td></tr>
+              <tr><td>Maks. ciśnienie robocze</td><td class="td-mono">29,42 MPa (300 kgf/cm²)</td></tr>
+              <tr><td>Napęd</td><td class="td-mono">od silnika podwozia</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:16px"><h2>2.8 Rotator</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Ruch rotatora, mm (min.)</td><td class="td-mono">7 000</td></tr>
+              <tr><td>Długość szlangi wiertniczej (maks.)</td><td class="td-mono">9 000 mm</td></tr>
+              <tr><td>Prędkość obrotowa – I</td><td class="td-mono">75 obr./min</td></tr>
+              <tr><td>Prędkość obrotowa – II</td><td class="td-mono">150 obr./min</td></tr>
+              <tr><td>Prędkość obrotowa – III</td><td class="td-mono">363 obr./min</td></tr>
+              <tr><td>Prędkość obrotowa – IV</td><td class="td-mono">–</td></tr>
+              <tr><td>Moment obrotowy – I (Nm, min.)</td><td class="td-mono">14 638 (1494)</td></tr>
+              <tr><td>Moment obrotowy – II (Nm, min.)</td><td class="td-mono">3 719 (747)</td></tr>
+              <tr><td>Moment obrotowy – III (Nm, min.)</td><td class="td-mono">3 033 (313)</td></tr>
+              <tr><td>Moment obrotowy – IV (Nm, min.)</td><td class="td-mono">1 517 (155)</td></tr>
+              <tr><td>Typ napędu</td><td class="td-mono">TMV-4l-108F-3R24</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:16px"><h2>2.6 Podnoszenie Świdra / Sił Uderzenia</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Maks. siła podnoszenia wiertnicy</td><td class="td-mono">196,13 kN (20 000 kgf)</td></tr>
+              <tr><td>Maks. siła uderzenia wiertnicy</td><td class="td-mono">79,43 kN (8 100 kgf)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>2.9 Wciągarka</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+        <tbody>
+          <tr><td>Typ wciągarki</td><td class="td-mono">dp</td></tr>
+          <tr><td>Prędkość podawania wiertnicy (góra-dół)</td><td class="td-mono">0,55 ÷ 1,12 + 10%</td></tr>
+          <tr><td>Napęd</td><td class="td-mono">hydrauliczny, analogiczny lub odwracalny</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>2.10 Średnice i Głębokości Wiercenia</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metoda wiercenia</th><th>Śr. końcowa [mm]</th><th>Umowna głębokość [m]</th></tr></thead>
+        <tbody>
+          <tr><td>Płukanie bezpośrednie</td><td class="td-mono">250</td><td class="td-mono">400</td></tr>
+          <tr><td>Wiertło ślimakowe</td><td class="td-mono">650</td><td class="td-mono">70</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>2.11–2.14 Pozostałe Parametry</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+        <tbody>
+          <tr><td>Długość rury wiertniczej (maks.)</td><td class="td-mono">9 000 mm</td></tr>
+          <tr><td>Oświetlenie studni</td><td class="td-mono">reflektory LED CP-42R + Flood 42W Epistar</td></tr>
+          <tr><td>Średni czas pracy do pauzy (min.)</td><td class="td-mono">200 godz.</td></tr>
+          <tr><td>Żywotność do naprawy generalnej (min.)</td><td class="td-mono">4 000 godz.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>3. Opis Konstrukcji URB-210M</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Rama Urządzenia (poz. 7.1)</h4>
+        <p>Spawana konstrukcja przeznaczona do montażu sprzętu wiertniczego. Wykonana z rur profilowanych, montowana na bazie transportowej pojazdu KAMAZ. Wyposażona w drabinki mocujące maszt, podparciem przednią i tylną. Podpory hydrauliczne stabilizują urządzenie podczas wiercenia.</p>
+      </div>
+      <div class="info-card">
+        <h4>Maszt Urządzenia (poz. 7.2)</h4>
+        <p>Składa się z dwóch głównych części: ramy i przedłużacza, połączonych śrubami. Maszt wyposażony w dwie prowadnice (rury profilowane) dla wózka wiertniczego. Na kranach masztu zamocowane kołnierzami dodatkowe stopery. Maszt obsługiwany siłownikiem hydraulicznym.</p>
+      </div>
+      <div class="info-card">
+        <h4>Suport (poz. 7.3)</h4>
+        <p>Spawana konstrukcja – przesuwa się wzdłuż masztu wewnątrz ramienia wiertnicy, tworząc układ podający. Na suporcie zamocowane są: rotator, płyta regulacyjna z śrubami, trawers. Cylinder hydrauliczny mechanizmu podawczego montowany w suporcie.</p>
+      </div>
+      <div class="info-card">
+        <h4>Rotator (poz. 7.2.4)</h4>
+        <p>Przekazuje moment obrotowy i siłę osłową do kolumny wiertniczej. Silnik hydrauliczny dwustopniowy z reduktorem. Rotator może pracować w dwóch trybach: ciągnięcie skały (dłuto) lub ekstrakcja rdzenia. Uszczelka rotora zapewnia szczelność podczas cyrkulacji płuczki.</p>
+      </div>
+      <div class="info-card">
+        <h4>Blok Koronowy (poz. 7.2.5)</h4>
+        <p>Zbudowany z korpusu, dwóch osi i wstawionych w nim bloków z krążkami pomocniczymi. Blok koronowy montowany jest na wsporniku masztu. Linia montowana w górnym położeniu – koniec liny mocowany do wciągarki pomocniczej.</p>
+      </div>
+      <div class="info-card">
+        <h4>Winda / Wciągarka (poz. 7.2.6)</h4>
+        <p>Korpus z kożuchem, półkola obejma, pół-sprzęgło, tulejka i zaluzja – główne elementy windy. W czasie podnoszenia – kadłub elewatora znajdzie się w dolnym położeniu. Winda sterowana hydraulicznie, umożliwia obrót wrzeciona podczas prac wiertniczych.</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Tabela Smarowania URB-210M (Tabela 2)</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Układ / Agregat</th><th>Materiał smarny</th><th>Sposób smarowania</th></tr></thead>
+        <tbody>
+          <tr><td>Wypusty wału Cardana</td><td class="td-mono">Litol 24</td><td>Smarować ręcznie (2 punkty)</td></tr>
+          <tr><td>Skrzynia biegów + obudowa</td><td class="td-mono">Olej przekładniowy Lukoil TM-5 75W90 API GL-5</td><td>Wymieniać olej (1 pkt.)</td></tr>
+          <tr><td>Rotator</td><td class="td-mono">Olej przekładniowy Lukoil TM-5 75W90 API GL-5</td><td>Wymieniać olej (1 pkt.)</td></tr>
+          <tr><td>Maszt – osie obrotu, rolki bloków</td><td class="td-mono">Solidol RZ GOST 1033-79</td><td>Wlać smar do smarowniczek (13 pkt.)</td></tr>
+          <tr><td>Mechanizm obrotu masztu</td><td class="td-mono">Olej przekładniowy Lukoil TM-5 75W90 API GL-5</td><td>Wymieniać olej (1 pkt.)</td></tr>
+          <tr><td>Wciągarka</td><td class="td-mono">Solidol RZ GOST 1033-79</td><td>Wlać smar do smarowniczek (4 pkt.)</td></tr>
+          <tr><td>Układ hydrauliczny – zbiornik</td><td class="td-mono">Smar hydrauliczny WMGZ TU 38-101479-86</td><td>Wymienić po pierwszych 100 godz., potem co 1000 godz.</td></tr>
+          <tr><td>Lina</td><td class="td-mono">Smar grafitowy UssA GOST 3333-80</td><td>Smarować ręcznie</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Przeglądy Techniczne URB-210M</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>EO – Przegląd Codzienny</h4>
+        <ul>
+          <li>Sprawdzenie ilości paliwa w zbiornikach</li>
+          <li>Sprawdzenie poziomu oleju w skrzyniach</li>
+          <li>Sprawdzenie szczelności hydrauliki</li>
+          <li>Sprawdzenie mocowania zbiornika oleju</li>
+          <li>Uruchomienie silnika i sprawdzenie działania</li>
+          <li>Sprawdzenie działania oświetlenia</li>
+          <li>Sprawdzenie wszystkich dźwigni sterujących</li>
+          <li>Przygotowanie urządzenia do pracy</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>TO-1 – Pierwszy Przegląd (co 100–120 godz.)</h4>
+        <ul>
+          <li>Konserwacja zgodnie z EO</li>
+          <li>Oczyszczanie z kurzu i brudu</li>
+          <li>Nasmarować jednostki i zespoły urządzenia</li>
+          <li>Spuścić 3 kg paliwa ze zbiornika (sedymentacja)</li>
+          <li>Wyjąć i wypłukać elementy filtrów hydraulicznych</li>
+          <li>Dokręcić nakrętki złączeń urządzenia</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>TO-2 – Drugi Przegląd (co 500–550 godz.)</h4>
+        <ul>
+          <li>Czynności z TO-1 plus prace konserwacyjne</li>
+          <li>Spuścić olej z układu hydraulicznego</li>
+          <li>Wymienić elementy filtrujące nafty</li>
+          <li>Nasmarować urządzenie wg tabeli smarowania</li>
+          <li>Zdemontować i wypłukać poszczególne części</li>
+          <li>Wymienić olej w układzie hydraulicznym</li>
+          <li>Wymienić gumowe uszczelki wszystkich części</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>CO – Sezonowy Przegląd (wiosna i jesień)</h4>
+        <ul>
+          <li>Czynności z TO-2 i pierwszego przeglądu</li>
+          <li>Wlać smary zgodnie z tabelą smarowania</li>
+          <li>Wymienić olej w układzie hydraulicznym</li>
+          <li>Spuścić olej i obudową filtra oleju nafty</li>
+          <li>Dokładnie oczyścić zewnętrzne węzły</li>
+          <li>Wlać smary w miejsca niedostępne</li>
+          <li>Dokonać sezonowej zmiany smarów wg tabeli</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Możliwe Usterki URB-210M i Sposoby Usunięcia (Tabela 1)</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nazwa usterki</th><th>Prawdopodobna przyczyna</th><th>Sposób usunięcia</th></tr></thead>
+        <tbody>
+          <tr><td>Układ hydrauliczny nie działa</td><td>Brak oleju</td><td>Uzupełnić olej</td></tr>
+          <tr><td>Układ hydrauliczny nie działa</td><td>Nie pracuje pompa hydrauliczna</td><td>Włączyć pompę</td></tr>
+          <tr><td>Obrót rotatora jest niemożliwy – dystrybucja szpul</td><td>Zaciśnięta szpula, złamana</td><td>Przepłucz szpulę, wymień sprężyny lub wymień kierunkowy zawór sterujący</td></tr>
+          <tr><td>Ruch pracujących cylindrów wykazuje hydrauliczne szarpnięcia</td><td>Powietrze zasysane w cylindrach</td><td>Przepompować układ hydrauliczny</td></tr>
+          <tr><td>Wyciek oleju na prętach hydraulicznych w połączeniach przewodów olejowych</td><td>Zużyte uszczelnienia, naruszenie ciągłości połączeń</td><td>Wymienić uszczelnienia, Dokręcić złączki</td></tr>
+          <tr><td>Przełączanie szpuli</td><td>Zaciśnięta szpula, złamana sprężyna</td><td>Przepłucz szpulę, wymień sprężyny lub wymień kierunkowy zawór sterujący</td></tr>
+          <tr><td>Stuki i hałasy w przekładni i rotatorze</td><td>Złamane zęby przekładni, Osłabione mocowanie</td><td>Wymienić przekładnię; Dokręcić mocowania; Wymienić łożyska</td></tr>
+          <tr><td>Nierówny hałas w przekładni</td><td>Zużycie łożysk w przekładni</td><td>Wymienić łożyska</td></tr>
+          <tr><td>Przegrzanie przekładni</td><td>Niewystarczająca ilość oleju</td><td>Uzupełnić olej</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== URB-2A2 ===== -->
+  <div id="dtr-2a2" class="tab-content">
+
+    <div class="section-title"><h2>URB-2A2 – Charakterystyka Ogólna</h2><div class="line"></div></div>
+    <div class="alert-box" style="border-left-color:#1a7a9a;background:rgba(26,122,154,0.07)">
+      <strong>Przeznaczenie:</strong> Wiertnica URB-2A2 jest przeznaczona do wiercenia otworów sejsmicznych, geologiczno-złożowych i kartograficznych. Wszystkie mechanizmy są zamontowane na własnej ramie przymocowanej do podwozia samochodu KAMAZ B2131 (43118) 6x6, uruchamiane od jego silnika. Posiada przesuwaną obrotnicę z napędem hydraulicznym. Numer fabryczny egzemplarza opisanego w DTR: №131219.
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>2. Charakterystyka Techniczna URB-2A2</h2><div class="line"></div></div>
+    <div class="two-col">
+      <div>
+        <div class="section-title"><h2>Głębokość Wiercenia</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Metoda</th><th>Max głębokość</th></tr></thead>
+            <tbody>
+              <tr><td>Na płuczkę</td><td class="td-mono">220 m</td></tr>
+              <tr><td>Z przedmuchem powietrza (sprężarka Q=6 m³/min, p=24 kG/m²)</td><td class="td-mono">50 m</td></tr>
+              <tr><td>Przenośnikami śrubowymi</td><td class="td-mono">30 m</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:16px"><h2>Średnice Wiercenia</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość [mm]</th></tr></thead>
+            <tbody>
+              <tr><td>Średnica wiercenia początkowa</td><td class="td-mono">250</td></tr>
+              <tr><td>Średnica końcowa w skałach miękkich</td><td class="td-mono">215</td></tr>
+              <tr><td>Średnica końcowa w skałach twardych</td><td class="td-mono">93</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:16px"><h2>Obrotnica (Stół Obrotowy)</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Typ</td><td class="td-mono">ruchomy</td></tr>
+              <tr><td>Obroty – I bieg</td><td class="td-mono">2,33 s⁻¹ (140 obr./min)</td></tr>
+              <tr><td>Obroty – II bieg</td><td class="td-mono">3,75 s⁻¹ (225 obr./min)</td></tr>
+              <tr><td>Obroty – III bieg</td><td class="td-mono">5,42 s⁻¹ (325 obr./min)</td></tr>
+              <tr><td>Skok obrotnicy</td><td class="td-mono">7 000 mm</td></tr>
+              <tr><td>Moment siły (przy p=110 kG/cm²)</td><td class="td-mono">2 010 Nm</td></tr>
+              <tr><td>Napęd</td><td class="td-mono">wielotłoczkowy silnik hydrauliczny-osiowy</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="section-title"><h2>Ciśnienie Układu Hydraulicznego</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Ciśnienie robocze</td><td class="td-mono">110 kG/cm²</td></tr>
+              <tr><td>Max dopuszczalne (krytyczny czas)</td><td class="td-mono">125 kG/cm² (≤2,5 MPa)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:16px"><h2>Mechanizm Podnoszenia / Nacisku</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Typ</td><td class="td-mono">podnośnik hydrauliczny z układem wielokrążkowym</td></tr>
+              <tr><td>Max udźwig (p=85 kG/cm²)</td><td class="td-mono">4 800 kG</td></tr>
+              <tr><td>Max nacisk na dno otworu (p=85 kG/cm²)</td><td class="td-mono">2 600 kG</td></tr>
+              <tr><td>Prędkość podnoszenia przyrządu</td><td class="td-mono">1,25 m/s</td></tr>
+              <tr><td>Prędkość opuszczania i posuwu</td><td class="td-mono">0,6 m/s</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:16px"><h2>Maszt i Transport</h2><div class="line"></div></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+            <tbody>
+              <tr><td>Typ masztu</td><td class="td-mono">spawany z wysięgnikami i stopami</td></tr>
+              <tr><td>Nośność masztu</td><td class="td-mono">6 000 kG</td></tr>
+              <tr><td>Długość urządzenia (transport.)</td><td class="td-mono">10,2 m</td></tr>
+              <tr><td>Szerokość (transport.)</td><td class="td-mono">2,50 m</td></tr>
+              <tr><td>Wysokość (na samochodzie)</td><td class="td-mono">4,0 m</td></tr>
+              <tr><td>Max całkowity ciężar</td><td class="td-mono">14 125 kG</td></tr>
+              <tr><td>Ciężar na most przedni</td><td class="td-mono">do 4 710 kG</td></tr>
+              <tr><td>Ciężar na mosty tylne</td><td class="td-mono">do 9 415 kG</td></tr>
+              <tr><td>Max prędkość transportowa (asfalt)</td><td class="td-mono">90 km/h</td></tr>
+              <tr><td>Max prędkość (drogi gruntowe)</td><td class="td-mono">30 km/h</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>Rury Płuczkowe / Żerdzie Wiertnicze</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+        <tbody>
+          <tr><td>Średnica żerdzi wiertniczych</td><td class="td-mono">60,3 mm i 50,0 mm</td></tr>
+          <tr><td>Długość żerdzi wiertniczych</td><td class="td-mono">4 500 mm i 6 000 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:16px"><h2>Pompa Płuczkowa</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Parametr</th><th>Wartość</th></tr></thead>
+        <tbody>
+          <tr><td>Typ pompy</td><td class="td-mono">NB-50</td></tr>
+          <tr><td>Wydajność max</td><td class="td-mono">680 l/min</td></tr>
+          <tr><td>Ciśnienie robocze</td><td class="td-mono">34 kG/cm</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>3. Budowa i Zasada Działania Mechanizmów URB-2A2</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>3.1 Schemat Kinematyczny</h4>
+        <p>Ruch obrotowy od silnika samochodowego przez skrzynię biegów (5. bieg), skrzynię odbioru mocy za pomocą wału Cardana II przekazuje się na wał napędzający III skrzyni rozdzielczej. Od wału III przez koła zębate ruch przekazuje się na wały napędu pomp hydraulicznych i pompy płuczkowej.</p>
+      </div>
+      <div class="info-card">
+        <h4>3.2 Skrzynia Odbioru Mocy</h4>
+        <p>Mechaniczna skrzynia odbioru mocy posiada jedno przełożenie i=0,76 i sprzęgło włączania. Zamocowana jest na górnej części kadłuba skrzyni rozdzielczej samochodu. Smarowanie kół zębatych i łożysk tocznych przez rozpryskiwanie oleju kołami zębatymi.</p>
+      </div>
+      <div class="info-card">
+        <h4>3.4 Obrotnica – Stół Obrotowy</h4>
+        <p>Obrotnica stanowi przekładnię zębatą walcową o zębach prostych z trzema wałkami, trzema biegami – dźwignia w obudowie obrotnicy. Napęd ruchu obrotowego jest od silnika hydraulicznego. Zmiana biegów przez przesunięcie dźwignią bloku kół zębatych. Zmiana liczby obrotów na każdym biegu przez dławienie regulatorem obrotów.</p>
+      </div>
+      <div class="info-card">
+        <h4>3.5 Elewator</h4>
+        <p>Przeznaczony do opuszczania/podnoszenia przyrządu i skręcania/rozkręcania rur płuczkowych. Elewator przymocowany do wózka wiertniczego za pomocą czterech śrub. Do wrzeciona od dołu wkręcony jest łącznik zabezpieczony kołnierzem za pomocą śrub. Obrotnica sterowana jest przy użyciu pilota zamieszczonego w lewej tylnej części platformy.</p>
+      </div>
+      <div class="info-card">
+        <h4>3.6 Maszt</h4>
+        <p>Maszt składa się z ceownika połączonego belkami poprzecznymi. Wewnątrz masztu w dolnej części znajduje się podnośnik hydrauliczny, a w górnej są dwa przewody olejowe. Dolna część masztu zaopatrzona jest w wysięgniki (podpory hydrauliczne) ze stopami. Smarowanie łożysk tocznych górnego i dolnego wielokrążka przez smarownice.</p>
+      </div>
+      <div class="info-card">
+        <h4>3.7 Podnośnik Hydrauliczny</h4>
+        <p>Swoim przymocowaniem cylindra do szkieletu masztu przejmuje część obciążeń przy ruchu obrotowym przyrządu. Cylinder jest jednostopniowy, podwyjnego działania. Tłoczysko jest mrą o powierzchni utwardzonej i pokrytej chromem. Skok tłoka wynosi 2 600 mm. Uszczelnienie ruchowe tłoka i tłoczyska stanowią pierścienie uszczelniające.</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>4. Układ Hydrauliczny URB-2A2</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Osprzęt Układu Hydraulicznego</h4>
+        <div class="table-wrap" style="border:none;margin:0">
+          <table style="font-size:0.8rem">
+            <thead><tr><th>Element</th><th>Parametry</th></tr></thead>
+            <tbody>
+              <tr><td>Zbiornik oleju hydr.</td><td class="td-mono">V=350 l</td></tr>
+              <tr><td>Silnik-pompa MN-250/100</td><td class="td-mono">p=100 kG/cm², Q=215 l/min</td></tr>
+              <tr><td>Filtr F7M 32.25/200</td><td class="td-mono">p=200 kG/cm², Q=160 l/min</td></tr>
+              <tr><td>Zawór zwrotny G51-25</td><td class="td-mono">p=200 kG/cm², Q=140 l/min</td></tr>
+              <tr><td>Zawór przelewowy MKP-32</td><td class="td-mono">p=100 kG/cm², Q=250 l/min</td></tr>
+              <tr><td>Pompa zębata NSz-IOE</td><td class="td-mono">p=100 kG/cm², Q=20 l/min</td></tr>
+              <tr><td>Zawór przelewowy MKP-12</td><td class="td-mono">p=100 kG/cm², Q=40 l/min</td></tr>
+              <tr><td>Zawór dławiący Wl-6</td><td class="td-mono">p=160 kG/cm², Q=160 l/min</td></tr>
+              <tr><td>Pompa ręczna GN-60</td><td class="td-mono">p=60 kG/cm², Q=1,6 l/min</td></tr>
+              <tr><td>Rozdzielacz Rn-203</td><td class="td-mono">p=200 kG/cm², Q=160 l/min</td></tr>
+              <tr><td>Manometr MP-3 kl.2,5</td><td class="td-mono">p=250 kG/cm²</td></tr>
+              <tr><td>Siłownik przewodu wiertn.</td><td class="td-mono">D=120mm, d=80mm, skok=2600mm</td></tr>
+              <tr><td>Wysięgniki/podpory hydr.</td><td class="td-mono">D=100mm, d=80mm</td></tr>
+              <tr><td>Siłownik podnoszenia masztu</td><td class="td-mono">D=100mm, d=80mm</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="info-card">
+        <h4>Tabla Sterowania Hydraulicznego (Tab. 3)</h4>
+        <div class="table-wrap" style="border:none;margin:0">
+          <table style="font-size:0.78rem">
+            <thead><tr><th>Operacja</th><th>Rozdzielacz</th><th>Regulator/Zawór</th><th>Pompa</th></tr></thead>
+            <tbody>
+              <tr><td>Skręcanie (obr. prawe)</td><td class="td-mono">11/1/-b</td><td class="td-mono">8/2 zamknięty</td><td class="td-mono">2/1/</td></tr>
+              <tr><td>Rozkręcanie (obr. lewe)</td><td class="td-mono">11/1/-C</td><td class="td-mono">8/2 zamknięty</td><td class="td-mono">2/1/</td></tr>
+              <tr><td>Zatrzymanie obrotów wrzeciona</td><td class="td-mono">11/1/-a</td><td class="td-mono">8/2 otwarty</td><td class="td-mono">2/1/</td></tr>
+              <tr><td>Podnoszenie wolne</td><td class="td-mono">11/2/-b 11/3/-b</td><td class="td-mono">8/1 zamknięty 8/3 otwarty</td><td class="td-mono">2/2/6</td></tr>
+              <tr><td>Podnoszenie normalne</td><td class="td-mono">1 1/2/-b 11/3/-b</td><td class="td-mono">8/1 zamknięty 8/3 zamknięty</td><td class="td-mono">2/2/6</td></tr>
+              <tr><td>Opuszczanie normalne</td><td class="td-mono">1 1/2/-a 1 1/3/-b</td><td class="td-mono">8/1 otwarty 8/3 zamknięty</td><td class="td-mono">2/2/6</td></tr>
+              <tr><td>Podnoszenie masztu</td><td class="td-mono">11/2/-C + 1 I/3/-b + 13-c</td><td class="td-mono">8/1 otwarty 8/3 otwarty</td><td class="td-mono">2/2/6</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Karta Serwisowa – Przyczyny Awarii i Sposoby Usunięcia</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Awaria</th><th>Przyczyna</th><th>Sposób usunięcia</th></tr></thead>
+        <tbody>
+          <tr><td>Przegrzanie łożysk</td><td>Brak smaru, nadmierne ściąganie, nadmierne ściskanie łożysk</td><td>Uzupełnić smar; wyregulować łożysko/mocowanie; wymienić łożysko</td></tr>
+          <tr><td>Brak ciśnienia w układzie hydraulicznym</td><td>Zamknięty Zawór ssawny, za dużo oleju za mało oleju, Zawór przelewowy otwarty</td><td>Otworzyć Zawór (regulator 8/1); dolać oleju do poziomu wg wskaźnika</td></tr>
+          <tr><td>Pompa NSz-IOE nie stwarza ciśnienia przy dużych obrotach samochodu</td><td>Zawór przelewowy (Pompa otwarty nacisk-regulatora 8/1/ jest otwarty, niepoprawna praca pompy)</td><td>Zamknąć regulator 8/1; rozebrać Zawór 8/1 i przepiukaćí przepukaćí; zdjąć króciec tioczony pompy i przepiukać Zawór zwrotny</td></tr>
+          <tr><td>Pompa NSz-IOE nie stwarza ciśnienia tylko przy dużych obrotach samochodu po odłączeniu</td><td>Zanieczyszczenie oleju przez zawór zwrotnego 4/; przeciek oleju przez zawory dławiące regulatory 8/2/, 8/3/; uszkodzenie silnika hydraulicznego</td><td>Rozebrać i przepiukać Zawór; wymienić regulatory pompy; wymienić pompę; wymienić silnik</td></tr>
+          <tr><td>Obrotnica nie zapewnia max momentu przy skręcającego</td><td>Szybkie przegrzanie oleju w układzie hydraulicznym, podsysanie powietrza, duża ilość piana w oleju</td><td>Odkręcić połączenia, wymienić węże lub uszkodzone elementy, dospawać uszkodzone spawy</td></tr>
+          <tr><td>Częste zanieczyszczenie zaworów przelewowych, zwiększone zużycie pomp hydraulicznych</td><td>Zanieczyszczony olej w układzie hydraulicznym</td><td>Przepiukać elementy filtrujące, wymienić wkłady filtrów hydraulicznych, zmienić olej hydrauliczny</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Wykaz Łożysk – URB-2A2 (Tabela 6)</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Zespół</th><th>Nazwa łożyska</th><th>Wymiary dxDxB</th><th>Ilość</th></tr></thead>
+        <tbody>
+          <tr><td>Skrzynia odbioru mocy</td><td>Łożysko stożkowe 76063/7309</td><td class="td-mono">30×72×29</td><td class="td-mono">2+2</td></tr>
+          <tr><td>Obrotnica gl. – łożysko kulkowe zwykłe</td><td>212</td><td class="td-mono">60×110×22</td><td class="td-mono">1</td></tr>
+          <tr><td>Obrotnica – łożysko kulkowe zwykłe</td><td>308</td><td class="td-mono">40×90×23</td><td class="td-mono">2</td></tr>
+          <tr><td>Obrotnica – łożysko kulkowe wzdłużone</td><td>83145/3608</td><td class="td-mono">70×125×40</td><td class="td-mono">2+1</td></tr>
+          <tr><td>Wielokrążki – łożysko kulkowe zwykłe</td><td>214</td><td class="td-mono">70×125×24</td><td class="td-mono">2</td></tr>
+          <tr><td>Podnośnik hydr. – łożysko</td><td>412</td><td class="td-mono">–</td><td class="td-mono">2</td></tr>
+          <tr><td>Skrzynia rozdzielcza – łożysko kulkowe</td><td>212</td><td class="td-mono">60×110×22</td><td class="td-mono">2</td></tr>
+          <tr><td>Skrzynia rozdzielcza – łożysko kulkowe</td><td>214</td><td class="td-mono">70×125×24</td><td class="td-mono">1+7</td></tr>
+          <tr><td>Wózek wiertniczy – łożysko kulkowe zwykłe</td><td>212</td><td class="td-mono">60×110×22</td><td class="td-mono">4</td></tr>
+          <tr><td>Wózek wiertniczy – łożysko kulkowe zwykłe</td><td>602036/2032</td><td class="td-mono">17×40×12</td><td class="td-mono">12</td></tr>
+          <tr><td>Pompa płuczkowa – łożysko walcowe</td><td>2226</td><td class="td-mono">130×230×40</td><td class="td-mono">2</td></tr>
+          <tr><td>Pompa płuczkowa – łożysko stożkowe</td><td>7516</td><td class="td-mono">80×140×33</td><td class="td-mono">2</td></tr>
+          <tr><td>Pompa płuczkowa – łożysko stożkowe</td><td>7520</td><td class="td-mono">60×110×28</td><td class="td-mono">2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Lista Części Szybko Zużywających się – URB-2A2</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>l.p.</th><th>Nazwa</th><th>Nr katalogowy</th><th>Dotyczy</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Trzon</td><td class="td-mono">НБ32.02.501</td><td>Pompa płuczkowa</td></tr>
+          <tr><td>2</td><td>Tok</td><td class="td-mono">НБ32.02.200</td><td>Pompa płuczkowa</td></tr>
+          <tr><td>3</td><td>Tuleja</td><td class="td-mono">НБ 32.02.102-03</td><td>Pompa płuczkowa</td></tr>
+          <tr><td>4</td><td>Wał wrzeciona z błotną tuleja</td><td class="td-mono">2-37-50-2</td><td>Wiertnik (główica)</td></tr>
+          <tr><td>5</td><td>Obsada</td><td class="td-mono">2-33-74</td><td>Elewator</td></tr>
+          <tr><td>6</td><td>Rygiel</td><td class="td-mono">2-33-70-1</td><td>Elewator</td></tr>
+          <tr><td>7</td><td>Sztucer</td><td class="td-mono">2-33-68</td><td>Elewator</td></tr>
+          <tr><td>8</td><td>Oś elewatora</td><td class="td-mono">2-33-73</td><td>Elewator</td></tr>
+          <tr><td>9</td><td>Uszczeka trzona</td><td class="td-mono">11ГрИ.04.004</td><td>Pompa płuczkowa</td></tr>
+          <tr><td>10</td><td>Kołnierz na drąg wodzika</td><td class="td-mono">11ГрИ.04.004</td><td>Pompa płuczkowa</td></tr>
+          <tr><td>11</td><td>Półpierścienie wała wrzeciona</td><td class="td-mono">2-33-66</td><td>Wiertnik (główica)</td></tr>
+          <tr><td>12</td><td>Wałek wózka składany</td><td class="td-mono">2-31-25</td><td>Wózek masztu</td></tr>
+          <tr><td>13</td><td>Siodło zaworu kulkowego</td><td class="td-mono">–</td><td>Pompa płuczkowa</td></tr>
+          <tr><td>14</td><td>Pierścień na pokrywę zaworu</td><td class="td-mono">11Г-3-14</td><td>Pompa płuczkowa</td></tr>
+          <tr><td>15</td><td>Pierścień na pokrywę czołowe</td><td class="td-mono">140-150-58</td><td>Pompa płuczkowa</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>8. Bezpieczeństwo Pracy – URB-2A2</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>Kluczowe Zasady BHP</h4>
+        <ul>
+          <li>Do pracy z URB-2A2 mogą być dopuszczone osoby posiadające odpowiednie przeszkolenie i zaznajomione z instrukcją obsługi</li>
+          <li>Dostęp osób postronnych do sterowania jest zabroniony</li>
+          <li>Układ hydrauliczny poddaje się próbom ciśnieniowym przy ciśnieniu 125,0 kG/cm²</li>
+          <li>W czasie podnoszenia i opuszczania masztu ZABRANIA SIĘ przebywania osób w kabinie samochodu</li>
+          <li>Zmiana biegów obrotnicy może nastąpić TYLKO w dolnym położeniu obrotnicy</li>
+          <li>ZABRANIA SIĘ wykonywania jakichkolwiek prac pod obrotnicą, kiedy dźwignia rozdzielacza 11/2/ nie ma położenia „do góry"</li>
+          <li>ZABRANIA SIĘ wykonywania prac remontowych przy podniesionej obrotnicy</li>
+          <li>Poziom hałasu podczas pracy nie przekracza 90 dB</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>Zobowiązania Gwarancyjne</h4>
+        <ul>
+          <li>Przedsiębiorstwo produkcyjne gwarantuje zgodność URB-2A2 z wymaganiami warunków technicznych</li>
+          <li>Okres gwarancyjny: 1 rok od dnia rozpoczęcia eksploatacji</li>
+          <li>Lecz nie więcej niż 1 rok od dnia przekazania użytkownikowi</li>
+          <li>Warunki gwarancji podane w pasporcie urządzenia</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PORÓWNANIE ===== -->
+  <div id="dtr-por" class="tab-content">
+    <div class="section-title"><h2>Porównanie URB-2A2 vs URB-210M</h2><div class="line"></div></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Parametr</th><th>URB-2A2</th><th>URB-210M</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Przeznaczenie</strong></td><td>Otwory sejsmiczne, geologiczne, kartograficzne</td><td>Studnie głębinowe, otwory hydrologiczne, odwodnieniowe</td></tr>
+          <tr><td><strong>Max głębokość wiercenia (płuczka)</strong></td><td class="td-mono">220 m</td><td class="td-mono">400 m</td></tr>
+          <tr><td><strong>Max głębokość (powietrze)</strong></td><td class="td-mono">50 m</td><td class="td-mono">–</td></tr>
+          <tr><td><strong>Max głębokość (ślimakowe)</strong></td><td class="td-mono">30 m</td><td class="td-mono">70 m</td></tr>
+          <tr><td><strong>Średnica wiercenia końcowa (miękkie skały)</strong></td><td class="td-mono">215 mm</td><td class="td-mono">250 mm</td></tr>
+          <tr><td><strong>Średnica wiercenia końcowa (twarde skały)</strong></td><td class="td-mono">93 mm</td><td class="td-mono">–</td></tr>
+          <tr><td><strong>Całkowita masa urządzenia</strong></td><td class="td-mono">14 125 kg</td><td class="td-mono">≤ 21 700 kg</td></tr>
+          <tr><td><strong>Moc napędu</strong></td><td>od silnika samochodu KAMAZ B2131</td><td class="td-mono">160 kW (silnik podwozia)</td></tr>
+          <tr><td><strong>Ciśnienie hydrauliczne robocze</strong></td><td class="td-mono">110 kG/cm²</td><td class="td-mono">29,42 MPa (300 kgf/cm²)</td></tr>
+          <tr><td><strong>Max ciśnienie hydrauliczne</strong></td><td class="td-mono">125 kG/cm²</td><td class="td-mono">300 kgf/cm²</td></tr>
+          <tr><td><strong>Max udźwig podnośnika</strong></td><td class="td-mono">4 800 kG</td><td class="td-mono">20 000 kG (196 kN)</td></tr>
+          <tr><td><strong>Max nacisk na dno otworu</strong></td><td class="td-mono">2 600 kG</td><td class="td-mono">8 100 kG (79,4 kN)</td></tr>
+          <tr><td><strong>Prędkość podnoszenia</strong></td><td class="td-mono">1,25 m/s</td><td class="td-mono">0,55÷1,12 m/s</td></tr>
+          <tr><td><strong>Skok podnośnika/obrotnicy</strong></td><td class="td-mono">2 600 mm (podnośnik)</td><td class="td-mono">7 000 mm (rotator)</td></tr>
+          <tr><td><strong>Nośność masztu</strong></td><td class="td-mono">6 000 kG</td><td class="td-mono">wyższa (brak danych)</td></tr>
+          <tr><td><strong>Pompa płuczkowa (typ)</strong></td><td class="td-mono">NB-50, Q=680 l/min</td><td class="td-mono">NB-50 lub inna</td></tr>
+          <tr><td><strong>Obroty wrzeciona – I bieg</strong></td><td class="td-mono">140 obr./min</td><td class="td-mono">75 obr./min</td></tr>
+          <tr><td><strong>Obroty wrzeciona – II bieg</strong></td><td class="td-mono">225 obr./min</td><td class="td-mono">150 obr./min</td></tr>
+          <tr><td><strong>Obroty wrzeciona – III bieg</strong></td><td class="td-mono">325 obr./min</td><td class="td-mono">363 obr./min</td></tr>
+          <tr><td><strong>Prędkość transportowa (asfalt)</strong></td><td class="td-mono">90 km/h</td><td class="td-mono">80 km/h</td></tr>
+          <tr><td><strong>Baza transportowa</strong></td><td class="td-mono">KAMAZ B2131 (43118) 6×6</td><td class="td-mono">KAMAZ 65111-0003020-E6</td></tr>
+          <tr><td><strong>Długość transportowa</strong></td><td class="td-mono">10,2 m</td><td class="td-mono">12,7 m</td></tr>
+          <tr><td><strong>Szerokość</strong></td><td class="td-mono">2,50 m</td><td class="td-mono">2,50 m</td></tr>
+          <tr><td><strong>Wysokość (transport)</strong></td><td class="td-mono">4,0 m</td><td class="td-mono">3,95 m</td></tr>
+          <tr><td><strong>Poziom hałasu</strong></td><td class="td-mono">≤ 90 dB</td><td class="td-mono">–</td></tr>
+          <tr><td><strong>Żywotność do naprawy generalnej</strong></td><td>–</td><td class="td-mono">≥ 4 000 godz.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert-box" style="margin-top:20px">
+      <strong>Wniosek:</strong> URB-210M jest urządzeniem <strong>większym i cięższym</strong> przeznaczonym do wiercenia studni głębinowych do 400 m, z większym udźwigiem (20 t vs 4,8 t) i większym naciskiem na dno (8 100 vs 2 600 kG). URB-2A2 jest urządzeniem <strong>lżejszym i bardziej mobilnym</strong>, stosowanym do płytszych otworów sejsmicznych i kartograficznych do 220 m, z mniejszą średnicą końcową (215/93 mm).
+    </div>
+  </div>
+</div>
+
 </main>
 
 <footer>
@@ -3003,7 +3605,7 @@ function showPage(pageId) {
   var pg = document.getElementById('page-' + pageId);
   if (pg) pg.classList.add('active');
   // Update active button in BOTH navs
-  var map = { home:0, geology:1, drilling:2, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10, volume:11 };
+  var map = { home:0, geology:1, drilling:2, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10, volume:11, dtr:12 };
   // Desktop nav (no close button offset)
   var deskBtns = document.querySelectorAll('#main-nav-desktop button');
   deskBtns.forEach(function(b){ b.classList.remove('active'); });
