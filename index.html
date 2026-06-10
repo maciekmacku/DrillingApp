@@ -4325,7 +4325,12 @@ function resetVolume() {
 }
 
 // ===================== INIT =====================
-showPage('home');
+(function() {
+  var hash = location.hash.slice(1);
+  var validPages = ['home','geology','drilling','fluids','cement','calculator',
+    'glossary','safety','pipes','hydro','hydrogeo','volume','dtr','reg812'];
+  showPage(validPages.indexOf(hash) !== -1 ? hash : 'home');
+})();
 </script>
 
 <script>
