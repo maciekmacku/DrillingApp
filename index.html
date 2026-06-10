@@ -571,6 +571,7 @@
     <button onclick="showPage('hydrogeo')">🌊 Hydrogeologia</button>
     <button onclick="showPage('volume')">🔵 Obj. Otworu</button>
     <button onclick="showPage('dtr')">🔧 DTR Urządzeń</button>
+    <button onclick="showPage('reg812')">📜 Rozp. 812</button>
   </nav>
 </header>
 <!-- Overlay backdrop -->
@@ -591,6 +592,7 @@
   <button onclick="showPage('hydrogeo')">🌊 Hydrogeologia</button>
   <button onclick="showPage('volume')">🔵 Obj. Otworu</button>
   <button onclick="showPage('dtr')">🔧 DTR Urządzeń</button>
+  <button onclick="showPage('reg812')">📜 Rozp. 812</button>
 </nav>
 
 <main>
@@ -680,6 +682,12 @@
       <span class="card-icon">🌊</span>
       <h3>Wiertnictwo Hydrogeologiczne</h3>
       <p>Wody podziemne, metody wiercenia studni, konstrukcje otworów, filtry studzienne, obsypki żwirowe. Wg Gonet &amp; Macuda (AGH 2004).</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('reg812')">
+      <span class="card-icon">📜</span>
+      <h3>Rozporządzenie poz. 812</h3>
+      <p>Rozdział 3: Wykonywanie otworów wiertniczych (§38–§80). Rozp. Min. Gospodarki z 25.04.2014 r. Dz.U. 2014 poz. 812.</p>
       <div class="card-arrow">→</div>
     </div>
     <div class="card" onclick="showPage('dtr')">
@@ -3537,6 +3545,428 @@
   </div>
 </div>
 
+<!-- ===================== ROZPORZĄDZENIE POZ. 812 ===================== -->
+<div id="page-reg812" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">📜</div>
+    <div>
+      <h2>Rozporządzenie poz. 812 – Rozdział 3</h2>
+      <p>Wykonywanie otworów wiertniczych (§38–§80)</p>
+    </div>
+  </div>
+
+  <div class="alert-box" style="margin-bottom:20px">
+    <strong>Podstawa prawna:</strong> Rozporządzenie Ministra Gospodarki z dnia 25 kwietnia 2014 r. w sprawie szczegółowych wymagań dotyczących prowadzenia ruchu zakładów górniczych wydobywających kopaliny otworami wiertniczymi (Dz.U. 2014 poz. 812). Wydane na podstawie art. 120 ust. 1 ustawy z dnia 9 czerwca 2011 r. – Prawo geologiczne i górnicze. Wejście w życie: 8 lipca 2014 r.
+    <br><br>Źródło: <strong>eli.gov.pl/eli/DU/2014/812</strong> (oficjalny tekst obowiązujący)
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'r812-dok')">§38–41 Dokumentacja</button>
+    <button class="tab-btn" onclick="switchTab(this,'r812-lok')">§42–48 Lokalizacja</button>
+    <button class="tab-btn" onclick="switchTab(this,'r812-pro')">§49–56 Projekt / Płuczka</button>
+    <button class="tab-btn" onclick="switchTab(this,'r812-bop')">§57–80 BOP / Erupcja</button>
+  </div>
+
+  <!-- TAB 1: §38-41 Dokumentacja -->
+  <div id="r812-dok" class="tab-content active">
+    <div class="section-title"><h2>§38–41 Dokumentacja Robót Wiertniczych</h2><div class="line"></div></div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 38 – Prowadzenie dokumentacji robót wiertniczych</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Przy wykonywaniu otworu wiertniczego prowadzi się dokumentację robót wiertniczych.</p>
+        <p><strong>2.</strong> W skład dokumentacji robót wiertniczych wchodzą:</p>
+        <ul>
+          <li>dokumentacje dotyczące wykonywania otworu wiertniczego,</li>
+          <li>dokumentacje eksploatacyjne urządzeń energomechanicznych i sprzętu wiertniczego,</li>
+          <li>projekty techniczne zabiegów specjalnych wykonywanych w otworach wiertniczych.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 39 – Skład dokumentacji wykonywania otworu wiertniczego</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Dokumentację dotyczącą wykonywania otworu wiertniczego stanowią w szczególności:</p>
+        <ul>
+          <li>protokół przekazania urządzenia wiertniczego do ruchu,</li>
+          <li>raporty wiertnicze,</li>
+          <li>aktualny profil geologiczny otworu wiertniczego oraz protokoły z wykonanych prób chłonności i wytrzymałości formacji,</li>
+          <li>diagramy przyrządów kontrolno-pomiarowych,</li>
+          <li>dziennik wiertniczy,</li>
+          <li>projekty techniczne i protokoły przeprowadzonych rurowań i uszczelnień, w tym cementowań, kolumn rur okładzinowych oraz prób szczelności rur,</li>
+          <li>protokoły przeprowadzonych badań skuteczności uszczelniania rur okładzinowych oraz prób szczelności rur,</li>
+          <li>projekty techniczne i protokoły pomiarów, badań i prac specjalistycznych,</li>
+          <li>projekty techniczne i protokoły przeprowadzonej likwidacji otworu wiertniczego.</li>
+        </ul>
+        <p><strong>2.</strong> Projekty techniczne zawierają: opis stanu technicznego otworu, opis technologii robót, rodzaj maszyn i urządzeń, zasady organizacji pracy i nadzoru, wykaz instrukcji bezpiecznego wykonywania prac.</p>
+        <p><strong>3.</strong> W przypadku robót wiertniczych wykonywanych dla badań sejsmicznych dokumentację sporządza się odpowiednio do zakresu wykonywanych robót.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 40 – Rejestracja prac z substancjami promieniotwórczymi</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Prace z użyciem substancji promieniotwórczych w otworach wiertniczych rejestruje się w dzienniku wiertniczym lub w książce otworu wiertniczego eksploatacyjnego.</p>
+        <p><strong>2.</strong> Rejestracja zawiera:</p>
+        <ul>
+          <li>numer zezwolenia Prezesa Państwowej Agencji Atomistyki,</li>
+          <li>typ izotopu, aktywność źródła i rodzaj promieniowania.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 41 – Dokumentacja eksploatacyjna urządzeń energomechanicznych</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Dokumentacja eksploatacyjna urządzeń energomechanicznych i sprzętu wiertniczego zawiera:</p>
+        <ul>
+          <li>dokumentację techniczno-ruchową maszyn, urządzeń i sprzętu wiertniczego, w tym instrukcje eksploatacyjne,</li>
+          <li>książki kontroli oraz eksploatacji urządzeń i sprzętu,</li>
+          <li>dokumentację dotyczącą wymaganych atestów urządzeń i sprzętu.</li>
+        </ul>
+        <p><strong>2.</strong> Książki kontroli zawierają: nazwy kontrolowanych urządzeń, harmonogram przeprowadzania kontroli, sposób wykonania kontroli, wyniki kontroli.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: §42-48 Lokalizacja -->
+  <div id="r812-lok" class="tab-content">
+    <div class="section-title"><h2>§42–48 Lokalizacja i Przygotowanie Wiertni</h2><div class="line"></div></div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 42 – Lokalizacja otworów z zagrożeniem gazowym/erupcyjnym</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Lokalizując otwory wiertnicze, w których jest spodziewane występowanie gazów wybuchowych, gazów toksycznych lub istnienie zagrożenia samowypływu płynu złożowego, uwzględnia się konfigurację terenu mogącą sprzyjać naturalnemu gromadzeniu się gazów lub cieczy wokół obiektu.</p>
+        <p><strong>2.</strong> W przypadku zaliczenia otworu wiertniczego do odpowiedniej kategorii zagrożenia siarkowodorowego określonej w przepisach w sprawie zagrożeń naturalnych w zakładach górniczych, zapewnia się:</p>
+        <ul>
+          <li>dojazd do wiertni z <strong>dwóch różnych kierunków</strong>,</li>
+          <li>widoczne z terenu wiertni urządzenie służące do pomiaru kierunku wiatru.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 43 – Infrastruktura terenu i uzbrojenie podziemne</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> W przypadku lokalizacji otworu wiertniczego uwzględnia się infrastrukturę terenu, w tym napowietrzne linie energetyczne, a także podziemne uzbrojenie (kable energetyczne i telefoniczne, rurociągi, kolektory sanitarne) na podstawie geodezyjnej ewidencji sieci uzbrojenia terenu lub innej dostępnej dokumentacji, oraz uwzględnia się przeważający kierunek wiatru.</p>
+        <p><strong>2.</strong> Jeżeli istnieje uzasadnione przypuszczenie, że teren jest uzbrojony, a lokalizacja uzbrojenia nie jest znana, przed rozpoczęciem robót wiertniczych uzbrojenie lokalizuje się za pomocą odpowiedniej aparatury lub wykopu. Z wykonanych czynności sporządza się <strong>protokół</strong>.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 44 – Minimalne odległości otworu wiertniczego od obiektów</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Otwór wiertniczy lokalizuje się co najmniej w odległości:</p>
+        <div class="table-wrap" style="margin:10px 0">
+          <table>
+            <thead><tr><th>Obiekt / Strefa</th><th>Min. odległość</th></tr></thead>
+            <tbody>
+              <tr><td>Obiekty z ogniem otwartym (ropa/gaz, gazy palne)</td><td class="td-mono">50 m</td></tr>
+              <tr><td>Linie kolejowe, kanały, zbiorniki wodne, rzeki, drogi publiczne, zabudowania</td><td class="td-mono">1,5 × wysokości wieży / masztu</td></tr>
+              <tr><td>Napowietrzne linie wysokiego napięcia</td><td class="td-mono">1,5 × wys. wieży/masztu, nie mniej niż <strong>30 m</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>2.</strong> W przypadku robót wiertniczych dla badań sejsmicznych odległości ustala kierownik ruchu zakładu.</p>
+        <p><strong>3.</strong> Odległości mogą być <strong>zmniejszone</strong> przez kierownika ruchu zakładu w przypadkach uzasadnionych warunkami techniczno-ruchowymi.</p>
+        <p><strong>4.</strong> Kierownik ruchu zawiadamia właściwy organ nadzoru górniczego o zmniejszeniu odległości <strong>przed</strong> rozpoczęciem robót przygotowawczych lub montażowych.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 45 – Otwory wiertnicze na obszarach leśnych</div>
+      <div class="accordion-body">
+        <p>W przypadku zlokalizowania otworu wiertniczego na obszarze leśnym lub w odległości mniejszej niż <strong>100 m</strong> od granicy lasu, jeżeli przewiduje się występowanie ropy naftowej lub gazu ziemnego, sposób ochrony przeciwpożarowej obszaru leśnego uzgadnia się z właścicielem, zarządzającym lub jego użytkownikiem.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 46 – Kontrola stanu technicznego lin i wielokrążków przed stawianiem wieży</div>
+      <div class="accordion-body">
+        <p>Przed rozpoczęciem stawiania wież wiertniczych, masztów wiertniczych, czwórnogów i trójnogów osoby dozoru ruchu kontrolują stan techniczny:</p>
+        <ul>
+          <li>lin i wielokrążków,</li>
+          <li>prawidłowości ich zamocowania i olinowania,</li>
+          <li>sprawności zespołu napędowego i układu hamulcowego,</li>
+        </ul>
+        <p>zgodnie z dokumentacją techniczno-ruchową maszyn, urządzeń i sprzętu wiertniczego.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 47 – Kontrola siłowników hydraulicznych podczas podnoszenia masztu</div>
+      <div class="accordion-body">
+        <p>Podczas podnoszenia podbudowy lub masztu wiertniczego z użyciem siłowników hydraulicznych kontroluje się stan techniczny siłowników, instalacji zasilającej i sterowniczej, zgodnie z dokumentacją techniczno-ruchową maszyn i urządzeń wiertniczych.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 48 – Rekonstrukcja odwiertów dla zakładów górniczych</div>
+      <div class="accordion-body">
+        <p>W przypadku wykonywania otworów wiertniczych i rekonstrukcji odwiertów dla zakładów górniczych, prace prowadzi kierownik ruchu zakładu, w <strong>porozumieniu</strong> z kierownikiem ruchu zakładu górniczego.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: §49-56 Projekt / Płuczka -->
+  <div id="r812-pro" class="tab-content">
+    <div class="section-title"><h2>§49–56 Projekt Geologiczno-Techniczny i Płuczka Wiertnicza</h2><div class="line"></div></div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 49 – Projekt geologiczno-techniczny wiercenia</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Wiercenie otworów wiertniczych poszukiwawczych i rozpoznawczych prowadzi się zgodnie z projektem robót geologicznych.</p>
+        <p><strong>2.</strong> Wiercenie otworów wiertniczych i rekonstrukcja odwiertów na potrzeby ruchu zakładu górniczego otworowego odbywa się na podstawie <strong>projektu geologiczno-technicznego wiercenia</strong>, zatwierdzonego przez kierownika ruchu zakładu górniczego otworowego.</p>
+        <p><strong>3.</strong> Projekt geologiczno-techniczny wiercenia określa:</p>
+        <ul>
+          <li>lokalizację planowanych prac,</li>
+          <li>konstrukcję odwiertów wraz z przypuszczalnym profilem geologicznym i warunkami geologicznymi (hydrogeologicznymi i inżyniersko-złożowymi),</li>
+          <li>przewidywaną konstrukcję otworów wiertniczych i technologię ich wiercenia,</li>
+          <li>przewidywane roboty strzałowe i zabiegi intensyfikacji przypływu,</li>
+          <li>skład płynu szczelinującego i warunki stosowania (w przypadku szczelinowania hydraulicznego),</li>
+          <li>zakres i sposób zamykania horyzontów produkcyjnych i wodonośnych,</li>
+          <li>zakres oraz metody projektowanych badań geofizycznych,</li>
+          <li>zakres badań geologicznych w otworze wiertniczym poszukiwawczym,</li>
+          <li>zaliczenie otworu do odpowiedniej <strong>klasy zagrożenia erupcyjnego lub siarkowodorowego</strong>,</li>
+          <li>zabezpieczenie przeciwerupcyjne wylotu otworu wiertniczego i przewodu wiertniczego w poszczególnych fazach prac.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 50 – Nadzór nad pracami rozpoznawczymi</div>
+      <div class="accordion-body">
+        <p>Prace związane z rozpoznaniem geologicznym, w szczególności <strong>dowiercanie, opróbowanie, rdzeniowanie, cementowanie rur</strong>, oraz prace geofizyczne, badania hydrogeologiczne wykonuje się pod bezpośrednim nadzorem osób dozoru ruchu zakładu oraz służby geologicznej tego zakładu.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 51 – Bieżące pomiary parametrów płuczki i obieg płuczkowy</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Podczas robót wiertniczych wykonuje się bieżące pomiary parametrów płuczki. Zakres i częstotliwość pomiarów określa kierownik ruchu zakładu albo upoważniona przez niego osoba dozoru ruchu zakładu.</p>
+        <p><strong>2.</strong> System obiegu płuczkowego uwzględnia w szczególności możliwość przygotowania odpowiedniego rodzaju płuczki, jej obróbkę, oczyszczanie i odgazowanie, stosownie do wymagań prowadzonych robót wiertniczych.</p>
+        <p><strong>3.</strong> Przy robotach wiertniczych w celu poszukiwania, rozpoznawania złóż ropy naftowej i gazu ziemnego lub wydobywania ropy naftowej i gazu ziemnego obieg płuczkowy wyposaża się w:</p>
+        <ul>
+          <li>przyrządy kontrolno-pomiarowe sygnalizujące <strong>przypływ płynu złożowego</strong> lub zanik płuczki wiertniczej,</li>
+          <li>sygnalizację świetlną i akustyczną zainstalowaną na stanowisku wiertacza,</li>
+          <li>instalację tłoczną pomp płuczkowych podłączoną do węzła zatłaczania otworu wiertniczego.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 52 – Ciśnienie hydrostatyczne płuczki jako zabezpieczenie przeciwerupcyjne</div>
+      <div class="accordion-body">
+        <p>Wysokość ciśnienia hydrostatycznego słupa płuczki w otworze wiertniczym wykonywanym dla udostępnienia złóż ropy naftowej i gazu ziemnego, stanowiącego zabezpieczenie przeciwerupcyjne, przy równoczesnej ochronie złoża, określa <strong>kierownik ruchu zakładu</strong>.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 53 – Prędkość wyciągania przewodu i efekt tłokowania</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Prędkość wyciągania i zapuszczania przewodu wiertniczego oraz lepkość plastyczną płuczki dobiera się w taki sposób, aby ograniczyć efekt tłokowania. Szczególną ostrożność zachowuje się w przypadku zaniku płuczki i przypływu płynu złożowego do otworu wiertniczego.</p>
+        <p><strong>2.</strong> Wyciągając przewód wiertniczy, <strong>dopełnia się otwór wiertniczy płuczką</strong> o parametrach takich jak podczas wiercenia, w sposób ciągły, kontrolując skuteczność jego dopełnienia.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 54 – Izolacja poziomów gazowych przy zaniechaniu robót</div>
+      <div class="accordion-body">
+        <p>Zaniechanie robót wiertniczych w otworze wiertniczym z <strong>odkrytym poziomem gazowym</strong> poprzedza się odizolowaniem tego poziomu od pozostałej części otworu wiertniczego.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 55 – Głębokość zapuszczenia rur okładzinowych (gradient ciśnienia)</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> Głębokość zapuszczenia kolejnej kolumny rur okładzinowych podczas robót wiertniczych dla ropy/gazu dobiera się tak, aby w nieorurowanym interwale otworu wiertniczego nie wystąpiły warstwy, w których <strong>gradient ciśnienia złożowego jednej warstwy byłby większy od gradientu ciśnienia szczelinowania innej warstwy</strong>.</p>
+        <p><strong>2.</strong> Gradient ciśnienia szczelinowania ustala się wykonując próby ciśnieniowe w otworze wiertniczym, w sposób określony w instrukcji zapobiegania i likwidacji erupcji (§71).</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 56 – Zakaz prób ciśnieniowych powyżej ciśnienia szczelinowania</div>
+      <div class="accordion-body">
+        <p><strong>1.</strong> W otworze wiertniczym jest <strong>niedopuszczalne</strong> wykonywanie prób ciśnieniowych z użyciem ciśnienia większego od <strong>znanego ciśnienia szczelinowania skał odkrytych</strong>.</p>
+        <p><strong>2.</strong> Konstrukcja więźby rurowej wylotu otworu wiertniczego umożliwia pomiar ciśnienia w przestrzeniach międzyrurowych rur okładzinowych.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: §57-80 BOP / Erupcja -->
+  <div id="r812-bop" class="tab-content">
+    <div class="section-title"><h2>§57–80 BOP, Zabezpieczenia Przeciwerupcyjne i Procedury Awaryjne</h2><div class="line"></div></div>
+
+    <div class="alert-box" style="border-left-color:#718096;background:rgba(74,85,104,0.06);margin-bottom:16px">
+      <strong>Uwaga:</strong> Paragrafy §57–§80 dotyczą szczegółowych wymagań dla zabezpieczeń przeciwerupcyjnych (BOP), procedur przy kicku, zagrożeniu H₂S, testowania BOP oraz likwidacji otworów. Poniżej zestawione są kluczowe wymagania.
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 57–60 – Wymagania dla zabezpieczeń przeciwerupcyjnych (BOP)</div>
+      <div class="accordion-body">
+        <p>W rejonie, w którym eksploatuje się lub poszukuje złóż ropy naftowej i gazu ziemnego, a także w rejonie, w którym stwierdzono lub przewiduje się nagromadzenia gazów palnych lub toksycznych – stosuje się <strong>urządzenia przeciwerupcyjne</strong> zapewniające zamknięcie otworu wiertniczego.</p>
+        <p>Skład i parametry zestawu przeciwerupcyjnego (BOP) ustala się w projekcie geologiczno-technicznym wiercenia na podstawie:</p>
+        <ul>
+          <li>przewidywanego ciśnienia złożowego,</li>
+          <li>temperatury i składu chemicznego płynów złożowych,</li>
+          <li>parametrów stosowanych rur okładzinowych i przewodu wiertniczego.</li>
+        </ul>
+        <p>Ciśnienie robocze zestawu BOP musi być większe od <strong>maksymalnego przewidywanego ciśnienia przy wylewie</strong> w danym interwale wiercenia.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 61–65 – Testowanie i sprawdzanie BOP</div>
+      <div class="accordion-body">
+        <p>Zestaw przeciwerupcyjny i jego elementy podlegają sprawdzeniu:</p>
+        <ul>
+          <li>przed każdym zapuszczeniem kolumny rur okładzinowych,</li>
+          <li>po każdym naprawie lub modyfikacji,</li>
+          <li>podczas wiercenia – w regularnych odstępach czasu określonych przez kierownika ruchu zakładu (nie rzadziej niż co <strong>7 dni</strong>).</li>
+        </ul>
+        <p>Sprawdzenie prewentera polega na:</p>
+        <ul>
+          <li>próbie funkcjonalnej (otwarcie/zamknięcie każdego elementu BOP),</li>
+          <li>próbie ciśnieniowej szczelności (niskim i wysokim ciśnieniem).</li>
+        </ul>
+        <p>Wyniki testów BOP wpisuje się do <strong>dziennika wiertniczego</strong>.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 66–68 – Postępowanie przy stwierdzeniu kieku (kick detection)</div>
+      <div class="accordion-body">
+        <p>W przypadku stwierdzenia objawów napływu płynu złożowego do otworu wiertniczego (kick) pracownicy niezwłocznie:</p>
+        <ul>
+          <li>zatrzymują wiercenie i wyciąganie przewodu wiertniczego,</li>
+          <li>zamykają zestaw BOP,</li>
+          <li>zawiadamiają kierownika ruchu zakładu lub osobę dozoru ruchu,</li>
+          <li>dokumentują w dzienniku wiertniczym: czas wykrycia, ciśnienia na rurach i przestrzeni anularnej, objętość napływu.</li>
+        </ul>
+        <p>Po zamknięciu BOP ustabilizowane ciśnienia mierzy się na <strong>rurach i przestrzeni anularnej (SIDPP i SICP)</strong> jako dane wyjściowe do obliczenia gęstości płuczki ciężkiej niezbędnej do likwidacji kieku metodą Drillers Method lub Wait & Weight Method.</p>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 69–71 – Instrukcja zapobiegania i likwidacji erupcji</div>
+      <div class="accordion-body">
+        <p>W zakładzie górniczym otworowym, wykonującym otwory wiertnicze dla złóż ropy naftowej i gazu ziemnego, sporządza się <strong>instrukcję zapobiegania i likwidacji erupcji</strong>, zatwierdzoną przez kierownika ruchu zakładu. Instrukcja zawiera:</p>
+        <ul>
+          <li>opis stosowanego zestawu BOP i jego elementów,</li>
+          <li>procedury zamykania otworu przy stwierdzeniu kieku,</li>
+          <li>metody obliczania parametrów płuczki ciężkiej,</li>
+          <li>procedury kontrolowanego zatłaczania płuczki,</li>
+          <li>metody ustalania gradientu ciśnienia szczelinowania,</li>
+          <li>plany postępowania awaryjnego przy erupcji i pożarze wylotu.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 72–75 – Zagrożenie siarkowodorowe (H₂S)</div>
+      <div class="accordion-body">
+        <div class="alert-box" style="background:rgba(74,85,104,0.08);border-left-color:#2d3748">
+          <strong>⚠ H₂S – siarkowodór:</strong> Bezbarwny gaz o zapachu zgniłych jaj, silnie toksyczny. Stężenie 0,1% obj. (1000 ppm) – natychmiastowe porażenie układu oddechowego i śmierć.
+        </div>
+        <p>W otworach zaliczonych do kategorii zagrożenia siarkowodorowego:</p>
+        <ul>
+          <li>stosuje się rury okładzinowe i wyposażenie odporne na korozję siarkowodorową (klasy odporności na H₂S wg norm NACE/ISO),</li>
+          <li>na wiertni instaluje się detektory H₂S z sygnalizacją świetlną i akustyczną,</li>
+          <li>wszyscy pracownicy wyposażeni są w aparaty oddechowe i przeszkoleni z procedur awaryjnych,</li>
+          <li>zapewnia się dojazd z dwóch różnych kierunków (§42 ust. 2),</li>
+          <li>sporządza się plan ewakuacji uwzględniający kierunek wiatru.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 76–78 – Wymagania dla płuczki wiertniczej przy eksploatacji złóż</div>
+      <div class="accordion-body">
+        <p>Przy robotach wiertniczych związanych z poszukiwaniem i wydobywaniem ropy naftowej i gazu ziemnego parametry płuczki zapewniają:</p>
+        <ul>
+          <li>utrzymanie przewagi ciśnienia hydrostatycznego nad ciśnieniem złożowym przy jednoczesnej ochronie formacji przed szczelinowaniem,</li>
+          <li>właściwe oczyszczanie otworu z urobku (wystarczająca prędkość anularna),</li>
+          <li>stabilność ścian otworu wiertniczego (inhibicja łupków).</li>
+        </ul>
+        <p>Kierownik ruchu zakładu określa:</p>
+        <ul>
+          <li>wymaganą gęstość płuczki dla poszczególnych interwałów wiercenia,</li>
+          <li>zakres dopuszczalnych odchyleń parametrów od wartości projektowych,</li>
+          <li>częstotliwość i zakres pomiarów parametrów płuczki.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <div class="accordion-head">§ 79–80 – Likwidacja otworu wiertniczego</div>
+      <div class="accordion-body">
+        <p>Likwidacja otworu wiertniczego polega na trwałym zamknięciu wszystkich nawierconych poziomów wodonośnych, gazowych i złożowych, zapobiegającym:</p>
+        <ul>
+          <li>migracji płynów złożowych do innych warstw lub na powierzchnię,</li>
+          <li>zanieczyszczeniu poziomów wodonośnych,</li>
+          <li>osiadaniu terenu nad otworem.</li>
+        </ul>
+        <p>Projekt techniczny likwidacji otworu zawiera:</p>
+        <ul>
+          <li>opis metody i kolejności uszczelniania (cementowania) poszczególnych interwałów,</li>
+          <li>rodzaj i parametry zaczynu cementowego,</li>
+          <li>sposób weryfikacji skuteczności likwidacji,</li>
+          <li>sposób demontażu głowicy i urządzeń wiertniczych.</li>
+        </ul>
+        <p>Po zakończeniu likwidacji sporządza się <strong>protokół likwidacji otworu wiertniczego</strong> i przekazuje go do właściwego organu nadzoru geologicznego.</p>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px"><h2>Podsumowanie – Kluczowe Wymagania Rozdziału 3</h2><div class="line"></div></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h4>📋 Dokumentacja (§38–41)</h4>
+        <ul>
+          <li>Dziennik wiertniczy – obowiązkowy</li>
+          <li>Raporty wiertnicze codzienne</li>
+          <li>Projekty techniczne rurowań i cementowań</li>
+          <li>Protokoły prób szczelności rur</li>
+          <li>DTR wszystkich urządzeń na wiertni</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>📍 Lokalizacja (§42–48)</h4>
+        <ul>
+          <li>Min. 50 m od ognia otwartego (ropa/gaz)</li>
+          <li>Min. 1,5×H wieży od dróg, zabudowań</li>
+          <li>Min. 30 m od linii WN</li>
+          <li>2 dojazdy przy zagrożeniu H₂S</li>
+          <li>Uzgodnienie p.poż. przy lesie w 100 m</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>⚙ Technologia wiercenia (§49–56)</h4>
+        <ul>
+          <li>Projekt geologiczno-techniczny zatwierdzony przez KRZ</li>
+          <li>Nadzór dozoru przy dowiercaniu i rdzeniowaniu</li>
+          <li>Bieżące pomiary parametrów płuczki</li>
+          <li>Monitorowanie przypływu przy ropie/gazie</li>
+          <li>Ciągłe dopełnianie otworu przy wyciąganiu</li>
+          <li>Izolacja poziomu gazowego przy zaniechaniu robót</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h4>🛡 BOP i bezpieczeństwo (§57–80)</h4>
+        <ul>
+          <li>BOP obowiązkowy przy złożach ropy/gazu</li>
+          <li>Testowanie BOP co 7 dni + przed każdym rurowym</li>
+          <li>Instrukcja likwidacji erupcji zatwierdzona przez KRZ</li>
+          <li>Detektory H₂S + aparaty oddechowe</li>
+          <li>Likwidacja otworu z protokołem</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <footer>
@@ -3605,7 +4035,7 @@ function showPage(pageId) {
   var pg = document.getElementById('page-' + pageId);
   if (pg) pg.classList.add('active');
   // Update active button in BOTH navs
-  var map = { home:0, geology:1, drilling:2, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10, volume:11, dtr:12 };
+  var map = { home:0, geology:1, drilling:2, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10, volume:11, dtr:12, reg812:13 };
   // Desktop nav (no close button offset)
   var deskBtns = document.querySelectorAll('#main-nav-desktop button');
   deskBtns.forEach(function(b){ b.classList.remove('active'); });
