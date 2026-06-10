@@ -11,7 +11,7 @@ const STATIC_FILES = [
 ];
 
 const FONT_URLS = [
-  'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap'
+  'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap'
 ];
 
 // ── INSTALL ──────────────────────────────────────

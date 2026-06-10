@@ -16,7 +16,7 @@
 <link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144.png">
 <link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg-deep: #f2f3f5;
@@ -30,10 +30,10 @@
     --teal: #4a5568;
     --teal-dim: #718096;
     --blue: #4a5568;
-    --text-bright: #1a202c;
-    --text-main: #2d3748;
-    --text-dim: #4a5568;
-    --text-muted: #a0aec0;
+    --text-bright: #000000;
+    --text-main: #111111;
+    --text-dim: #333333;
+    --text-muted: #666666;
     --border: #cbd5e0;
     --border-glow: rgba(74,85,104,0.25);
     --grid-line: rgba(0,0,0,0.035);
@@ -48,8 +48,8 @@
   body {
     background: #f8f9fa;
     color: var(--text-main);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 19px;
     line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
@@ -119,15 +119,15 @@
     font-weight: 900;
     font-size: 1.4rem;
     letter-spacing: 0.06em;
-    color: #2d3748;
+    color: #1a6fc4;
     text-shadow: none;
   }
 
   .logo-sub {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.22em;
-    color: #4a5568;
+    color: #4a90d9;
     text-transform: uppercase;
     margin-top: -4px;
   }
@@ -193,7 +193,7 @@
     background: none;
     border: none;
     padding: 8px 11px;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.07em;
@@ -255,7 +255,7 @@
     border: none;
     border-bottom: 1px solid rgba(74,85,104,0.12);
     color: #2d3748;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.15em;
@@ -272,7 +272,7 @@
     text-align: left;
     padding: 16px 24px;
     font-size: 0.95rem;
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 600;
     letter-spacing: 0.05em;
     background: none;
@@ -405,7 +405,7 @@
   }
 
   .program-box h4 {
-    font-family: 'Rajdhani', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     color: #4a5568;
     letter-spacing: 0.1em;
@@ -548,7 +548,7 @@
       </svg>
     </div>
     <div>
-      <div class="logo-text">Drilling<span style="color:var(--text-bright);font-weight:400"> App</span></div>
+      <div class="logo-text">Drilling<span style="color:#4a90d9;font-weight:400"> App</span></div>
       <div class="logo-sub">Kompendium Wiedzy Wiertniczej</div>
     </div>
   </div>
@@ -603,7 +603,7 @@
     <div class="hero-tag">v2.0 • Inżynieria Naftowa i Gazownicza</div>
     <h1>Drilling<span> App</span></h1>
     <p class="hero-sub">Profesjonalne Kompendium Wiedzy Wiertniczej</p>
-    <button id="pwa-install-btn" onclick="installPWA()" style="display:none;margin:0 auto 24px;align-items:center;gap:10px;background:rgba(74,85,104,0.12);border:1px solid rgba(74,85,104,0.35);border-radius:8px;padding:12px 24px;color:#2d3748;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">
+    <button id="pwa-install-btn" onclick="installPWA()" style="display:none;margin:0 auto 24px;align-items:center;gap:10px;background:rgba(74,85,104,0.12);border:1px solid rgba(74,85,104,0.35);border-radius:8px;padding:12px 24px;color:#111111;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">
       📲 Zainstaluj Drilling App
     </button>
     <div class="stats-row">
