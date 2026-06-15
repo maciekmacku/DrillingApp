@@ -16,27 +16,27 @@
 <link rel="apple-touch-icon" sizes="144x144" href="icons/icon-144.png">
 <link rel="apple-touch-icon" sizes="128x128" href="icons/icon-128.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-deep: #f2f3f5;
-    --bg-panel: #e9eaec;
-    --bg-card: #ffffff;
-    --bg-card2: #f6f7f8;
-    --accent-gold: #4a5568;
-    --accent-amber: #2d3748;
-    --accent-orange: #718096;
-    --accent-rust: #4a5568;
-    --teal: #4a5568;
-    --teal-dim: #718096;
-    --blue: #4a5568;
-    --text-bright: #000000;
-    --text-main: #111111;
-    --text-dim: #333333;
-    --text-muted: #666666;
-    --border: #cbd5e0;
-    --border-glow: rgba(74,85,104,0.25);
-    --grid-line: rgba(0,0,0,0.035);
+    --bg-deep: #1a1f2e;
+    --bg-panel: #222838;
+    --bg-card: #252c3d;
+    --bg-card2: #1e2433;
+    --accent-gold: #94a3b8;
+    --accent-amber: #cbd5e1;
+    --accent-orange: #94a3b8;
+    --accent-rust: #64748b;
+    --teal: #93c5fd;
+    --teal-dim: #60a5fa;
+    --blue: #93c5fd;
+    --text-bright: #f1f5f9;
+    --text-main: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --border: #334155;
+    --border-glow: rgba(148,163,184,0.2);
+    --grid-line: rgba(255,255,255,0.03);
     --shadow-gold: 0 4px 20px rgba(0,0,0,0.1);
     --shadow-teal: 0 4px 16px rgba(74,85,104,0.08);
   }
@@ -46,10 +46,11 @@
   html { scroll-behavior: smooth; }
 
   body {
-    background: #f8f9fa;
+    background: #1e2433;
     color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    font-size: 19px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
     line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
@@ -88,7 +89,7 @@
     position: sticky;
     top: 0;
     z-index: 900;
-    background: rgba(240,242,245,0.97);
+    background: rgba(26,31,46,0.97);
     border-bottom: 1px solid var(--border);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -119,15 +120,15 @@
     font-weight: 900;
     font-size: 1.4rem;
     letter-spacing: 0.06em;
-    color: #1a6fc4;
+    color: #e2e8f0;
     text-shadow: none;
   }
 
   .logo-sub {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-size: 0.7rem;
     letter-spacing: 0.22em;
-    color: #4a90d9;
+    color: #93c5fd;
     text-transform: uppercase;
     margin-top: -4px;
   }
@@ -139,8 +140,8 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    background: rgba(74,85,104,0.1);
-    border: 1px solid rgba(74,85,104,0.35);
+    background: rgba(148,163,184,0.1);
+    border: 1px solid rgba(148,163,184,0.25);
     border-radius: 8px;
     padding: 10px 12px;
     cursor: pointer;
@@ -152,7 +153,7 @@
     display: block;
     width: 22px;
     height: 2px;
-    background: #4a5568;
+    background: #94a3b8;
     border-radius: 2px;
     transition: transform 0.25s ease, opacity 0.2s ease;
     transform-origin: center;
@@ -193,7 +194,7 @@
     background: none;
     border: none;
     padding: 8px 11px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.07em;
@@ -206,14 +207,14 @@
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
   }
-  #main-nav-desktop button:hover { color: var(--text-bright); background: rgba(74,85,104,0.08); }
-  #main-nav-desktop button.active { color: #2d3748; background: rgba(74,85,104,0.1); }
+  #main-nav-desktop button:hover { color: var(--text-bright); background: rgba(148,163,184,0.08); }
+  #main-nav-desktop button.active { color: #e2e8f0; background: rgba(148,163,184,0.1); }
   #main-nav-desktop button.active::after {
     content: '';
     position: absolute;
     bottom: 0; left: 11px; right: 11px;
     height: 2px;
-    background: #4a5568;
+    background: #94a3b8;
     border-radius: 2px;
   }
 
@@ -225,8 +226,8 @@
     width: min(300px, 85vw);
     height: 100%;
     height: 100dvh;
-    background: #ffffff;
-    border-right: 1px solid rgba(74,85,104,0.2);
+    background: #1e2433;
+    border-right: 1px solid rgba(148,163,184,0.15);
     flex-direction: column;
     align-items: stretch;
     overflow-y: auto;
@@ -251,11 +252,11 @@
     top: 0;
     width: 100%;
     padding: 18px 20px;
-    background: rgba(74,85,104,0.06);
+    background: rgba(148,163,184,0.06);
     border: none;
     border-bottom: 1px solid rgba(74,85,104,0.12);
-    color: #2d3748;
-    font-family: 'Inter', sans-serif;
+    color: #e2e8f0;
+    font-family: 'Rajdhani', sans-serif;
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.15em;
@@ -272,7 +273,7 @@
     text-align: left;
     padding: 16px 24px;
     font-size: 0.95rem;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-weight: 600;
     letter-spacing: 0.05em;
     background: none;
@@ -284,8 +285,8 @@
     touch-action: manipulation;
     text-transform: uppercase;
   }
-  #main-nav-mobile button:hover { background: rgba(74,85,104,0.06); color: var(--text-bright); }
-  #main-nav-mobile button.active { color: #2d3748; background: rgba(74,85,104,0.1); border-left: 3px solid #4a5568; padding-left: 21px; }
+  #main-nav-mobile button:hover { background: rgba(148,163,184,0.06); color: var(--text-bright); }
+  #main-nav-mobile button.active { color: #e2e8f0; background: rgba(148,163,184,0.1); border-left: 3px solid #93c5fd; padding-left: 21px; }
   #main-nav-mobile button:last-child { border-bottom: none; }
 
   /* ── RESPONSIVE ───────────────────────────────── */
@@ -332,7 +333,7 @@
     .topic-icon { width: 38px; height: 38px; font-size: 1.1rem; }
     .tabs { flex-wrap: wrap; gap: 5px; border-bottom: none; margin-bottom: 16px; }
     .tab-btn { padding: 6px 12px; font-size: 0.7rem; border: 1px solid var(--border); border-radius: 20px; }
-    .tab-btn.active { border-color: #4a5568; background: rgba(74,85,104,0.08); }
+    .tab-btn.active { border-color: #93c5fd; background: rgba(148,163,184,0.08); }
     .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
     table { font-size: 0.74rem; min-width: 440px; }
     th, td { padding: 7px 9px; }
@@ -354,7 +355,8 @@
     .input-group label { font-size: 0.7rem; }
     .input-group input, .input-group select { padding: 9px 12px; font-size: 0.85rem; }
     .unit-tag { font-size: 0.62rem; width: 48px; }
-    .calc-btn { font-size: 0.8rem; }
+    .calc-btn {
+    color: #f1f5f9; font-size: 0.8rem; }
     .result-label { font-size: 0.76rem; }
     .result-value { font-size: 0.95rem; }
     .result-highlight .value { font-size: 1.25rem; }
@@ -376,7 +378,8 @@
     .formula-box { font-size: 0.68rem; }
     .result-highlight { flex-direction: column; gap: 4px; text-align: center; }
     .result-highlight .value { font-size: 1.3rem; }
-    .calc-btn { font-size: 0.72rem; padding: 11px; }
+    .calc-btn {
+    color: #f1f5f9; font-size: 0.72rem; padding: 11px; }
     table { font-size: 0.7rem; }
   }
 
@@ -389,7 +392,7 @@
 
   /* CEMENT DIAGRAM */
   .cement-diagram {
-    background: #f5f6f8;
+    background: #1e2433;
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 20px;
@@ -397,17 +400,17 @@
   }
 
   .program-box {
-    background: rgba(74,85,104,0.06);
-    border: 1px solid rgba(74,85,104,0.18);
+    background: rgba(148,163,184,0.06);
+    border: 1px solid rgba(148,163,184,0.15);
     border-radius: 6px;
     padding: 16px;
     margin-top: 16px;
   }
 
   .program-box h4 {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-weight: 700;
-    color: #4a5568;
+    color: #93c5fd;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-size: 0.82rem;
@@ -438,8 +441,8 @@
     margin: 2px;
   }
 
-  .tag-gold { background: rgba(74,85,104,0.08); color: #4a5568; border: 1px solid rgba(74,85,104,0.2); }
-  .tag-teal { background: rgba(74,85,104,0.08); color: #4a5568; border: 1px solid rgba(74,85,104,0.2); }
+  .tag-gold { background: rgba(148,163,184,0.08); color: #93c5fd; border: 1px solid rgba(148,163,184,0.15); }
+  .tag-teal { background: rgba(148,163,184,0.08); color: #93c5fd; border: 1px solid rgba(148,163,184,0.15); }
   .tag-red { background: rgba(230,126,34,0.1); color: #e07040; border: 1px solid rgba(212,97,26,0.25); }
 
   .two-col {
@@ -454,12 +457,12 @@
   /* ---- pill label for tabs ---- */
   .pill {
     display: inline-block;
-    background: rgba(74,85,104,0.08);
-    border: 1px solid rgba(74,85,104,0.2);
+    background: rgba(148,163,184,0.08);
+    border: 1px solid rgba(148,163,184,0.15);
     border-radius: 20px;
     font-size: 0.7rem;
     padding: 2px 10px;
-    color: #4a5568;
+    color: #93c5fd;
     letter-spacing: 0.1em;
     margin-left: 8px;
   }
@@ -474,7 +477,7 @@
 
   .accordion-head {
     padding: 14px 18px;
-    background: #f5f6f8;
+    background: #1e2433;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -487,14 +490,14 @@
 
   .accordion-head:hover { background: rgba(232,160,32,0.05); }
 
-  .accordion-head.open { color: #4a5568; }
+  .accordion-head.open { color: #93c5fd; }
   .accordion-head .chevron { transition: transform 0.25s; color: var(--text-dim); }
-  .accordion-head.open .chevron { transform: rotate(180deg); color: #4a5568; }
+  .accordion-head.open .chevron { transform: rotate(180deg); color: #93c5fd; }
 
   .accordion-body {
     display: none;
     padding: 16px 18px;
-    background: #f8f9fa;
+    background: #1e2433;
     font-size: 0.86rem;
     color: var(--text-dim);
     line-height: 1.6;
@@ -509,46 +512,46 @@
   <header>
   <div class="logo">
     <div class="logo-icon">
-      <!-- Red tricone drill bit SVG -->
+      <!-- Tricone drill bit SVG - yellow/gold -->
       <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- Bit body / shank -->
-        <rect x="18" y="1" width="8" height="10" rx="2" fill="#4a5568"/>
-        <rect x="17" y="10" width="10" height="6" rx="1" fill="#2d3748"/>
+        <rect x="18" y="1" width="8" height="10" rx="2" fill="#f59e0b"/>
+        <rect x="17" y="10" width="10" height="6" rx="1" fill="#d97706"/>
         <!-- Bit leg left -->
-        <path d="M16 16 L10 28 L14 30 L18 18 Z" fill="#4a5568"/>
+        <path d="M16 16 L10 28 L14 30 L18 18 Z" fill="#f59e0b"/>
         <!-- Bit leg right -->
-        <path d="M28 16 L34 28 L30 30 L26 18 Z" fill="#4a5568"/>
+        <path d="M28 16 L34 28 L30 30 L26 18 Z" fill="#f59e0b"/>
         <!-- Bit leg center -->
-        <path d="M19 16 L17 32 L22 33 L27 32 L25 16 Z" fill="#2d3748"/>
-        <!-- Cone left (circle) -->
-        <circle cx="12" cy="31" r="6" fill="#718096"/>
-        <circle cx="12" cy="31" r="3.5" fill="#4a5568"/>
+        <path d="M19 16 L17 32 L22 33 L27 32 L25 16 Z" fill="#d97706"/>
+        <!-- Cone left -->
+        <circle cx="12" cy="31" r="6" fill="#fbbf24"/>
+        <circle cx="12" cy="31" r="3.5" fill="#f59e0b"/>
         <!-- Cone right -->
-        <circle cx="32" cy="31" r="6" fill="#718096"/>
-        <circle cx="32" cy="31" r="3.5" fill="#4a5568"/>
+        <circle cx="32" cy="31" r="6" fill="#fbbf24"/>
+        <circle cx="32" cy="31" r="3.5" fill="#f59e0b"/>
         <!-- Cone center -->
-        <circle cx="22" cy="35" r="6" fill="#718096"/>
-        <circle cx="22" cy="35" r="3.5" fill="#4a5568"/>
-        <!-- TCI inserts on cones -->
-        <circle cx="10" cy="29" r="1" fill="#a0aec0"/>
-        <circle cx="14" cy="32" r="1" fill="#a0aec0"/>
-        <circle cx="12" cy="26" r="1" fill="#a0aec0"/>
-        <circle cx="30" cy="29" r="1" fill="#a0aec0"/>
-        <circle cx="34" cy="32" r="1" fill="#a0aec0"/>
-        <circle cx="32" cy="26" r="1" fill="#a0aec0"/>
-        <circle cx="20" cy="33" r="1" fill="#a0aec0"/>
-        <circle cx="24" cy="33" r="1" fill="#a0aec0"/>
-        <circle cx="22" cy="38" r="1" fill="#a0aec0"/>
+        <circle cx="22" cy="35" r="6" fill="#fbbf24"/>
+        <circle cx="22" cy="35" r="3.5" fill="#f59e0b"/>
+        <!-- TCI inserts -->
+        <circle cx="10" cy="29" r="1" fill="#fef3c7"/>
+        <circle cx="14" cy="32" r="1" fill="#fef3c7"/>
+        <circle cx="12" cy="26" r="1" fill="#fef3c7"/>
+        <circle cx="30" cy="29" r="1" fill="#fef3c7"/>
+        <circle cx="34" cy="32" r="1" fill="#fef3c7"/>
+        <circle cx="32" cy="26" r="1" fill="#fef3c7"/>
+        <circle cx="20" cy="33" r="1" fill="#fef3c7"/>
+        <circle cx="24" cy="33" r="1" fill="#fef3c7"/>
+        <circle cx="22" cy="38" r="1" fill="#fef3c7"/>
         <!-- Nozzles -->
-        <circle cx="17" cy="28" r="1.5" fill="#4a5568"/>
-        <circle cx="27" cy="28" r="1.5" fill="#4a5568"/>
-        <circle cx="22" cy="27" r="1.5" fill="#4a5568"/>
+        <circle cx="17" cy="28" r="1.5" fill="#d97706"/>
+        <circle cx="27" cy="28" r="1.5" fill="#d97706"/>
+        <circle cx="22" cy="27" r="1.5" fill="#d97706"/>
         <!-- Highlight shank -->
-        <rect x="20" y="2" width="2" height="8" rx="1" fill="rgba(255,160,160,0.3)"/>
+        <rect x="20" y="2" width="2" height="8" rx="1" fill="rgba(255,255,200,0.35)"/>
       </svg>
     </div>
     <div>
-      <div class="logo-text">Drilling<span style="color:#4a90d9;font-weight:400"> App</span></div>
+      <div class="logo-text">DrillBabyDrill<span style="color:var(--text-bright);font-weight:400"> App</span></div>
       <div class="logo-sub">Kompendium Wiedzy Wiertniczej</div>
     </div>
   </div>
@@ -603,7 +606,7 @@
     <div class="hero-tag">v2.0 • Inżynieria Naftowa i Gazownicza</div>
     <h1>Drilling<span> App</span></h1>
     <p class="hero-sub">Profesjonalne Kompendium Wiedzy Wiertniczej</p>
-    <button id="pwa-install-btn" onclick="installPWA()" style="display:none;margin:0 auto 24px;align-items:center;gap:10px;background:rgba(74,85,104,0.12);border:1px solid rgba(74,85,104,0.35);border-radius:8px;padding:12px 24px;color:#111111;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">
+    <button id="pwa-install-btn" onclick="installPWA()" style="display:none;margin:0 auto 24px;align-items:center;gap:10px;background:rgba(74,85,104,0.12);border:1px solid rgba(74,85,104,0.35);border-radius:8px;padding:12px 24px;color:#2d3748;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;">
       📲 Zainstaluj Drilling App
     </button>
     <div class="stats-row">
@@ -1785,7 +1788,7 @@
   <!-- H2S -->
   <div id="saf-h2s" class="tab-content">
     <div class="section-title"><h2>H₂S – Siarkowodór w Wiertnictwie</h2><div class="line"></div></div>
-    <div class="alert-box" style="border-left-color:#cc2222;background:rgba(74,85,104,0.07)">
+    <div class="alert-box" style="border-left-color:#cc2222;background:rgba(147,197,253,0.06)">
       <strong>⚠ ZAGROŻENIE ŻYCIA:</strong> H₂S (siarkowodór) to gaz silnie toksyczny, bezbarwny, o zapachu zgniłych jaj. Już stężenie <strong>100 ppm paraliżuje węch</strong>. Stężenie 1000 ppm powoduje natychmiastową śmierć. Cięższy od powietrza – zbiera się w zagłębieniach.
     </div>
     <div class="info-grid" style="margin-top:20px">
@@ -2973,7 +2976,7 @@
   <div id="dtr-210" class="tab-content active">
 
     <div class="section-title"><h2>URB-210M – Charakterystyka Ogólna</h2><div class="line"></div></div>
-    <div class="alert-box" style="border-left-color:#718096;background:rgba(74,85,104,0.06)">
+    <div class="alert-box" style="border-left-color:#93c5fd;background:rgba(74,85,104,0.06)">
       <strong>Przeznaczenie:</strong> Urządzenie wiertnicze URB-210 przeznaczone jest do wiercenia studni wysokowydajnych, otworów hydrologicznych oraz odwodnieniowych. Wiercenie odbywa się metodą obrotową z użyciem płuczki, z bezpośrednim odwrotnym płukaniem za pomocą obrotowego rotora. Baza transportowa: samochód KAMAZ 65111-0003020-E6.
     </div>
 
@@ -3222,7 +3225,7 @@
   <div id="dtr-2a2" class="tab-content">
 
     <div class="section-title"><h2>URB-2A2 – Charakterystyka Ogólna</h2><div class="line"></div></div>
-    <div class="alert-box" style="border-left-color:#718096;background:rgba(74,85,104,0.06)">
+    <div class="alert-box" style="border-left-color:#93c5fd;background:rgba(74,85,104,0.06)">
       <strong>Przeznaczenie:</strong> Wiertnica URB-2A2 jest przeznaczona do wiercenia otworów sejsmicznych, geologiczno-złożowych i kartograficznych. Wszystkie mechanizmy są zamontowane na własnej ramie przymocowanej do podwozia samochodu KAMAZ B2131 (43118) 6x6, uruchamiane od jego silnika. Posiada przesuwaną obrotnicę z napędem hydraulicznym. Numer fabryczny egzemplarza opisanego w DTR: №131219.
     </div>
 
@@ -3800,7 +3803,7 @@
   <div id="r812-bop" class="tab-content">
     <div class="section-title"><h2>§57–80 BOP, Zabezpieczenia Przeciwerupcyjne i Procedury Awaryjne</h2><div class="line"></div></div>
 
-    <div class="alert-box" style="border-left-color:#718096;background:rgba(74,85,104,0.06);margin-bottom:16px">
+    <div class="alert-box" style="border-left-color:#93c5fd;background:rgba(74,85,104,0.06);margin-bottom:16px">
       <strong>Uwaga:</strong> Paragrafy §57–§80 dotyczą szczegółowych wymagań dla zabezpieczeń przeciwerupcyjnych (BOP), procedur przy kicku, zagrożeniu H₂S, testowania BOP oraz likwidacji otworów. Poniżej zestawione są kluczowe wymagania.
     </div>
 
@@ -4325,12 +4328,7 @@ function resetVolume() {
 }
 
 // ===================== INIT =====================
-(function() {
-  var hash = location.hash.slice(1);
-  var validPages = ['home','geology','drilling','fluids','cement','calculator',
-    'glossary','safety','pipes','hydro','hydrogeo','volume','dtr','reg812'];
-  showPage(validPages.indexOf(hash) !== -1 ? hash : 'home');
-})();
+showPage('home');
 </script>
 
 <script>
