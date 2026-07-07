@@ -630,6 +630,7 @@
     <button onclick="showPage('volume')">🔵 Obj. Otworu</button>
     <button onclick="showPage('dtr')">🔧 DTR Urządzeń</button>
     <button onclick="showPage('reg812')">📜 Rozp. 812</button>
+    <button onclick="showPage('oug')">✅ Kontrola OUG</button>
   </nav>
 </header>
 <!-- Overlay backdrop -->
@@ -651,6 +652,7 @@
   <button onclick="showPage('volume')">🔵 Obj. Otworu</button>
   <button onclick="showPage('dtr')">🔧 DTR Urządzeń</button>
   <button onclick="showPage('reg812')">📜 Rozp. 812</button>
+  <button onclick="showPage('oug')">✅ Kontrola OUG</button>
 </nav>
 
 <main>
@@ -665,7 +667,7 @@
       📲 Zainstaluj Drilling App
     </button>
     <div class="stats-row">
-      <div class="stat-box"><span class="stat-num">13</span><span class="stat-label">Działów</span></div>
+      <div class="stat-box"><span class="stat-num">14</span><span class="stat-label">Działów</span></div>
       <div class="stat-box"><span class="stat-num">230+</span><span class="stat-label">Haseł</span></div>
       <div class="stat-box"><span class="stat-num">50+</span><span class="stat-label">Wzorów</span></div>
       <div class="stat-box"><span class="stat-num">3</span><span class="stat-label">Kalkulatory</span></div>
@@ -734,8 +736,6 @@
       <p>Oblicz prędkości anularne, ECD, straty ciśnienia w przewodzie wiertniczym, optymalizacja dysz świdra.</p>
       <div class="card-arrow">→</div>
     </div>
-  </div>
-
     <div class="card" onclick="showPage('hydrogeo')">
       <span class="card-icon">🌊</span>
       <h3>Wiertnictwo Hydrogeologiczne</h3>
@@ -758,6 +758,12 @@
       <span class="card-icon">🔵</span>
       <h3>Kalkulator Objętości Otworu</h3>
       <p>Oblicz objętość otworu wiertniczego na podstawie średnicy D i głębokości h. Wzór: 0,785 × D² × h</p>
+      <div class="card-arrow">→</div>
+    </div>
+    <div class="card" onclick="showPage('oug')">
+      <span class="card-icon">✅</span>
+      <h3>Kontrola OUG</h3>
+      <p>Wytyczne i checklisty przygotowania do kontroli Okręgowego Urzędu Górniczego: dokumentacja, barak, kadra, plac wierceń.</p>
       <div class="card-arrow">→</div>
     </div>
   </div>
@@ -4025,6 +4031,98 @@
   </div>
 </div>
 
+<!-- ===================== KONTROLA OUG PAGE ===================== -->
+<div id="page-oug" class="page">
+  <button class="back-btn" onclick="showPage('home')">← Powrót</button>
+
+  <div class="topic-header">
+    <div class="topic-icon">✅</div>
+    <div>
+      <h2>Kontrola OUG – Okręgowy Urząd Górniczy</h2>
+      <p>Checklisty przygotowania wiertni do kontroli: dokumentacja, barak, kadra, plac wierceń</p>
+    </div>
+  </div>
+
+  <div class="alert-box">
+    <strong>Cel:</strong> Poniższe wykazy porządkują dokumenty i stan wiertni tak, aby były zawsze gotowe na kontrolę inspektora Okręgowego Urzędu Górniczego. Sprawdzaj listy cyklicznie, nie tylko przed zapowiedzianą kontrolą.
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab(this,'oug-dok')">📄 Dokumentacja Wiercenia</button>
+    <button class="tab-btn" onclick="switchTab(this,'oug-barak')">🏠 Wnętrze Baraku</button>
+    <button class="tab-btn" onclick="switchTab(this,'oug-kadra')">👷 Pracownicy Kadry</button>
+    <button class="tab-btn" onclick="switchTab(this,'oug-plac')">⛏ Plac Wierceń</button>
+  </div>
+
+  <!-- DOKUMENTACJA WIERCENIA -->
+  <div id="oug-dok" class="tab-content active">
+    <div class="section-title"><h2>Dokumentacja Wiercenia</h2><div class="line"></div></div>
+    <div class="info-card">
+      <ul>
+        <li>☐ Umowa, na podstawie której wykonywane są otwory</li>
+        <li>☐ Przekazanie placu wierceń</li>
+        <li>☐ Kolaudacja</li>
+        <li>☐ Pozwolenie na prace szczególnie niebezpieczne</li>
+        <li>☐ Raporty wiertnicze</li>
+        <li>☐ Aktualne PGTO (Projekt Geologiczno-Techniczny Otworu)</li>
+        <li>☐ Pomiary elektryczne</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- WNĘTRZE BARAKU -->
+  <div id="oug-barak" class="tab-content">
+    <div class="section-title"><h2>Wnętrze Baraku</h2><div class="line"></div></div>
+    <div class="info-card">
+      <ul>
+        <li>☐ Wykaz telefonów kontaktowych dozoru</li>
+        <li>☐ Wykaz telefonów alarmowych</li>
+        <li>☐ Kontakt do najbliższego szpitala, jednostki straży pożarnej i policji</li>
+        <li>☐ PGTO</li>
+        <li>☐ Zeszyt szkoleń BHP z wpisem o zapoznaniu z technologią wykonania danego otworu</li>
+        <li>☐ Książka kontroli wiertni</li>
+        <li>☐ Instrukcje postępowania w nagłych wypadkach</li>
+        <li>☐ Książka raportowa</li>
+        <li>☐ Lista obecności</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PRACOWNICY KADRY -->
+  <div id="oug-kadra" class="tab-content">
+    <div class="section-title"><h2>Pracownicy Kadry</h2><div class="line"></div></div>
+    <div class="info-card">
+      <ul>
+        <li>☐ Teczki osobowe pracowników pracujących na danej zmianie</li>
+        <li>☐ Ważne uprawnienia pracowników</li>
+        <li>☐ Zapoznanie się z instrukcjami</li>
+        <li>☐ Badania okresowe</li>
+        <li>☐ Szkolenia okresowe BHP</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PLAC WIERCEŃ -->
+  <div id="oug-plac" class="tab-content">
+    <div class="section-title"><h2>Plac Wierceń</h2><div class="line"></div></div>
+    <div class="info-card">
+      <ul>
+        <li>☐ Tablica informacyjna z nazwą firmy i zakazem wstępu</li>
+        <li>☐ Gaśnice z ważnym atestem</li>
+        <li>☐ Szelki bezpieczeństwa z ważnym atestem plus amortyzator</li>
+        <li>☐ Pętle stalowe lub pasy z atestem (uszkodzone – do utylizacji)</li>
+        <li>☐ Narzędzia uszkodzone – do utylizacji</li>
+        <li>☐ Zabezpieczenia, szekle i tym podobne z atestem</li>
+        <li>☐ Śmieci wokół baraku posprzątane, urządzenia i barak zamiecione</li>
+        <li>☐ Drabinki i tym podobne z atestem</li>
+        <li>☐ Ogrodzony teren budowy</li>
+        <li>☐ Kable elektryczne podwieszone, urządzenie uziemione, szafka elektryczna uziemiona</li>
+        <li>☐ Widocznie oznaczona lina odciągowa</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <footer>
@@ -4093,7 +4191,7 @@ function showPage(pageId) {
   var pg = document.getElementById('page-' + pageId);
   if (pg) pg.classList.add('active');
   // Update active button in BOTH navs
-  var map = { home:0, geology:1, drilling:2, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10, volume:11, dtr:12, reg812:13 };
+  var map = { home:0, geology:1, drilling:2, fluids:3, cement:4, calculator:5, glossary:6, safety:7, pipes:8, hydro:9, hydrogeo:10, volume:11, dtr:12, reg812:13, oug:14 };
   // Desktop nav (no close button offset)
   var deskBtns = document.querySelectorAll('#main-nav-desktop button');
   deskBtns.forEach(function(b){ b.classList.remove('active'); });

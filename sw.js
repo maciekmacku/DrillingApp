@@ -1,7 +1,7 @@
-// Drilling App – Service Worker v1.0
-const CACHE_NAME = 'drilling-app-v1';
-const STATIC_CACHE = 'drilling-static-v1';
-const FONT_CACHE = 'drilling-fonts-v1';
+// Drilling App – Service Worker v1.1
+const CACHE_NAME = 'drilling-app-v2';
+const STATIC_CACHE = 'drilling-static-v2';
+const FONT_CACHE = 'drilling-fonts-v2';
 
 // Files to cache for offline use
 const STATIC_FILES = [
